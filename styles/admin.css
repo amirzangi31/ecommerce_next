@@ -1,0 +1,149 @@
+.admin-content {
+  @apply bg-admin-content h-screen;
+}
+
+.admin-container {
+  @apply pr-64 py-4 pl-4  h-screen;
+}
+.admin-container__inner {
+  @apply h-full bg-white rounded-xl p-2 relative overflow-y-scroll;
+}
+/* width */
+.admin-container__inner::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Track */
+.admin-container__inner::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+.admin-container__inner::-webkit-scrollbar-thumb {
+  @apply bg-primary  rounded-lg;  
+}
+
+
+
+.admin-container__inner h2 {
+  @apply text-2xl font-bold text-center text-whiteone;
+}
+.admin-container__inner table {
+  @apply w-full ;
+}
+.admin-container__inner thead  th{
+  @apply bg-gray py-2 border border-primary text-white;
+}
+.admin-container__inner thead {
+  @apply border-b border-primary;
+}
+.admin-container__inner tbody {
+  @apply border border-primary;
+}
+.admin-container__inner td {
+  @apply py-2 text-center border-l border-primary border-b;
+}
+
+aside {
+  @apply w-60 bg-white h-[calc(100vh-32px)] my-4 rounded-tl-2xl rounded-bl-2xl fixed px-2;
+}
+
+.logo {
+  @apply py-4 text-center text-lg text-primary font-bold;
+}
+
+/*-----------------Sign in-------------------*/
+
+.sign-content-admin {
+  @apply h-screen  flex justify-center items-center bg-admin-content px-4;
+}
+.sign-content-admin form {
+  @apply flex flex-col p-4 rounded-xl bg-white w-80 max-w-full shadow-xl;
+}
+.sign-content-admin h2 {
+  @apply text-lg text-center text-primary;
+}
+.sign-content-admin form div {
+  @apply flex flex-col my-2;
+}
+.sign-content-admin form input {
+  @apply bg-white border border-primary my-2 rounded-lg p-1 text-primary;
+}
+.sign-content-admin form input:focus {
+  @apply outline-none;
+}
+
+.sign-content-admin form label {
+  @apply font-bold  text-primary;
+  font-size: 0.9rem;
+}
+
+/*-----------------Sign in-------------------*/
+
+/*-----------------form admin-------------------*/
+
+.form-admin {
+}
+.input-content {
+  @apply grid grid-cols-2 gap-2;
+}
+.input-content__group {
+  @apply flex flex-col;
+}
+.input-content__textarea {
+  @apply flex flex-col;
+}
+.form-admin input,
+.form-admin textarea,
+.form-admin select {
+  @apply w-full border border-primary p-1 rounded-lg my-1;
+}
+
+.form-admin .input-secondary {
+  @apply w-full border border-gray  text-gray  p-1 rounded-lg my-1;
+
+}
+
+
+.form-admin label {
+  @apply text-primary text-sm font-bold;
+}
+.form-admin .label-secondary {
+  @apply text-gray text-sm font-bold;
+}
+
+/*-----------------form admin-------------------*/
+
+/*-----------------upload image productform-------------------*/
+.upload-image-element {
+  @apply w-24 h-24   bg-gray flex justify-center items-center flex-col-reverse;
+  @apply text-white rounded-lg font-normal cursor-pointer;
+}
+
+.confirm-upload {
+  @apply text-primary my-2;
+}
+
+.delete-image {
+  @apply relative overflow-hidden;
+}
+.delete-image:hover svg {
+  @apply top-[calc(50%-8px)] left-[calc(50%-8px)];
+}
+
+.delete-image svg {
+  @apply absolute  w-4 h-4 -top-full z-40 transition-all duration-500 delay-200;
+}
+.delete-image svg:hover {
+  @apply w-6 h-6;
+}
+.delete-image:hover::after {
+  @apply top-0 left-0  w-full h-full;
+}
+
+.delete-image::after {
+  content: "";
+  @apply absolute top-1/2 left-1/2  w-0 h-0 block  z-10 rounded-lg transition-all duration-200;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+/*-----------------upload image productform-------------------*/
