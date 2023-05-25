@@ -9,7 +9,7 @@ const handler = async (req, res) => {
     } catch (err) {
         return res
             .status(500)
-            .json({ status: "failed", message: "Error to connecting to db!" });
+            .json({ status: "failed", message: "error to connecting to db!" });
     }
     const { method } = req
 

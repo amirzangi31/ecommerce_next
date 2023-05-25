@@ -34,7 +34,7 @@ function TableProductAdmin({ products , swal}) {
   return (
     <table>
       <thead>
-        <tr className="text-gray">
+        <tr className="text-bg-admin">
           <th></th>
           <th>نام محصول</th>
           <th>قیمت</th>
@@ -45,11 +45,11 @@ function TableProductAdmin({ products , swal}) {
       <tbody>
         {products.map((item, index) => (
           <tr key={item._id}>
-            <td className=" text-whiteone">{index + 1}</td>
-            <td className="text-whiteone">{item.name}</td>
-            <td className=" text-whiteone">{item.price.toLocaleString()}</td>
-            <td className="text-whiteone">{item.description.length > 50 && "..."}{shortText(item.description, 50)}</td>
-            <td   className=" text-whiteone">
+            <td className=" border-secondary-admin">{index + 1}</td>
+            <td className="border-secondary-admin">{item.name}</td>
+            <td className=" border-secondary-admin">{item.price.toLocaleString()}</td>
+            <td className="border-secondary-admin">{item.description.length > 50 && "..."}{shortText(item.description, 50)}</td>
+            <td   className=" border-secondary-admin">
               <div className="flex justify-center items-center gap-2">
                 <Link href={`/admin/products/${item._id}`}><Button className="btn-primary">ویرایش</Button></Link>
                 <Button className="btn-error" handler={() => deleteHandler(item)}>حذف</Button>

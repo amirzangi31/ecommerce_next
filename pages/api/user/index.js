@@ -10,7 +10,7 @@ const handler = async (req, res) => {
     } catch (err) {
         return res
             .status(500)
-            .json({ status: "failed", message: "Error to connecting to db!" });
+            .json({ status: "failed", message: "error to connecting to db!" });
     }
 
     const session = await getSession({ req })
@@ -18,10 +18,10 @@ const handler = async (req, res) => {
         return res.status(401).json({ status: "failed", message: "You are not logged in" })
     }
     const user = await User.findOne({ email: session.user.email })
-    const { name, email, profileimage, orders, createdAt, updatedAt, address, phone } = user
+    const { name, email, profileimage, orders, createdAt, updatedAt, address, phone , _id } = user
 
     if (req.method === "GET") {
-        return res.status(200).json({ status: "success", user: { name, email, profileimage, orders, createdAt, updatedAt, address, phone } })
+        return res.status(200).json({ status: "success", user: { _id , name, email, profileimage, orders, createdAt, updatedAt, address, phone } })
     }
 
 

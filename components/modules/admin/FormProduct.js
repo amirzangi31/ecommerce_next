@@ -169,8 +169,8 @@ function FormProduct({
     <div className="form-admin">
       {createdAt && 
       <div className="flex justify-between items-center my-2">
-          <div><span className="text-primary">ساخته شده در تاریخ : </span><span className="text-gray font-bold">{convertToPersain(createdAt)}</span></div>
-          <div><span className="text-primary">بروزرسانی شده در تاریخ : </span><span className="text-gray font-bold">{convertToPersain(updatedAt)}</span></div>
+          <div><span className="text-primary-admin">ساخته شده در تاریخ : </span><span className="text-whiteone font-bold">{convertToPersain(createdAt)}</span></div>
+          <div><span className="text-primary-admin">بروزرسانی شده در تاریخ : </span><span className="text-whiteone font-bold">{convertToPersain(updatedAt)}</span></div>
       </div>}
       <div className="input-content">
         <div className="input-content__group">
@@ -246,7 +246,7 @@ function FormProduct({
       {confirmUpload ? (
         <div className="confirm-upload">
           <p className="text-center">آیا میخواهید این عکس را اپلود کنید؟</p>
-          <div className="upload-image-element mx-auto my-2 border border-primary overflow-hidden">
+          <div className="upload-image-element mx-auto my-2 border border-primary-admin overflow-hidden">
             <img src={createObjectURL} alt="" />
           </div>
           <div className="center gap-4">
@@ -299,6 +299,7 @@ function FormProduct({
                         className="w-full"
                       />
                       <BsFillTrashFill
+                      className="border-secondary-admin"
                         onClick={() => deleteImageHandler(index, item.name)}
                       />
                     </div>
@@ -306,7 +307,7 @@ function FormProduct({
                 </ReactSortable>
               </div>
             ) : (
-              <div className="text-primary font-bold">
+              <div className="text-primary-admin font-bold">
                 هیچ عکسی برای این محصول بارگذاری نکرده اید
               </div>
             )}

@@ -1,0 +1,126 @@
+/*------------editor style--------------*/
+.editor {
+  @apply border border-primary-admin rounded-md w-full overflow-hidden mb-6 bg-bg-admin;
+  min-height: 200px;
+}
+
+.btns-editor {
+  @apply flex justify-between items-center flex-wrap border-b border-primary-admin;
+}
+.btn-editor-color {
+  @apply bg-bg-admin w-12 rounded-lg border border-secondary-admin flex justify-center items-center px-1;
+}
+.btn-editor-color input {
+  @apply border-none p-0 m-0 w-12 bg-transparent cursor-pointer;
+}
+.btn-editor {
+  @apply px-2 text-whiteone;
+}
+
+.btns-editor button,
+.btns-editor label {
+  @apply m-1 btn-editor  opacity-100 text-xs;
+}
+
+.btns-editor button.active {
+  @apply opacity-100 border  py-2 rounded-lg border-secondary-admin bg-primary-admin text-whiteone;
+}
+
+.ProseMirror {
+  @apply p-4 border-none outline-none text-whiteone;
+}
+
+.ProseMirror > * + * {
+  margin-top: 0.75em;
+}
+.ProseMirror ol {
+  padding: 0 1rem;
+  list-style-type: decimal;
+}
+
+.ProseMirror ul {
+  padding: 0 1rem;
+  list-style-type: square;
+}
+.ProseMirror h1 {
+  font-size: 36px;
+  line-height: 40px;
+}
+
+.ProseMirror h2 {
+  font-size: 30px;
+  line-height: 40px;
+}
+
+.ProseMirror h3 {
+  font-size: 24px;
+  line-height: 40px;
+}
+
+.ProseMirror h4 {
+  font-size: 18px;
+  line-height: 20px;
+}
+
+/* Won't be used here */
+
+.ProseMirror h5 {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ProseMirror h6 {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  line-height: 1.1;
+}
+
+.ProseMirror code {
+  @apply  border-secondary-admin py-1 px-3 rounded-lg;
+  box-sizing: border-box;
+  /* background-color: #a58181; */
+  background: #0d0d0d;
+
+  /* color: #616161; */
+}
+
+.ProseMirror pre {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.ProseMirror pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+
+.ProseMirror img {
+  max-width: 50%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.ProseMirror blockquote {
+  padding-right: 1rem;
+  border-right: 2px solid #9c9c9c;
+}
+
+.ProseMirror hr {
+  border: none;
+  border-top: 2px solid #9c9c9c;
+  margin: 2rem 0;
+}
+/*------------editor style--------------*/

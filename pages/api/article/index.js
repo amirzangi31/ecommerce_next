@@ -1,4 +1,4 @@
-import Category from "@/models/Category";
+import Article from "@/models/Article";
 import connectDB from "@/utils/connectDB";
 import { getSession } from "next-auth/react";
 
@@ -21,23 +21,28 @@ const handler = async (req, res) => {
             return res.status(401).json({ status: "failed", message: "You are not logged in!" })
         }
 
-        const { name, properties, parent , image } = req.body
-        const category = await Category.findOne({ name })
-        if (category) {
-            return res.status(422).json({ status: 'failed', message: "Category is doesn't exist" })
+        const { title, description, author, image, shortdes } = req.body
+
+
+
+        const article = await Article.findOne({ title })
+        if (article) {
+            return res.status(422).json({ status: 'failed', message: "Article is doesn't exist" })
         }
 
-        if (!name) {
+        if (!title || !description || !author || !image || !shortdes) {
             return res.status(422).json({ status: "failed", message: 'Invalid data!' })
         }
 
-        const newCategory = await Category.create({ name, parent: parent.toString() || undefined, properties , image })
+        const newArticle = await Article.create({ ...req.body })
 
-        return res.status(201).json({ status: "success", message: 'Category created', data: newCategory })
+        return res.status(201).json({ status: "success", message: 'Article created', data: newArticle })
     } else if (method === 'GET') {
-        const categories = await Category.find()
+        const articles = await Article.find()
 
-        return res.status(200).json({ status: 'success', data: categories })
+
+        return res.status(200).json({ status: "success", data: articles })
+
     }
 }
 

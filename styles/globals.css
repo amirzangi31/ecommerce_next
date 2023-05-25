@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import "./admin.css";
+@import "./editoradmin.css";
 
 @font-face {
   font-family: "Vazir";
@@ -31,13 +32,12 @@
 
 body {
   font-family: "Vazir", sans-serif;
-  
 }
 
 input,
 textarea,
 select {
-  @apply bg-transparent text-whiteone;
+  @apply bg-secondary-admin text-whiteone;
 }
 input:focus,
 textarea:focus {
@@ -45,7 +45,7 @@ textarea:focus {
 }
 
 hr {
-  @apply border-primary;
+  @apply border-primary-admin;
 }
 
 .center {
@@ -57,18 +57,68 @@ hr {
 }
 
 .btn-primary {
-  @apply bg-primary text-whiteone btn;
+  @apply bg-primary-admin text-whiteone btn;
 }
 .btn-error {
   @apply bg-error text-whiteone btn;
 }
 .btn-circle {
-  @apply w-12 h-12 bg-primary text-whiteone rounded-full center absolute bottom-4 right-4;
+  @apply w-12 h-12 bg-primary-admin text-whiteone rounded-full center absolute bottom-4 right-4;
 }
 .btn-secondary {
-  @apply btn text-whiteone bg-gray;
+  @apply btn text-whiteone bg-secondary-admin;
 }
 
 .Toastify__toast-body {
   @apply text-sm;
 }
+
+/*----------------modal------------------*/
+
+.modal {
+  @apply fixed top-1/2 left-1/2  w-0 h-0 overflow-y-scroll overflow-x-hidden px-2 z-40 relative;
+  @apply flex justify-center items-center transition-all duration-500;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal.active {
+  @apply fixed top-0 left-0  w-full h-screen overflow-y-scroll overflow-x-hidden px-2;
+  @apply flex justify-center items-center;
+}
+.close-modal {
+  @apply w-12 h-12 rounded-full text-whiteone cursor-pointer absolute top-3 right-2 center;
+  @apply border-2 border-whiteone;
+}
+.modal .modal-content {
+  @apply w-full md:w-8/12 lg:md:w-6/12 ;
+  min-height: 30vh;
+}
+.modal.modal.active .modal-content {
+  animation: showContentModal 700ms 700ms both;
+  -webkit-animation: showContentModal 700ms 700ms both;
+}
+
+/* width */
+.modal::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Track */
+.modal::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+.modal::-webkit-scrollbar-thumb {
+  @apply bg-primary-admin  rounded-lg;
+}
+
+@keyframes showContentModal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*----------------modal------------------*/

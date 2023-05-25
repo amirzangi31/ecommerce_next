@@ -187,7 +187,7 @@ function CategoriesPageAdmin({ categories }) {
         {confirmUpload ? (
           <div className="confirm-upload">
             <p className="text-center">آیا میخواهید این عکس را اپلود کنید؟</p>
-            <div className="upload-image-element mx-auto my-2 border border-primary overflow-hidden">
+            <div className="upload-image-element mx-auto my-2 border border-primary-admin overflow-hidden">
               <img src={createObjectURL} alt="" />
             </div>
             <div className="center gap-4">

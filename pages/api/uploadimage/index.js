@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     } catch (err) {
         return res
             .status(500)
-            .json({ status: "failed", message: "Error to connecting to db!" });
+            .json({ status: "failed", message: "error to connecting to db!" });
     }
     const session = await getSession({ req })
     if (!session || session.user.name !== "admin") {

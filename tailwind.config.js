@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: ['class'],
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -11,11 +12,11 @@ module.exports = {
     extend: {
       colors: {
         "admin-content": "#a5b1c2",
-        primary: "#0000FF",
-        error: "#e74c3c",
-        gray : "#7EC8E3",
-        white : "#050A30",
-        'whiteone' : "#fff"
+        'primary-admin': "#0000FF",
+        'error': "#e74c3c",
+        'secondary-admin': "#7EC8E3",
+        'bg-admin': "#050A30",
+        'whiteone': "#fff"
       }
     },
   },
