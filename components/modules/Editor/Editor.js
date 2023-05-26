@@ -82,7 +82,7 @@ const Editor = ({ desHandler , value }) => {
   return (
     <>
       <Modal show={showModal} setShow={setShowModal} >
-        <div className="text-whiteone py-2 text-center text-xl font-bold" >
+        <div className="text-whiteone dark:text-whtieone py-2 text-center text-xl font-bold" >
           <p>آیا میخواهید این عکس را به مقاله اضافه کنید ؟؟</p>
         </div>
         <div className="rounded-lg overflow-hidden  w-6/12 mx-auto">

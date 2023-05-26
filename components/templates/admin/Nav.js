@@ -9,17 +9,20 @@ function Nav() {
   const [darkMode, setDarkMode] = useState("")
 
 
+  const setDarkModeFunc = () => {
+    setDarkMode(ls?.theme)
+    document.documentElement.className = ls?.theme
+  }
+
 
 
   useEffect(() => {
-    setDarkMode(ls?.theme)
-  }, [darkMode])
+    setDarkModeFunc()
+  }, [])
 
 
 
   const darkModeHandler = () => {
-
-
     if (ls?.theme === "dark") {
       ls?.setItem("theme", "light")
       setDarkMode("light")
@@ -34,8 +37,8 @@ function Nav() {
   }
 
 
-  const inactiveLink = `w-full flex  py-1 border-secondary-admin items-center text-whiteone  bg-secondary-admin rounded-lg my-2 px-2`;
-  const activeLink = ` flex  py-1 border-secondary-admin items-center text-whiteone   bg-primary-admin rounded-lg my-2 px-2`;
+  const inactiveLink = `w-full flex  py-1 border-secondary-admin dark:border-dark-secondary-admin items-center text-whiteone dark:text-dark-whiteone bg-bg-admin dark:bg-dark-bg-admin rounded-lg my-2 px-2`;
+  const activeLink = ` flex  py-1 border-secondary-admin dark:border-dark-secondary-admin items-center text-whiteone dark:text-dark-whiteone dark:bg-dark-secondary-admin  bg-secondary-admin rounded-lg my-2 px-2`;
 
   const router = useRouter()
   const { pathname } = router
@@ -49,7 +52,7 @@ function Nav() {
 
   return (
     <aside>
-      <div className="logo text-whiteone">
+      <div className="logo text-whiteone dark:text-dark-whiteone ">
         <Link href={"/admin/"}>پنل ادمین فروشگاه</Link>
       </div>
 

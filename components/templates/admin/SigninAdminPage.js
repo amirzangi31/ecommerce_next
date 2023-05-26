@@ -29,7 +29,7 @@ function SigninAdminPage() {
         password: form.password,
         redirect: false
       })
-
+      console.log(res)
       if (res.status === 200) {
         router.replace("/admin")
       } else {

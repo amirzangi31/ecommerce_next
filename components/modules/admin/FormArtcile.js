@@ -109,8 +109,8 @@ function FormArtcile({ author, article, edited }) {
     <div className="form-admin">
       {article?.createdAt &&
         <div className="flex justify-between items-center my-2">
-          <div><span className="text-primary-admin">ساخته شده در تاریخ : </span><span className="text-whiteone font-bold">{convertToPersain(article?.createdAt)}</span></div>
-          <div><span className="text-primary-admin">بروزرسانی شده در تاریخ : </span><span className="text-whiteone font-bold">{convertToPersain(article?.updatedAt)}</span></div>
+          <div><span className="text-primary-admin dark:text-dark-primary-admin">ساخته شده در تاریخ : </span><span className="text-whiteone dark:text-dark-whiteone font-bold">{convertToPersain(article?.createdAt)}</span></div>
+          <div><span className="text-primary-admin dark:text-dark-primary-admin">بروزرسانی شده در تاریخ : </span><span className="text-whiteone dark:text-dark-whiteone font-bold">{convertToPersain(article?.updatedAt)}</span></div>
         </div>}
       {confirmUpload ? (
         <div className="confirm-upload">

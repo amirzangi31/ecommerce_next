@@ -33,7 +33,7 @@ function TableCategoryAdmin({ categories, swal, editedCategory }) {
     return (
         <table>
             <thead>
-                <tr className="text-bg-admin">
+                <tr className="text-bg-admin dark:text-dark-bg-admin">
                     <th></th>
                     <th>نام دسته بندی</th>
                     <th>والد</th>
@@ -43,10 +43,10 @@ function TableCategoryAdmin({ categories, swal, editedCategory }) {
             <tbody>
                 {categories.map((item, index) => (
                     <tr key={item._id}>
-                        <td className=" border-secondary-admin">{index + 1}</td>
-                        <td className="border-secondary-admin">{item.name}</td>
-                        <td className=" border-secondary-admin">{item.parent ? item.parent?.name: "-----"}</td>
-                        <td className=" border-secondary-admin">
+                        <td className=" border-secondary-admin dark:border-secondary-admin">{index + 1}</td>
+                        <td className="border-secondary-admin dark:border-secondary-admin">{item.name}</td>
+                        <td className=" border-secondary-admin dark:border-secondary-admin">{item.parent ? item.parent?.name: "-----"}</td>
+                        <td className=" border-secondary-admin dark:border-secondary-admin">
                             <div className="flex justify-center items-center gap-2">
                                 <Button className="btn-primary" handler={() => editedCategory(item)}>ویرایش</Button>
                                 <Button className="btn-error" handler={() => deleteHandler(item)}>حذف</Button>

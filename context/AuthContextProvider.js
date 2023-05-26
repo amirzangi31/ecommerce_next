@@ -21,6 +21,7 @@ function AuthContextProvider({ children }) {
             loading: true
         })
         const res = await fetch(`${baseurl}api/user`)
+
         const data = await res.json()
 
         if (data.status === "success") {
@@ -29,7 +30,7 @@ function AuthContextProvider({ children }) {
                 user: data.user,
                 error: ""
             })
-        } else if (data.status === "faild") {
+        } else if (data.status === "failed") {
             setUserInfo({
                 loading: false,
                 user: {},

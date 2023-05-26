@@ -38,6 +38,7 @@ input,
 textarea,
 select {
   @apply bg-secondary-admin text-whiteone;
+  @apply dark:bg-dark-secondary-admin text-dark-whiteone;
 }
 input:focus,
 textarea:focus {
@@ -58,15 +59,19 @@ hr {
 
 .btn-primary {
   @apply bg-primary-admin text-whiteone btn;
+  @apply dark:bg-dark-primary-admin dark:text-dark-whiteone;
 }
 .btn-error {
   @apply bg-error text-whiteone btn;
+  @apply dark:text-dark-whiteone;
 }
 .btn-circle {
   @apply w-12 h-12 bg-primary-admin text-whiteone rounded-full center absolute bottom-4 right-4;
+  @apply dark:bg-dark-primary-admin dark:text-dark-whiteone;
 }
 .btn-secondary {
   @apply btn text-whiteone bg-secondary-admin;
+  @apply dark:bg-dark-secondary-admin dark:text-dark-whiteone;
 }
 
 .Toastify__toast-body {
@@ -86,10 +91,11 @@ hr {
 }
 .close-modal {
   @apply w-12 h-12 rounded-full text-whiteone cursor-pointer absolute top-3 right-2 center;
+  @apply dark:text-dark-whiteone;
   @apply border-2 border-whiteone;
 }
 .modal .modal-content {
-  @apply w-full md:w-8/12 lg:md:w-6/12 ;
+  @apply w-full md:w-8/12 lg:md:w-6/12;
   min-height: 30vh;
 }
 .modal.modal.active .modal-content {
@@ -110,6 +116,8 @@ hr {
 /* Handle */
 .modal::-webkit-scrollbar-thumb {
   @apply bg-primary-admin  rounded-lg;
+  @apply dark:bg-dark-primary-admin;
+
 }
 
 @keyframes showContentModal {

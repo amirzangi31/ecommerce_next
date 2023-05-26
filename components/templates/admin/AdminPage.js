@@ -7,11 +7,13 @@ function AdminPage() {
 
     const { userInfo: { loading, user, error } } = useContext(AuthContext)
 
+
+
     return (
 
         <LayoutAdmin title="پنل ادمین">
             {
-                loading ?<Loader />  :
+                loading ? <Loader />  :
                     <div className='center h-full'>
                         <h2>
                             سلام {user?.email} خوش امدید👋

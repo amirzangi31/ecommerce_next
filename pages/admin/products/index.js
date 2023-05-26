@@ -1,5 +1,6 @@
 import ProductsadminPage from '@/components/templates/admin/ProductsadminPage'
 import Product from '@/models/Product';
+import connectDB from '@/utils/connectDB';
 import React from 'react'
 
 function ProductsAdmin({ products }) {
@@ -15,6 +16,7 @@ export default ProductsAdmin;
 
 
 export async function getServerSideProps() {
+  await connectDB();
   const products = await Product.find()
 
   return {

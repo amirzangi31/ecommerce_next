@@ -51,9 +51,9 @@ function FormProduct({
 
       let pAll = filterCategories[0].parent
         ? [
-            ...filterCategories[0].parent.properties,
-            ...filterCategories[0].properties,
-          ]
+          ...filterCategories[0].parent.properties,
+          ...filterCategories[0].properties,
+        ]
         : [...filterCategories[0].properties];
 
       setForm({
@@ -167,11 +167,11 @@ function FormProduct({
 
   return (
     <div className="form-admin">
-      {createdAt && 
-      <div className="flex justify-between items-center my-2">
-          <div><span className="text-primary-admin">ساخته شده در تاریخ : </span><span className="text-whiteone font-bold">{convertToPersain(createdAt)}</span></div>
-          <div><span className="text-primary-admin">بروزرسانی شده در تاریخ : </span><span className="text-whiteone font-bold">{convertToPersain(updatedAt)}</span></div>
-      </div>}
+      {createdAt &&
+        <div className="flex justify-between items-center my-2">
+          <div><span className="text-primary-admin dark:text-dark-primary-admin">ساخته شده در تاریخ : </span><span className="text-whiteone dark:text-dark-whiteone font-bold">{convertToPersain(createdAt)}</span></div>
+          <div><span className="text-primary-admin dark:text-dark-primary-admin">بروزرسانی شده در تاریخ : </span><span className="text-whiteone dark:text-dark-whiteone font-bold">{convertToPersain(updatedAt)}</span></div>
+        </div>}
       <div className="input-content">
         <div className="input-content__group">
           <label>نام محصول</label>
@@ -299,7 +299,7 @@ function FormProduct({
                         className="w-full"
                       />
                       <BsFillTrashFill
-                      className="border-secondary-admin"
+                        className="border-secondary-admin dark:border-dark-secondary-admin"
                         onClick={() => deleteImageHandler(index, item.name)}
                       />
                     </div>
@@ -307,7 +307,7 @@ function FormProduct({
                 </ReactSortable>
               </div>
             ) : (
-              <div className="text-primary-admin font-bold">
+              <div className="text-primary-admin dark:text-primary-admin font-bold">
                 هیچ عکسی برای این محصول بارگذاری نکرده اید
               </div>
             )}

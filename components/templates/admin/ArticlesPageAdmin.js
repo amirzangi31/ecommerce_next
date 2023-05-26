@@ -35,20 +35,20 @@ function ArticlesPageAdmin({ articles, swal }) {
     <LayoutAdmin title="مقالات">
       <table>
         <thead>
-          <tr>
-            <th></th>
-            <th>مقاله </th>
-            <th>توضیحات </th>
-            <th> </th>
+          <tr className="text-bg-admin dark:text-dark-bg-admin">
+            <th ></th>
+            <th >مقاله </th>
+            <th >توضیحات </th>
+            <th > </th>
           </tr>
         </thead>
         <tbody>
           {articles.map((item, index) => (
 
-            <tr key={item._id} className="border-secondary-admin">
-              <td>{index + 1}</td>
-              <td>{shortText(item.title, 20)}{item.title.length > 20 && "..."}</td>
-              <td>{shortText(item.shortdes, 60)}{item.shortdes.length > 60 && "..."}</td>
+            <tr key={item._id} className="border-secondary-admin dark:border-dark-secondary-admin">
+              <td >{index + 1}</td>
+              <td >{shortText(item.title, 20)}{item.title.length > 20 && "..."}</td>
+              <td >{shortText(item.shortdes, 60)}{item.shortdes.length > 60 && "..."}</td>
 
               <td className="flex justify-center items-center gap-4">
                 <Link href={`/admin/articles/${item._id}`}><Button className="btn-primary">ویرایش</Button></Link>

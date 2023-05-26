@@ -1,7 +1,6 @@
 .admin-content {
-  @apply bg-admin-content   h-screen;
-  
-
+  @apply bg-admin-content    h-screen;
+  @apply dark:bg-dark-admin-content;
 }
 
 .admin-container {
@@ -22,19 +21,20 @@
 
 /* Handle */
 .admin-container__inner::-webkit-scrollbar-thumb {
-  @apply bg-primary-admin  rounded-lg;  
+  @apply bg-primary-admin  rounded-lg;
+  @apply dark:bg-dark-primary-admin;
 }
-
-
 
 .admin-container__inner h2 {
   @apply text-2xl font-bold text-center text-whiteone;
+  @apply dark:text-dark-whiteone dark:text-dark-whiteone;
 }
 .admin-container__inner table {
-  @apply w-full ;
+  @apply w-full;
 }
-.admin-container__inner thead  th{
-  @apply bg-secondary-admin py-2 border border-primary-admin ;
+.admin-container__inner thead th {
+  @apply bg-secondary-admin py-2 border border-primary-admin;
+  @apply dark:bg-dark-secondary-admin;
 }
 .admin-container__inner thead {
   @apply border-b border-primary-admin;
@@ -44,32 +44,39 @@
 }
 .admin-container__inner td {
   @apply py-2 text-center border-l border-primary-admin border-b text-whiteone;
+  @apply dark:text-dark-whiteone;
 }
 
 aside {
-  @apply w-60 bg-bg-admin h-[calc(100vh-32px)] my-4 rounded-tl-2xl rounded-bl-2xl fixed px-2;
+  @apply w-60 bg-bg-admin  h-[calc(100vh-32px)] my-4 rounded-tl-2xl rounded-bl-2xl fixed px-2;
+  @apply dark:bg-dark-bg-admin;
 }
 
 .logo {
   @apply py-4 text-center text-lg text-primary-admin font-bold;
+  @apply dark:text-dark-primary-admin text-dark-primary-admin;
 }
 
 /*-----------------Sign in-------------------*/
 
 .sign-content-admin {
   @apply h-screen  flex justify-center items-center bg-admin-content px-4;
+  @apply dark:bg-dark-bg-admin;
 }
 .sign-content-admin form {
   @apply flex flex-col p-4 rounded-xl bg-bg-admin w-80 max-w-full shadow-xl;
+  @apply dark:bg-dark-bg-admin;
 }
 .sign-content-admin h2 {
   @apply text-lg text-center text-primary-admin;
+  @apply dark:text-dark-primary-admin;
 }
 .sign-content-admin form div {
   @apply flex flex-col my-2;
 }
 .sign-content-admin form input {
   @apply bg-bg-admin border border-primary-admin my-2 rounded-lg p-1 text-primary-admin;
+  @apply dark:bg-dark-bg-admin  dark:border-dark-primary-admin dark:text-dark-primary-admin;
 }
 .sign-content-admin form input:focus {
   @apply outline-none;
@@ -77,6 +84,8 @@ aside {
 
 .sign-content-admin form label {
   @apply font-bold  text-primary-admin;
+  @apply dark:text-dark-primary-admin;
+
   font-size: 0.9rem;
 }
 
@@ -99,19 +108,23 @@ aside {
 .form-admin textarea,
 .form-admin select {
   @apply w-full border border-primary-admin p-1 rounded-lg my-1;
+  @apply dark:border-dark-primary-admin;
 }
 
 .form-admin .input-secondary {
-  @apply w-full border border-secondary-admin  border-secondary-admin  p-1 rounded-lg my-1 ;
-
+  @apply w-full border border-secondary-admin    p-1 rounded-lg my-1;
+  @apply dark:border-dark-secondary-admin;
 }
-
 
 .form-admin label {
   @apply text-primary-admin text-sm font-bold;
+  @apply dark:text-dark-primary-admin;
+
 }
 .form-admin .label-secondary {
   @apply text-bg-admin text-sm font-bold;
+  @apply dark:text-dark-bg-admin;
+
 }
 
 /*-----------------form admin-------------------*/
@@ -119,11 +132,13 @@ aside {
 /*-----------------upload image productform-------------------*/
 .upload-image-element {
   @apply w-24 h-24   bg-secondary-admin flex justify-center items-center flex-col-reverse;
+  @apply dark:bg-dark-secondary-admin dark:border-dark-secondary-admin;
   @apply border-secondary-admin rounded-lg font-normal cursor-pointer;
 }
 
 .confirm-upload {
   @apply text-primary-admin my-2;
+  @apply dark:text-dark-primary-admin;
 }
 
 .delete-image {

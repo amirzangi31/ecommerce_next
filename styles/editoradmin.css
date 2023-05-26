@@ -1,6 +1,7 @@
 /*------------editor style--------------*/
 .editor {
-  @apply border border-primary-admin rounded-md w-full overflow-hidden mb-6 bg-bg-admin;
+  @apply border border-primary-admin rounded-md w-full overflow-hidden mb-6 bg-secondary-admin;
+  @apply dark:bg-dark-secondary-admin dark:border-dark-primary-admin;
   min-height: 200px;
 }
 
@@ -9,12 +10,15 @@
 }
 .btn-editor-color {
   @apply bg-bg-admin w-12 rounded-lg border border-secondary-admin flex justify-center items-center px-1;
+
+  @apply dark:bg-dark-bg-admin dark:border-dark-secondary-admin;
 }
 .btn-editor-color input {
   @apply border-none p-0 m-0 w-12 bg-transparent cursor-pointer;
 }
 .btn-editor {
   @apply px-2 text-whiteone;
+  @apply dark:text-dark-whiteone;
 }
 
 .btns-editor button,
@@ -24,10 +28,12 @@
 
 .btns-editor button.active {
   @apply opacity-100 border  py-2 rounded-lg border-secondary-admin bg-primary-admin text-whiteone;
+  @apply dark:bg-dark-primary-admin dark:text-dark-whiteone dark:border-dark-secondary-admin;
 }
 
 .ProseMirror {
   @apply p-4 border-none outline-none text-whiteone;
+  @apply dark:text-dark-whiteone;
 }
 
 .ProseMirror > * + * {
@@ -84,7 +90,8 @@
 }
 
 .ProseMirror code {
-  @apply  border-secondary-admin py-1 px-3 rounded-lg;
+  @apply border-secondary-admin py-1 px-3 rounded-lg;
+  @apply dark:border-dark-secondary-admin;
   box-sizing: border-box;
   /* background-color: #a58181; */
   background: #0d0d0d;
