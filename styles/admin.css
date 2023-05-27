@@ -4,7 +4,7 @@
 }
 
 .admin-container {
-  @apply pr-64 py-4 pl-4  h-screen;
+  @apply lg:pr-64 pr-4  py-4 pl-4  h-screen;
 }
 .admin-container__inner {
   @apply h-full p-2 relative overflow-y-scroll;
@@ -49,6 +49,7 @@
 
 aside {
   @apply w-60 bg-bg-admin  h-[calc(100vh-32px)] my-4 rounded-tl-2xl rounded-bl-2xl fixed px-2;
+  @apply hidden lg:block;
   @apply dark:bg-dark-bg-admin;
 }
 

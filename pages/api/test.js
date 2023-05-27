@@ -20,7 +20,7 @@ const handler = async (req, res) => {
         role: "admin",
         name: "admin_1"
     }
-    console.log(userData)
+
 
     const user = await User.create({ ...userData })
 

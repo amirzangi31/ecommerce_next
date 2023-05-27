@@ -14,7 +14,7 @@ const handler = async (req, res) => {
     }
 
     const session = await getSession({ req })
-    console.log(session)
+
     if (!session) {
         return res.status(401).json({ status: "failed", message: "You are not logged in" })
     }
@@ -24,7 +24,6 @@ const handler = async (req, res) => {
     
     const { name, email, profileimage, orders, createdAt, updatedAt, address, phone , _id } = user
 
-    console.log(await User.find())
 
 
     if (req.method === "GET") {

@@ -1,6 +1,7 @@
 import EditArticleAdmin from '@/components/templates/admin/EditArticleAdmin';
 import Article from '@/models/Article';
 import User from '@/models/User';
+import connectDB from '@/utils/connectDB';
 import { getSession } from 'next-auth/react';
 import React from 'react'
 
@@ -15,6 +16,8 @@ export default EditArticle;
 
 
 export async function getServerSideProps({ req, query }) {
+    await connectDB()
+
     const session = await getSession({ req })
     const user = await User.findOne({ email: session?.user.email })
 

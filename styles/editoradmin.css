@@ -1,12 +1,30 @@
 /*------------editor style--------------*/
 .editor {
-  @apply border border-primary-admin rounded-md w-full overflow-hidden mb-6 bg-secondary-admin;
+  @apply border border-primary-admin rounded-md w-full overflow-hidden mb-6 bg-secondary-admin overflow-y-scroll relative;
   @apply dark:bg-dark-secondary-admin dark:border-dark-primary-admin;
   min-height: 200px;
+  max-height: 80vh;
+  direction: ltr;
+}
+.editor::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Track */
+.editor::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+.editor::-webkit-scrollbar-thumb {
+  @apply bg-whiteone  rounded-lg;
+  @apply dark:bg-dark-whiteone;
 }
 
 .btns-editor {
-  @apply flex justify-between items-center flex-wrap border-b border-primary-admin;
+  @apply  border-b border-primary-admin sticky top-0 left-0 bg-secondary-admin;
+  @apply flex justify-between items-center z-40  flex-wrap;
+  @apply dark:bg-dark-secondary-admin;
 }
 .btn-editor-color {
   @apply bg-bg-admin w-12 rounded-lg border border-secondary-admin flex justify-center items-center px-1;

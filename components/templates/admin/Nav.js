@@ -18,6 +18,7 @@ function Nav() {
 
   useEffect(() => {
     setDarkModeFunc()
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -59,7 +60,7 @@ function Nav() {
       <nav>
         <ul>
           <li>
-            <button onClick={darkModeHandler} className={`w-full flex justify-center items-center ${darkMode === "light" ? activeLink : inactiveLink}`}>
+            <button onClick={darkModeHandler} className={`w-full flex justify-center items-center  border bg-secondary-admin dark:bg-dark-secondary-admin  rounded-lg text-primary-admin dark:text-dark-primary-admin py-1 `}>
               {
                 ls?.theme === "dark" && darkMode === "dark" ? <div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

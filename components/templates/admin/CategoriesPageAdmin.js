@@ -54,7 +54,7 @@ function CategoriesPageAdmin({ categories }) {
     } else {
       // updated
       const res = await axios.patch(`/api/categories/${categoryId}`, data);
-      console.log(res);
+
       if (res.data.status === "success") {
         Toastify("success", "دسته بندی با موفقیت ویرایش شد");
         setForm({

@@ -142,11 +142,12 @@ function MenuBarEditor({ editor, changeImageHandler, loading }) {
         }
       </div>
       <div>
+
         <button
-          onClick={() => editor.chain().focus().setTextAlign("right").run()}
-          className={editor.isActive({ textAlign: "right" }) ? "active" : ""}
+          onClick={() => editor.chain().focus().setTextAlign("left").run()}
+          className={editor.isActive({ textAlign: "left" }) ? "active" : ""}
         >
-          <GrTextAlignRight />
+          <GrTextAlignLeft />
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("center").run()}
@@ -155,10 +156,10 @@ function MenuBarEditor({ editor, changeImageHandler, loading }) {
           <GrTextAlignCenter />
         </button>
         <button
-          onClick={() => editor.chain().focus().setTextAlign("left").run()}
-          className={editor.isActive({ textAlign: "left" }) ? "active" : ""}
+          onClick={() => editor.chain().focus().setTextAlign("right").run()}
+          className={editor.isActive({ textAlign: "right" }) ? "active" : ""}
         >
-          <GrTextAlignLeft />
+          <GrTextAlignRight />
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("justify").run()}
@@ -168,11 +169,11 @@ function MenuBarEditor({ editor, changeImageHandler, loading }) {
         </button>
       </div>
       <div>
-        <button onClick={() => editor.chain().focus().redo().run()}>
-          <FaRedo />
-        </button>
         <button onClick={() => editor.chain().focus().undo().run()}>
           <FaUndo />
+        </button>
+        <button onClick={() => editor.chain().focus().redo().run()}>
+          <FaRedo />
         </button>
       </div>
     </div>
