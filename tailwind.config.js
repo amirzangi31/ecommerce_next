@@ -11,6 +11,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+
+        "bg-body": "#141a2a",
+        bg: {
+          primary: "#1649ff",
+          secondary: "#a6acb8"
+        },
+        text: {
+          primary: "#fff",
+          secondary: "#7a8090"
+        },
+
+
         "admin-content": "#FBE7C6",
         'primary-admin': "#A0E7E5",
         'error': "#FA26A0",

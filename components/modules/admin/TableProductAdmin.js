@@ -51,8 +51,8 @@ function TableProductAdmin({ products , swal}) {
             <td className="border-secondary-admin dark:border-dark-secondary-admin">{item.description.length > 50 && "..."}{shortText(item.description, 50)}</td>
             <td   className=" border-secondary-admin dark:border-dark-secondary-admin">
               <div className="flex justify-center items-center gap-2">
-                <Link href={`/admin/products/${item._id}`}><Button className="btn-primary">ویرایش</Button></Link>
-                <Button className="btn-error" handler={() => deleteHandler(item)}>حذف</Button>
+                <Link href={`/admin/products/${item._id}`}><Button className="btn-primary-admin">ویرایش</Button></Link>
+                <Button className="btn-error-admin" handler={() => deleteHandler(item)}>حذف</Button>
               </div>
             </td>
           </tr>

@@ -1,8 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 @import "./admin.css";
 @import "./editoradmin.css";
+@import "./header.css";
+@import "./home/home.css";
+@import "./components.css";
 
 @font-face {
   font-family: "Vazir";
@@ -31,6 +36,8 @@
 }
 
 body {
+  @apply bg-bg-body text-text-secondary w-screen mx-auto overflow-x-hidden;
+  
   font-family: "Vazir", sans-serif;
 }
 
@@ -49,30 +56,68 @@ hr {
   @apply border-primary-admin;
 }
 
+
 .center {
   @apply flex justify-center items-center;
 }
 
-.btn {
+
+
+/*------------btns--------------*/
+.btn-base-admin {
   @apply rounded-lg px-4 py-1 center;
 }
 
-.btn-primary {
-  @apply bg-primary-admin text-whiteone btn;
+.btn-primary-admin {
+  @apply bg-primary-admin text-whiteone btn-base-admin;
   @apply dark:bg-dark-primary-admin dark:text-dark-whiteone;
 }
-.btn-error {
-  @apply bg-error text-whiteone btn;
+.btn-error-admin {
+  @apply bg-error text-whiteone btn-base-admin;
   @apply dark:text-dark-whiteone;
 }
-.btn-circle {
+.btn-circle-admin {
   @apply w-12 h-12 bg-primary-admin text-whiteone rounded-full center absolute bottom-4 right-4;
   @apply dark:bg-dark-primary-admin dark:text-dark-whiteone;
 }
-.btn-secondary {
-  @apply btn text-whiteone bg-secondary-admin;
+.btn-secondary-admin {
+  @apply btn-base-admin text-whiteone bg-secondary-admin;
   @apply dark:bg-dark-secondary-admin dark:text-dark-whiteone;
 }
+
+.btn {
+    @apply  text-text-primary rounded-lg transition-all duration-500; 
+    
+}
+.btn-lg {
+    @apply  px-10 py-5 btn;
+}
+.btn-md {
+    @apply  px-7 py-3 btn;
+}
+.btn-sm {
+    @apply  px-4 py-1 btn;
+}
+
+.btn-primary{
+  @apply bg-bg-primary;
+  @apply hover:bg-bg-secondary ;
+}
+
+.btn-secondary{
+  @apply bg-bg-secondary;
+  @apply hover:bg-bg-primary ;
+}
+
+
+
+
+
+
+
+
+/*------------btns--------------*/
+
 
 .Toastify__toast-body {
   @apply text-sm;

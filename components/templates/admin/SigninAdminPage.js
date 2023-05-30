@@ -61,7 +61,7 @@ function SigninAdminPage() {
             value={form.password}
           />
         </div>
-        <Button handler={submitHandler} className="btn-primary">
+        <Button handler={submitHandler} className="btn-primary-admin">
           ورود
         </Button>
       </form>

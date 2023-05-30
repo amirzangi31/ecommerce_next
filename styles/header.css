@@ -1,0 +1,87 @@
+header {
+  @apply w-full  fixed  z-40;
+}
+
+header .logo-header {
+  @apply text-xl text-text-primary;
+}
+
+header nav {
+  @apply fixed top-0 left-0 w-full h-screen z-40 flex justify-center items-center;
+  @apply lg:flex  lg:flex-1 lg:h-auto lg:w-auto  lg:relative;
+}
+header nav::after {
+  content: "";
+  @apply block lg:hidden absolute top-0 left-0 w-full h-full backdrop-blur-xl;
+  z-index: -1;
+}
+
+header nav ul {
+  @apply flex justify-center items-center flex-col lg:flex-row gap-4;
+}
+
+header nav li {
+  @apply flex justify-center items-center gap-2  text-text-primary transition-all duration-500;
+  @apply hover:text-text-secondary;
+}
+
+header nav li:hover .drop-down-nav {
+  @apply flex;
+}
+
+header nav li .drop-down-nav {
+  @apply absolute top-[calc(100%+0px)]  w-full right-0 py-4;
+  @apply hidden;
+}
+header nav li .drop-down-nav .drop-down-nav__inner {
+  @apply border border-white bg-bg-body w-full p-2 rounded-lg text-white;
+  @apply grid grid-cols-4 gap-2;
+  animation: fadeIn 800ms ease-in both;
+  -webkit-animation: fadeIn 800ms ease-in both;
+}
+
+header nav li .drop-down-nav .drop-down-nav__inner .drop-down-nav__link {
+  @apply transition-all duration-500 text-sm  text-center;
+  @apply hover:text-text-secondary;
+  animation: fadeInOne 300ms ease-in-out 800ms both;
+  -webkit-animation: fadeInOne 300ms ease-in-out 800ms both;
+}
+
+header .header-buttons {
+  @apply hidden  lg:flex justify-between items-center gap-2;
+}
+
+header .hamburger-icon {
+  @apply text-text-primary lg:hidden;
+}
+
+
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+  }
+}
+
+@keyframes fadeInOne {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

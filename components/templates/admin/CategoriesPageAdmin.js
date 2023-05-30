@@ -191,10 +191,10 @@ function CategoriesPageAdmin({ categories }) {
               <img src={createObjectURL} alt="" />
             </div>
             <div className="center gap-4">
-              <Button handler={cancelHandler} className="btn-error">
+              <Button handler={cancelHandler} className="btn-error-admin">
                 خیر
               </Button>
-              <Button handler={uploadImage} className="btn-primary">
+              <Button handler={uploadImage} className="btn-primary-admin">
                 بله
               </Button>
             </div>
@@ -264,7 +264,7 @@ function CategoriesPageAdmin({ categories }) {
 
         <div className="input-content my-2">
           <div className="input-content__group">
-            <Button className="btn-secondary" handler={addProperty}>
+            <Button className="btn-secondary-admin" handler={addProperty}>
               اضافه کردن ویژگی
             </Button>
           </div>
@@ -295,7 +295,7 @@ function CategoriesPageAdmin({ categories }) {
             </div>
             <div className="flex justify-center items-end h-full mt-auto">
               <Button
-                className="btn-error my-1"
+                className="btn-error-admin my-1"
                 handler={() => deleteProperty(index)}
               >
                 ×
@@ -306,11 +306,11 @@ function CategoriesPageAdmin({ categories }) {
 
         <div className="flex justify-end items-center gap-4">
           {edited && (
-            <Button className="btn-error" handler={closeEdited}>
+            <Button className="btn-error-admin" handler={closeEdited}>
               انصراف
             </Button>
           )}
-          <Button className="btn-primary" handler={addCategory}>
+          <Button className="btn-primary-admin" handler={addCategory}>
             {edited ? "ویرایش" : "افزودن دسته بندی"}
           </Button>
         </div>

@@ -89,8 +89,8 @@ const Editor = ({ desHandler , value }) => {
           {imageUrl && <ImageModalEditor imageUrl={imageUrl} alt={imageUrl} className="w-full" />}
         </div>
         <div className="flex justify-center items-center gap-2 py-2">
-          <Button className="btn-error" handler={closeModal}>خیر</Button>
-          <Button className="btn-primary" handler={showImageEditor} >بله</Button>
+          <Button className="btn-error-admin" handler={closeModal}>خیر</Button>
+          <Button className="btn-primary-admin" handler={showImageEditor} >بله</Button>
         </div>
       </Modal>
       <MenuBarEditor editor={editor} loading={loadingUpload} changeImageHandler={changeImageHandler} />

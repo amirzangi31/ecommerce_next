@@ -51,8 +51,8 @@ function ArticlesPageAdmin({ articles, swal }) {
               <td >{shortText(item.shortdes, 60)}{item.shortdes.length > 60 && "..."}</td>
 
               <td className="flex justify-center items-center gap-4">
-                <Link href={`/admin/articles/${item._id}`}><Button className="btn-primary">ویرایش</Button></Link>
-                <Button className="btn-error" handler={() => deleteHandler(item)}>حذف</Button>
+                <Link href={`/admin/articles/${item._id}`}><Button className="btn-primary-admin">ویرایش</Button></Link>
+                <Button className="btn-error-admin" handler={() => deleteHandler(item)}>حذف</Button>
               </td>
             </tr>
           ))}
@@ -60,7 +60,7 @@ function ArticlesPageAdmin({ articles, swal }) {
       </table>
       <Link href={'/admin/articles/addarticle'}>
 
-        <Button className="btn-circle">
+        <Button className="btn-circle-admin">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

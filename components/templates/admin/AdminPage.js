@@ -1,25 +1,24 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import LayoutAdmin from './LayoutAdmin'
-import { AuthContext } from '@/context/AuthContextProvider'
+
 import Loader from '@/components/modules/admin/Loader'
 
-function AdminPage() {
+function AdminPage({ user }) {
 
-    const { userInfo: { loading, user, error } } = useContext(AuthContext)
+
 
 
 
     return (
 
         <LayoutAdmin title="پنل ادمین">
-            {
-                loading ? <Loader />  :
-                    <div className='center h-full'>
-                        <h2>
-                            سلام {user?.email} خوش امدید👋
-                        </h2>
-                    </div>
-            }
+
+            <div className='center h-[calc(100vh-120px)]'>
+                <h2>
+                    سلام {user} خوش امدید👋
+                </h2>
+            </div>
+
         </LayoutAdmin>
     )
 }

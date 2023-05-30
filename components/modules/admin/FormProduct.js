@@ -69,6 +69,7 @@ function FormProduct({
   };
   useEffect(() => {
     getPropertiesCat();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.category]);
 
   // sortable for images function
@@ -250,10 +251,10 @@ function FormProduct({
             <img src={createObjectURL} alt="" />
           </div>
           <div className="center gap-4">
-            <Button handler={cancelHandler} className="btn-error">
+            <Button handler={cancelHandler} className="btn-error-admin">
               خیر
             </Button>
-            <Button handler={uploadImage} className="btn-primary">
+            <Button handler={uploadImage} className="btn-primary-admin">
               بله
             </Button>
           </div>
@@ -327,7 +328,7 @@ function FormProduct({
       </div>
 
       <div className="flex justify-end items-center ">
-        <Button className="btn-primary w-24" handler={saveHandler}>
+        <Button className="btn-primary-admin w-24" handler={saveHandler}>
           {edit ? "ویرایش" : "افزودن"}
         </Button>
       </div>

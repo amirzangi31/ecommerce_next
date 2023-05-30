@@ -119,10 +119,10 @@ function FormArtcile({ author, article, edited }) {
             <Image src={createObjectURL} alt="adf" width={700} height={500} />
           </div>
           <div className="center gap-4">
-            <Button handler={cancelHandler} className="btn-error">
+            <Button handler={cancelHandler} className="btn-error-admin">
               خیر
             </Button>
-            <Button handler={uploadImage} className="btn-primary">
+            <Button handler={uploadImage} className="btn-primary-admin">
               بله
             </Button>
           </div>
@@ -188,7 +188,7 @@ function FormArtcile({ author, article, edited }) {
 
 
       <div className="flex justify-end items-center">
-        <Button className="btn-primary" handler={addHandler}>
+        <Button className="btn-primary-admin" handler={addHandler}>
           {edited ? "ویرایش" : "افزودن"}
         </Button>
       </div>

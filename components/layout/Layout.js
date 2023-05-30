@@ -1,24 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import { useRouter } from 'next/router'
 
 function Layout({ children }) {
-
+    const [show, setShow] = useState(true)
     const router = useRouter()
     const { pathname } = router;
 
 
-
+    useEffect(() => {
+        if (pathname.includes("/admin") ||pathname.includes("/signinadmin")) {
+            setShow(false)
+        }else {
+            setShow(true)
+        }
+    }, [pathname])
 
 
     return (
         <>
-            {!pathname.includes("/admin") && <Header />}
-            <div>
+            {show && <Header />}
+            <main>
                 {children}
-            </div>
-            {!pathname.includes("/admin") && <Footer />}
+            </main>
+            {/* {show && <Footer />} */}
         </>
     )
 }
