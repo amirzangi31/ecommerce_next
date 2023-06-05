@@ -1,0 +1,13 @@
+.content-request {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 mt-12;
+}
+
+.content-request .card img {
+  animation: fadeInOne 1000ms ease-in-out alternate both;
+  -webkit-animation: fadeInOne 1000ms ease-in-out alternate both;
+}
+.content-request .request-description {
+  @apply flex justify-between items-start flex-col;
+  animation: fadeIntext 1000ms ease-in-out both;
+  -webkit-animation: fadeIntext 1000ms ease-in-out both;
+}

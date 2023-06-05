@@ -13,6 +13,7 @@ import { BsFillTrashFill } from "react-icons/bs";
 // SORTABLE
 import { ReactSortable } from "react-sortablejs";
 import { convertToPersain } from "@/services/jalalimoment";
+import { baseurl } from "@/lib/baseurl";
 
 function FormProduct({
   name,
@@ -40,6 +41,8 @@ function FormProduct({
   const [confirmUpload, setConfirmUpload] = useState(false);
   const [image, setImage] = useState("");
   const [createObjectURL, setCreateObjectURL] = useState("");
+  const [uploadLoading, setUploadLoading] = useState(false)
+
 
   //getall properties and filter propties this product with parent properties
   const getPropertiesCat = async () => {
@@ -69,7 +72,7 @@ function FormProduct({
   };
   useEffect(() => {
     getPropertiesCat();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.category]);
 
   // sortable for images function
@@ -103,17 +106,43 @@ function FormProduct({
 
   //upload image in local
   const uploadImage = async () => {
-    const uploadImage = await uploadImageHandler(image, "/api/uploadimage");
-    if (uploadImage.status === 200) {
+
+    // const uploadImage = await uploadImageHandler(image, "/api/uploadimage");
+    setUploadLoading(true)
+    const formData = new FormData()
+    formData.append("file", image);
+    formData.append("upload_preset", "adminEcommerce");
+
+
+    const res = await fetch('https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload', {
+      method: "POST",
+      body: formData
+    })
+    const data = await res.json()
+
+    // if (uploadImage.status === 200) {
+    //   setForm({
+    //     ...form,
+    //     images: [
+    //       ...form.images,
+    //       { name: image.name, link: `${baseurl}images/products/${image.name}` },
+    //     ],
+    //   });
+    // }
+
+
+    if (data.secure_url) {
       setForm({
         ...form,
         images: [
           ...form.images,
-          { name: image.name, link: `/images/products/${image.name}` },
+          { name: image.name, link: data.secure_url },
         ],
       });
     }
 
+    
+    setUploadLoading(false)
     cancelHandler();
   };
 
@@ -254,6 +283,7 @@ function FormProduct({
             <Button handler={cancelHandler} className="btn-error-admin">
               خیر
             </Button>
+
             <Button handler={uploadImage} className="btn-primary-admin">
               بله
             </Button>
@@ -328,9 +358,12 @@ function FormProduct({
       </div>
 
       <div className="flex justify-end items-center ">
+
+
         <Button className="btn-primary-admin w-24" handler={saveHandler}>
           {edit ? "ویرایش" : "افزودن"}
         </Button>
+
       </div>
     </div>
   );

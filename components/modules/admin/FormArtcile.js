@@ -52,13 +52,25 @@ function FormArtcile({ author, article, edited }) {
 
   //upload image in local
   const uploadImage = async () => {
-    const uploadImage = await uploadImageHandler(image, "/api/uploadimage");
-    if (uploadImage.status === 200) {
+
+    const formData = new FormData()
+    formData.append("file", image);
+    formData.append("upload_preset", "adminEcommerce");
+
+
+    const res = await fetch('https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload', {
+      method: "POST",
+      body: formData
+    })
+    const data = await res.json()
+
+    if (data.secure_url) {
       setForm({
         ...form,
-        image: `/images/products/${image.name}`,
+        image: data.secure_url
       });
     }
+  
 
     cancelHandler();
   };

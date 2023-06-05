@@ -30,10 +30,23 @@ const Editor = ({ desHandler , value }) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
       setLoadingUpload(true)
-      const upload = await uploadImageHandler(i, "/api/uploadimage")
-      if (upload.status === 200) {
+      
+
+      const formData = new FormData()
+      formData.append("file", i);
+      formData.append("upload_preset", "adminEcommerce");
+  
+  
+      const res = await fetch('https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload', {
+        method: "POST",
+        body: formData
+      })
+      const data = await res.json()
+
+
+      if (data.secure_url) {
         setLoadingUpload(false)
-        setImageUrl(`/images/products/${i.name}`);
+        setImageUrl(data.secure_url);
         setImage(i)
         setShowModal(true);
       }
@@ -47,7 +60,7 @@ const Editor = ({ desHandler , value }) => {
         .chain()
         .focus()
         .setImage({
-          src: `${baseurl}images/products/${image.name}`,
+          src: imageUrl,
         })
         .run();
 

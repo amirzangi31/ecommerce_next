@@ -1,5 +1,28 @@
 header {
-  @apply w-full  fixed  z-40;
+  @apply w-full  fixed  z-40 transition-all duration-500;
+}
+
+header.active {
+  @apply py-4 ;
+}
+
+header.active::before {
+  content: "";
+  @apply block  absolute top-[calc(100%+0px)]  left-0 w-full;
+  z-index: -1;
+  height: 1px;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    transparent 10%,
+    rgb(255, 255, 255) 50%,
+    transparent 90%
+  );
+}
+header.active::after {
+  content: "";
+  @apply block  absolute top-0 left-0 w-full h-full backdrop-blur-3xl;
+  z-index: -1;
 }
 
 header .logo-header {
@@ -7,13 +30,21 @@ header .logo-header {
 }
 
 header nav {
-  @apply fixed top-0 left-0 w-full h-screen z-40 flex justify-center items-center;
+  @apply fixed top-full left-0 w-full h-screen z-40 flex justify-center items-center;
   @apply lg:flex  lg:flex-1 lg:h-auto lg:w-auto  lg:relative;
 }
+header nav.active {
+  @apply top-0;
+  @apply animate-[fadeInNav_1s_both] lg:animate-none;
+}
+
 header nav::after {
   content: "";
-  @apply block lg:hidden absolute top-0 left-0 w-full h-full backdrop-blur-xl;
+  @apply hidden lg:hidden absolute top-0 left-0 w-full h-full backdrop-blur-xl;
   z-index: -1;
+}
+header nav.active::after {
+  @apply block;
 }
 
 header nav ul {
@@ -23,6 +54,9 @@ header nav ul {
 header nav li {
   @apply flex justify-center items-center gap-2  text-text-primary transition-all duration-500;
   @apply hover:text-text-secondary;
+}
+header nav li .search {
+  @apply cursor-pointer;
 }
 
 header nav li:hover .drop-down-nav {
@@ -34,7 +68,7 @@ header nav li .drop-down-nav {
   @apply hidden;
 }
 header nav li .drop-down-nav .drop-down-nav__inner {
-  @apply border border-white bg-bg-body w-full p-2 rounded-lg text-white;
+  @apply border border-white bg-bg-body w-full p-2 rounded-lg text-white absolute;
   @apply grid grid-cols-4 gap-2;
   animation: fadeIn 800ms ease-in both;
   -webkit-animation: fadeIn 800ms ease-in both;
@@ -55,33 +89,54 @@ header .hamburger-icon {
   @apply text-text-primary lg:hidden;
 }
 
-
-
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-    -webkit-transform: translateY(-20px);
-    -moz-transform: translateY(-20px);
-    -ms-transform: translateY(-20px);
-    -o-transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0px);
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    -o-transform: translateY(0px);
-  }
+.close-menu-toggle {
+  @apply absolute top-4 right-4 border border-text-primary p-1 rounded-full lg:hidden;
 }
 
-@keyframes fadeInOne {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+/*-------------------------search modal--------------------------*/
+
+.search-modal {
+  @apply fixed top-full left-0 w-full h-screen z-50 ;
 }
+
+.search-modal.active {
+  @apply top-0 ;
+}
+
+.search-modal::after {
+  content: "";
+  @apply block  absolute top-0 left-0 w-full h-full backdrop-blur-xl;
+  z-index: -1;
+}
+.search-modal.active::after {
+  animation: fadeInOne 700ms ease-in-out both;
+  -webkit-animation: fadeInOne 700ms ease-in-out both;
+}
+
+.search-modal .container {
+  @apply flex justify-center items-center flex-col h-full px-2 ;
+}
+.search-modal.active .container {
+  animation: fadeInOne 700ms 700ms ease-in-out alternate both;
+  -webkit-animation: fadeInOne 700ms 700ms ease-in-out alternate both;
+}
+
+.search-modal .container .btn-pish {
+  @apply mt-4;
+}
+
+.search-modal__inner {
+  @apply border w-full md:w-6/12 mx-auto bg-bg-body  rounded-lg p-4 flex justify-between items-center;
+}
+.search-modal__inner button {
+  @apply transition-all duration-500;
+}
+.search-modal__inner:hover button {
+  @apply text-text-primary;
+}
+
+.search-modal .search-modal__inner input {
+  @apply w-full bg-transparent;
+}
+
+/*-------------------------search modal--------------------------*/

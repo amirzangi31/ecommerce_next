@@ -9,13 +9,20 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    container: {
+      screens: {
+       
+        '2xl': '1300px',
+      }
+    },
     extend: {
       colors: {
 
         "bg-body": "#141a2a",
         bg: {
           primary: "#1649ff",
-          secondary: "#a6acb8"
+          secondary: "#a6acb8",
+          three: "#1d263b"
         },
         text: {
           primary: "#fff",
@@ -36,6 +43,12 @@ module.exports = {
           'secondary-admin': "#7EC8E3",
           'bg-admin': "#050A30",
           'whiteone': "#fff",
+        }
+      },
+      keyframes: {
+        fadeInNav: {
+          '0%': { left: "-100%" },
+          '100%': { left: "0%" },
         }
       }
     },

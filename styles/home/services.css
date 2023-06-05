@@ -1,0 +1,15 @@
+.services{
+    @apply mt-24   pb-12;
+}
+
+
+
+.title  {
+    @apply  flex ;
+
+}
+
+.title h2 {
+    @apply text-3xl text-text-primary font-bold;
+
+}

@@ -1,0 +1,28 @@
+.footer{
+    @apply border-t border-text-secondary ;
+}
+
+.footer__content-up {
+    @apply grid   grid-cols-1 md:grid-cols-3 gap-4 py-4;
+}
+
+
+.footer__social-medias {
+    @apply flex justify-start items-center gap-3 my-2;
+}
+.footer__social-medias div {
+    @apply p-1  rounded-md bg-text-secondary transition-all duration-500;
+    @apply hover:bg-bg-primary;
+}
+.footer__social-medias div svg {
+    @apply fill-text-primary;
+}
+
+
+.footer nav ul {
+    @apply flex justify-between md:justify-start items-center flex-wrap md:flex-col gap-4 md:gap-2; 
+}
+.footer nav ul li {
+    @apply hover:text-text-primary text-center transition-all duration-500; 
+
+}

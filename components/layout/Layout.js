@@ -10,9 +10,9 @@ function Layout({ children }) {
 
 
     useEffect(() => {
-        if (pathname.includes("/admin") ||pathname.includes("/signinadmin")) {
+        if (pathname.includes("/admin") || pathname.includes("/signinadmin")) {
             setShow(false)
-        }else {
+        } else {
             setShow(true)
         }
     }, [pathname])
@@ -21,10 +21,10 @@ function Layout({ children }) {
     return (
         <>
             {show && <Header />}
-            <main>
-                {children}
+            <main className='min-h-[calc(100vh-280px)]'>
+                    {children}
             </main>
-            {/* {show && <Footer />} */}
+            {show && <Footer />}
         </>
     )
 }

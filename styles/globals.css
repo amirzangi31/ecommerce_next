@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @import "./admin.css";
+@import "./animation.css";
 @import "./editoradmin.css";
 @import "./header.css";
 @import "./home/home.css";
 @import "./components.css";
+@import "./footer.css";
 
 @font-face {
   font-family: "Vazir";
@@ -36,9 +37,25 @@
 }
 
 body {
-  @apply bg-bg-body text-text-secondary w-screen mx-auto overflow-x-hidden;
+  @apply bg-bg-body text-text-secondary  mx-auto overflow-x-hidden relative;
   
+
   font-family: "Vazir", sans-serif;
+}
+
+/* width */
+body::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+  @apply bg-bg-secondary;
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+  @apply bg-bg-primary rounded-lg;
 }
 
 input,
@@ -56,12 +73,82 @@ hr {
   @apply border-primary-admin;
 }
 
-
 .center {
   @apply flex justify-center items-center;
 }
 
+/*------------card--------------*/
 
+.card {
+  @apply bg-bg-three rounded-xl border border-gray-700;
+}
+
+.card-p {
+  @apply card px-2 py-4 flex justify-between items-center flex-col;
+  height: 350px;
+}
+
+.card-p__image {
+  @apply overflow-hidden rounded-lg;
+  height: 150px;
+}
+.card-p__body {
+  @apply flex justify-between items-center flex-col h-[calc(100%-158px)];
+}
+.card-p__title {
+  @apply text-text-primary my-1 text-center;
+}
+.card-p__des {
+  @apply text-text-secondary my-1 text-center;
+}
+.card-p__price {
+  @apply flex justify-between items-center w-full;
+}
+.card-p__price p {
+  @apply text-text-secondary;
+}
+.card-p__price p span {
+  @apply text-text-primary;
+}
+.card-p__buttons {
+  @apply flex justify-between items-center w-full;
+}
+.card-p__image img {
+  @apply w-full h-full;
+  object-fit: contain;
+}
+
+
+.card-a {
+  @apply card card-p;
+  
+}
+.card-a__body {
+  @apply flex justify-between items-center flex-col h-[calc(100%-158px)];
+}
+.card-a__image {
+  @apply overflow-hidden rounded-lg;
+  height: 150px;
+}
+
+.card-a__image img {
+  @apply w-full h-full;
+  object-fit: contain;
+}
+.card-a__title {
+  @apply text-text-primary my-1 text-center w-full ;
+}
+.card-a__des {
+  @apply text-text-secondary my-1 text-center;
+}
+
+.card-a__buttons {
+  @apply flex justify-between items-center w-full;
+}
+
+
+
+/*------------card--------------*/
 
 /*------------btns--------------*/
 .btn-base-admin {
@@ -86,38 +173,30 @@ hr {
 }
 
 .btn {
-    @apply  text-text-primary rounded-lg transition-all duration-500; 
-    
+  @apply text-text-primary rounded-lg transition-all duration-500;
+  @apply hover:-translate-y-1;
 }
 .btn-lg {
-    @apply  px-10 py-5 btn;
+  @apply px-10 py-5 btn;
 }
 .btn-md {
-    @apply  px-7 py-3 btn;
+  @apply px-7 py-3 btn;
 }
 .btn-sm {
-    @apply  px-4 py-1 btn;
+  @apply px-4 py-1 btn;
 }
 
-.btn-primary{
+.btn-primary {
   @apply bg-bg-primary;
-  @apply hover:bg-bg-secondary ;
+  @apply hover:bg-bg-secondary;
 }
 
-.btn-secondary{
+.btn-secondary {
   @apply bg-bg-secondary;
-  @apply hover:bg-bg-primary ;
+  @apply hover:bg-bg-primary;
 }
-
-
-
-
-
-
-
 
 /*------------btns--------------*/
-
 
 .Toastify__toast-body {
   @apply text-sm;
@@ -126,7 +205,7 @@ hr {
 /*----------------modal------------------*/
 
 .modal {
-  @apply fixed top-1/2 left-1/2  w-0 h-0 overflow-y-scroll overflow-x-hidden px-2 z-40 relative;
+  @apply fixed top-1/2 left-1/2  w-0 h-0 overflow-y-scroll overflow-x-hidden px-2 z-50 ;
   @apply flex justify-center items-center transition-all duration-500;
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -162,16 +241,79 @@ hr {
 .modal::-webkit-scrollbar-thumb {
   @apply bg-primary-admin  rounded-lg;
   @apply dark:bg-dark-primary-admin;
-
-}
-
-@keyframes showContentModal {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 /*----------------modal------------------*/
+
+/*----------------slick slider------------------*/
+
+.product-slider {
+  @apply max-w-full;
+}
+
+.product-slider .slick-next {
+  @apply w-12 h-12;
+  width: 50px;
+  left: 10px !important;
+}
+.product-slider .slick-prev {
+  @apply w-12 h-12;
+  right: 10px !important;
+  z-index: 10;
+}
+.product-slider .slick-next::before,
+.product-slider .slick-prev::before {
+  @apply hidden;
+}
+.product-slider .slick-next::after {
+  content: "";
+  @apply text-white text-3xl w-12 h-12 absolute top-0 left-0;
+  background-image: url("../public/images/icons/arrow_icon.png");
+  background-size: contain;
+  background-position: center;
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+}
+.product-slider .slick-prev::after {
+  content: "";
+  @apply text-white text-3xl w-12 h-12 absolute top-0 left-0;
+  background-image: url("../public/images/icons/arrow_icon.png");
+  background-size: contain;
+  background-position: center;
+}
+
+.slick-dots {
+  /* background-color: red; */
+}
+.slick-dots li button:before {
+  color: #fff !important;
+}
+
+/*----------------slick slider------------------*/
+
+
+
+/*----------------pagination------------------*/
+
+.pagination {
+  @apply flex justify-center items-center gap-2;
+}
+
+.pagination li {
+  @apply bg-transparent px-2 text-text-primary py-1 rounded-lg  ;
+}
+.pagination .selected {
+  @apply bg-bg-primary px-2 text-text-primary py-1 rounded-lg  ;
+}
+
+.pagination .next,
+.pagination .previous {
+  @apply bg-transparent  ;
+}
+
+
+
+/*----------------pagination------------------*/
