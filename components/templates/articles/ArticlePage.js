@@ -1,15 +1,22 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import parse from "html-react-parser";
 import { convertToPersain } from "@/services/jalalimoment";
 import CommentForm from "@/components/modules/CommentForm";
 import CardComment from "@/components/modules/CardComment";
 import { Zoom } from "react-reveal";
+import useSWR from 'swr'
 
-const comments = [{}, {}];
+
 
 function ArticlePage({ article }) {
   const { title, shortdes, description, image, _id, createdAt } = article;
+
+  const [comments, setComments] = useState([])
+
+  const { data, error, isLoading } = useSWR(`/api/comment?parentid=${_id}&parenttype=article`, url => fetch(url).then(res => res.json()))
+  console.log(data, error, isLoading)
+
 
   return (
     <div>
@@ -33,10 +40,10 @@ function ArticlePage({ article }) {
           </div>
         </div>
 
-        <div className="box-title">نظرات</div>
+        {comments.lnegth > 0 && <div className="box-title">نظرات</div>}
         <div className="comment-content">
           {comments.map((item, index) => (
-            <CardComment key={index} />
+            <CardComment key={item._id} {...item} />
           ))}
         </div>
 

@@ -1,12 +1,12 @@
 import React from "react";
 
-function CardComment() {
+function CardComment({ name, comment, answer }) {
   return (
     <div className="card-comment">
       <div className="card-comment__header">
         <div className="flex justify-between items-center">
-          <span className="card-comment__profile">R</span>
-          <span className="card-comment__name">asdf</span>
+          <span className="card-comment__profile">{name.split("").slice(0,1)}</span>
+          <span className="card-comment__name">{name}</span>
         </div>
         <div className="card-comment__date">
           <p>asdf</p>
@@ -15,9 +15,13 @@ function CardComment() {
       <div className="card-comment__body">
         <div className="flex-1">
           <label>کاربر</label>
-          <div className="card-comment__user">لورم ایپسوم متن ساختگی با</div>
-          <label> ادمین</label>
-          <div className="card-comment__admin">لورم ایپسوم متن ساختگی با</div>
+          <div className="card-comment__user">{comment}</div>
+          {answer.trim() !== "" && (
+            <>
+              <label> ادمین</label>
+              <div className="card-comment__admin">{answer}</div>
+            </>
+          )}
         </div>
         <div className="card-comment__like">
           <span>

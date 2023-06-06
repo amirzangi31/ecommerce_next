@@ -194,7 +194,7 @@ hr {
 /*------------btns--------------*/
 
 .Toastify__toast-body {
-  @apply text-sm;
+  @apply text-sm text-center;
 }
 
 /*----------------modal------------------*/

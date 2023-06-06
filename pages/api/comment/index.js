@@ -56,14 +56,21 @@ const handler = async (req, res) => {
         res.status(200).json({ status: "success" })
 
     } else if (method === 'GET') {
+        const { parentid, parenttype } = req.query
 
-        const session = await getSession({ req })
-        if (session?.user.name !== "admin") {
-            return res.status(401).json({ status: "failed ", message: "You are not an admin" })
+        if (parentid && parenttype) {
+            const comments = await Comment.find({ accepted: false, [parenttype]: parentid });
+            return res.status(200).json({ status: "success", data: comments })
+        } else {
+
+            const session = await getSession({ req })
+            if (session?.user.name !== "admin") {
+                return res.status(401).json({ status: "failed ", message: "You are not an admin" })
+            }
+            const comments = await Comment.find()
+            res.status(200).json({ status: "success", data: comments })
         }
 
-        const comments = await Comment.find()
-        res.status(200).json({ status: "success", data: comments })
     }
 }
 
