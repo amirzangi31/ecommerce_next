@@ -4,11 +4,11 @@ import Button from "../modules/Button";
 import SearchComponenets from "./SearchComponenets";
 import { BsCart } from "react-icons/bs";
 
+
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [changeColorNavbar, setChangeColorNavbar] = useState(true);
-
 
   const handleScroll = () => {
     const scrollTop = document.documentElement.scrollTop;
@@ -19,9 +19,12 @@ function Header() {
     }
   };
 
+
+
   useEffect(() => {
     document.addEventListener("scroll", handleScroll);
     return () => document.removeEventListener("scroll", handleScroll);
+
   }, [])
 
 

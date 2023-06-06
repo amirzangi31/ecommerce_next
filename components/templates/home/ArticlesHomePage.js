@@ -7,8 +7,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 
 import { Fade } from 'react-reveal'
+import shortText from "@/services/shortText";
+import CardArticle from "@/components/modules/CardArticle";
 
-function ArticlesHomePage() {
+function ArticlesHomePage({ articles }) {
   const settings = {
     dots: true,
     infinite: true,
@@ -71,117 +73,12 @@ function ArticlesHomePage() {
       <div className="content-products mt-12">
         <Fade top>
           <Slider {...settings} className="product-slider">
+            {
+              articles.map((item) => (
+                <CardArticle key={item._id} {...item} />
+              ))
+            }
 
-            <div className=" p-2">
-              <div className="card-a">
-                <div className="card-a__image">
-                  <Image
-                    src="/images/products/pngimg.com - iphone_14_PNG40.png"
-                    width={700}
-                    height={500}
-                    alt="name"
-                  />
-                </div>
-                <div className="card-a__body">
-                  <div className="card-a__title">iphone 14 pro max</div>
-                  <div className="card-a__des">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                    با استفاده از
-                  </div>
-                  <div className="card-a__buttons w-full">
-                    <button className="btn-sm btn-primary w-full">ادامه مطلب ... </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className=" p-2">
-              <div className="card-a">
-                <div className="card-a__image">
-                  <Image
-                    src="/images/products/pngimg.com - iphone_14_PNG40.png"
-                    width={700}
-                    height={500}
-                    alt="name"
-                  />
-                </div>
-                <div className="card-a__body">
-                  <div className="card-a__title">iphone 14 pro max</div>
-                  <div className="card-a__des">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                    با استفاده از
-                  </div>
-                  <div className="card-a__buttons w-full">
-                    <button className="btn-sm btn-primary w-full">ادامه مطلب ... </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className=" p-2">
-              <div className="card-a">
-                <div className="card-a__image">
-                  <Image
-                    src="/images/products/pngimg.com - iphone_14_PNG40.png"
-                    width={700}
-                    height={500}
-                    alt="name"
-                  />
-                </div>
-                <div className="card-a__body">
-                  <div className="card-a__title">iphone 14 pro max</div>
-                  <div className="card-a__des">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                    با استفاده از
-                  </div>
-                  <div className="card-a__buttons w-full">
-                    <button className="btn-sm btn-primary w-full">ادامه مطلب ... </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className=" p-2">
-              <div className="card-a">
-                <div className="card-a__image">
-                  <Image
-                    src="/images/products/pngimg.com - iphone_14_PNG40.png"
-                    width={700}
-                    height={500}
-                    alt="name"
-                  />
-                </div>
-                <div className="card-a__body">
-                  <div className="card-a__title">iphone 14 pro max</div>
-                  <div className="card-a__des">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                    با استفاده از
-                  </div>
-                  <div className="card-a__buttons w-full">
-                    <button className="btn-sm btn-primary w-full">ادامه مطلب ... </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className=" p-2">
-              <div className="card-a">
-                <div className="card-a__image">
-                  <Image
-                    src="/images/products/pngimg.com - iphone_14_PNG40.png"
-                    width={700}
-                    height={500}
-                    alt="name"
-                  />
-                </div>
-                <div className="card-a__body">
-                  <div className="card-a__title">iphone 14 pro max</div>
-                  <div className="card-a__des">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                    با استفاده از
-                  </div>
-                  <div className="card-a__buttons w-full">
-                    <button className="btn-sm btn-primary w-full">ادامه مطلب ... </button>
-                  </div>
-                </div>
-              </div>
-            </div>
 
           </Slider>
         </Fade>

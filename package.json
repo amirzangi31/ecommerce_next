@@ -25,6 +25,7 @@
     "eslint-config-next": "13.1.6",
     "formidable": "^2.1.1",
     "fs": "^0.0.1-security",
+    "html-react-parser": "^4.0.0",
     "jalali-moment": "^3.3.11",
     "mongoose": "^7.2.0",
     "mv": "^2.1.1",

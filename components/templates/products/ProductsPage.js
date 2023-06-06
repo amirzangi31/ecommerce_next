@@ -1,89 +1,72 @@
 import React, { useState } from "react";
-import Pagination from "./Pagination";
 
 import ReactPaginate from "react-paginate";
-import axios from "axios";
-import { ThreeDots } from "react-loader-spinner";
+
+import CardProduct from "@/components/modules/CardProduct";
+
+
+
+
+
+const Items = ({ currentItems }) => {
+
+  return (
+    <>
+      {currentItems.map((item, index) => (
+        <CardProduct key={item._id} {...item} />
+      ))}
+    </>
+  );
+}
 
 
 
 
 function ProductsPage({ products }) {
 
-  const [productsData, setProductsData] = useState(products)
-  const [loading, setLoading] = useState(false)
+  
+  
 
 
 
+  const [itemOffset, setItemOffset] = useState(0);
+  const endOffset = itemOffset + 8;
+
+  const currentItems = products.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(products.length / 8);
 
 
-  const fetchData = async (e) => {
-    setLoading(true)
-
-    // try {
-
-    //   const res = await axios(`/api/products?page=${page}`)
-    //   console.log(res)
-
-    // } catch (err) {
-    //   console.log(err)
-    // }
-  }
 
   const handlePageClick = async (event) => {
-
-
-
-
+    const newOffset = (event.selected * 8) % products.length;
+    setItemOffset(newOffset);
   }
 
   return (
     <section className="py-12">
       <div className="container mx-auto px-2">
         <h2 className="text-xl text-text-primary py-2 border-b border-text-secondary">محصولات</h2>
-
-
-
-        <div className="content  py-4">
-          {loading && <div className="h-[calc(100vh-400px)] flex justify-center items-center">
-            <ThreeDots
-              height="80"
-              width="80"
-              radius="9"
-              color="#1649ff"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClassName=""
-
-              visible={true}
-            />
-          </div>}
-
-
-
-
-
-
-
-
+        <div className="h-screen">
+          <div className="py-3">
           <ReactPaginate
             breakLabel="..."
-            nextLabel="next >"
-            onClick={fetchData}
+            nextLabel="بعدی >"
             onPageChange={handlePageClick}
             pageRangeDisplayed={3}
-            pageCount={20}
-            previousLabel="< previous"
+            pageCount={pageCount}
+            previousLabel="< قبلی"
             className='pagination'
             initialPage={0}
             renderOnZeroPageCount={null}
           />
-
-
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            <Items currentItems={currentItems} />
+          </div>
         </div>
-
-
       </div>
+
+
     </section>
   );
 }

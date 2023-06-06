@@ -38,7 +38,6 @@
 
 body {
   @apply bg-bg-body text-text-secondary  mx-auto overflow-x-hidden relative;
-  
 
   font-family: "Vazir", sans-serif;
 }
@@ -118,10 +117,8 @@ hr {
   object-fit: contain;
 }
 
-
 .card-a {
   @apply card card-p;
-  
 }
 .card-a__body {
   @apply flex justify-between items-center flex-col h-[calc(100%-158px)];
@@ -136,7 +133,7 @@ hr {
   object-fit: contain;
 }
 .card-a__title {
-  @apply text-text-primary my-1 text-center w-full ;
+  @apply text-text-primary my-1 text-center w-full;
 }
 .card-a__des {
   @apply text-text-secondary my-1 text-center;
@@ -145,8 +142,6 @@ hr {
 .card-a__buttons {
   @apply flex justify-between items-center w-full;
 }
-
-
 
 /*------------card--------------*/
 
@@ -205,7 +200,7 @@ hr {
 /*----------------modal------------------*/
 
 .modal {
-  @apply fixed top-1/2 left-1/2  w-0 h-0 overflow-y-scroll overflow-x-hidden px-2 z-50 ;
+  @apply fixed top-1/2 left-1/2  w-0 h-0 overflow-y-scroll overflow-x-hidden px-2 z-50;
   @apply flex justify-center items-center transition-all duration-500;
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -294,8 +289,6 @@ hr {
 
 /*----------------slick slider------------------*/
 
-
-
 /*----------------pagination------------------*/
 
 .pagination {
@@ -303,17 +296,136 @@ hr {
 }
 
 .pagination li {
-  @apply bg-transparent px-2 text-text-primary py-1 rounded-lg  ;
+  @apply bg-transparent px-2 text-text-primary py-1 rounded-lg;
 }
 .pagination .selected {
-  @apply bg-bg-primary px-2 text-text-primary py-1 rounded-lg  ;
+  @apply bg-bg-primary px-2 text-text-primary py-1 rounded-lg;
 }
 
 .pagination .next,
 .pagination .previous {
-  @apply bg-transparent  ;
+  @apply bg-transparent;
 }
 
-
-
 /*----------------pagination------------------*/
+
+/*-------------------------article content--------------------------*/
+.article-content {
+  @apply py-12;
+}
+.article-content__image {
+  @apply w-6/12 mx-auto;
+}
+.article-content__title {
+  @apply text-text-primary my-4 text-center text-xl;
+}
+.article-content__info {
+  @apply my-2  p-2  text-text-primary text-sm flex justify-between  items-center;
+}
+.article-content__shortdes {
+  @apply my-2 text-center bg-bg-three p-2 rounded-lg border border-text-secondary;
+}
+.article-content__description {
+  @apply my-2;
+}
+.article-content__description img {
+  @apply mx-auto;
+}
+/*-------------------------article content--------------------------*/
+
+/*-------------------------comment form--------------------------*/
+
+.comment-form {
+  @apply w-full flex justify-between items-center flex-col;
+}
+
+.comment-form__group {
+  @apply grid grid-cols-1 gap-2 md:grid-cols-2 w-full;
+}
+.comment-form__group div {
+  @apply flex justify-between items-start flex-col;
+}
+.comment-form input,
+.comment-form textarea {
+  @apply bg-bg-three p-1 w-full rounded-lg border border-text-secondary my-2;
+}
+.comment-form__textarea {
+  @apply w-full my-1;
+}
+.comment-form__button {
+  @apply flex justify-end items-center w-full;
+}
+
+/*-------------------------comment form--------------------------*/
+
+/*-------------------------box title--------------------------*/
+.box-title {
+  @apply  my-2 py-2 text-xl text-center border-text-secondary rounded-lg text-text-primary;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    transparent 10%,
+    #1649ff 50%,
+    transparent 90%
+  );
+}
+/*-------------------------box title--------------------------*/
+
+/*-------------------------comment content--------------------------*/
+.comment-content {
+  @apply overflow-y-scroll;
+  max-height: 400px;
+}
+.comment-content::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Track */
+.comment-content::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+.comment-content::-webkit-scrollbar-thumb {
+  @apply bg-bg-primary rounded-lg;
+}
+
+/*-------------------------comment content--------------------------*/
+
+/*-------------------------card comment--------------------------*/
+
+.card-comment {
+  @apply bg-bg-three border border-text-secondary rounded-lg p-1 my-2;
+}
+.card-comment__header {
+  @apply flex justify-between items-center;
+}
+.card-comment__profile {
+  @apply w-12 h-12 rounded-full bg-bg-primary text-xl text-text-primary  inline-flex justify-center items-center;
+}
+.card-comment__name {
+  @apply mx-2 text-text-primary;
+}
+.card-comment__date {
+  @apply mx-2 text-text-primary;
+}
+.card-comment__body {
+  @apply flex justify-between items-center mt-2;
+}
+.card-comment__body label {
+  @apply text-xs;
+}
+.card-comment__user {
+  @apply border border-text-secondary w-full rounded-lg my-1 p-1 text-text-primary;
+}
+.card-comment__admin {
+  @apply border border-text-secondary w-full rounded-lg my-1 p-1 text-text-primary;
+}
+.card-comment__like {
+  @apply flex justify-between items-center p-2 flex-col text-text-primary;
+}
+.card-comment__like svg {
+  @apply cursor-pointer;
+}
+
+/*-------------------------card comment--------------------------*/

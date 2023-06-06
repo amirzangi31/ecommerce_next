@@ -6,7 +6,7 @@ import ProductSliderHomePage from './ProductSliderHomePage'
 import InstagramHomePage from './InstagramHomePage'
 import ArticlesHomePage from './ArticlesHomePage'
 
-function HomePage({ products }) {
+function HomePage({ products,articles }) {
 
   return (
     <>
@@ -16,7 +16,7 @@ function HomePage({ products }) {
         <RequestHomePage />
         <ProductSliderHomePage products={products} />
         <InstagramHomePage />
-        <ArticlesHomePage />
+        <ArticlesHomePage   articles={articles} />
       </div>
     </>
   )

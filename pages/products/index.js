@@ -1,4 +1,5 @@
 import ProductsPage from '@/components/templates/products/ProductsPage'
+import Category from '@/models/Category';
 import Product from '@/models/Product';
 import connectDB from '@/utils/connectDB';
 import { getSession } from 'next-auth/react';
@@ -14,15 +15,15 @@ function Products({ products }) {
 export default Products;
 
 
+export async function getStaticProps() {
 
-
-
-export async function getServerSideProps() {
-  
   await connectDB()
-  const products = await Product.find({}, null, { sort: { "_id": -1 }, limit: 5 })
-  
+  const category = await Category.find()
+  const products = await Product.find().populate("category")
+
+
   return {
-    props: { products: JSON.parse(JSON.stringify(products)) }
+    props: { products: JSON.parse(JSON.stringify(products)) },
+    revalidate: 30
   }
 }

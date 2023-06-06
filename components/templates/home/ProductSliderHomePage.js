@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 import { Fade } from 'react-reveal'
 import shortText from "@/services/shortText";
+import CardProduct from "@/components/modules/CardProduct";
 
 function ProductSliderHomePage({ products }) {
   const settings = {
@@ -73,43 +74,43 @@ function ProductSliderHomePage({ products }) {
           <Slider {...settings} className="product-slider">
             {
               products.map((item, index) => (
-
-                <div className=" p-2" key={item._id}>
-                  <div className="card-p">
-                    <div className="card-p__image">
-                      <Image
-                        src={item.images[0].link}
-                        width={700}
-                        height={500}
-                        alt="name"
-                      />
-                    </div>
-                    <div className="card-p__body">
-                      <div className="card-p__title">{item.name}</div>
-                      <div className="card-p__des">
-                      {shortText(item.description , 70)}{item.description.length > 70 && "..."}
-                      </div>
-                      <div className="card-p__price">
-                        <p>
-                          قیمت : <span>${item.price.toLocaleString()}</span>
-                        </p>
-                        <p>
-                          دسته بندی : <span>{item.category.name}</span>
-                        </p>
-                      </div>
-                      <div className="card-p__buttons">
-                        <Link href={`/products/${item._id}`}>
-                          <button type="button" className="btn-sm btn-secondary">
-                            جزِییات
-                          </button>
-                        </Link>
-                        <button type="button" className="btn-sm btn-primary">
-                          خرید
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <CardProduct key={item._id} {...item} />
+                // <div className=" p-2" key={item._id}>
+                //   <div className="card-p">
+                //     <div className="card-p__image">
+                //       <Image
+                //         src={item.images[0].link}
+                //         width={700}
+                //         height={500}
+                //         alt="name"
+                //       />
+                //     </div>
+                //     <div className="card-p__body">
+                //       <div className="card-p__title">{item.name}</div>
+                //       <div className="card-p__des">
+                //       {shortText(item.description , 70)}{item.description.length > 70 && "..."}
+                //       </div>
+                //       <div className="card-p__price">
+                //         <p>
+                //           قیمت : <span>${item.price.toLocaleString()}</span>
+                //         </p>
+                //         <p>
+                //           دسته بندی : <span>{item.category.name}</span>
+                //         </p>
+                //       </div>
+                //       <div className="card-p__buttons">
+                //         <Link href={`/products/${item._id}`}>
+                //           <button type="button" className="btn-sm btn-secondary">
+                //             جزِییات
+                //           </button>
+                //         </Link>
+                //         <button type="button" className="btn-sm btn-primary">
+                //           خرید
+                //         </button>
+                //       </div>
+                //     </div>
+                //   </div>
+                // </div>
               ))
             }
 
