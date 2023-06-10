@@ -1,5 +1,6 @@
 import mongoose, { Schema, models, model } from "mongoose"
 
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 
 const articleSchema = new Schema({
@@ -33,6 +34,7 @@ const articleSchema = new Schema({
     }]
 })
 
+articleSchema.plugin(mongoosePaginate)
 
 
 const Article = models.Article || model("Article", articleSchema)

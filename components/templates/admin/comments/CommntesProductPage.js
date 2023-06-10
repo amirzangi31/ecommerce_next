@@ -1,5 +1,5 @@
 import React from "react";
-import LayoutAdmin from "./LayoutAdmin";
+import LayoutAdmin from "../LayoutAdmin";
 import Image from "next/image";
 import CardCommentAdmin from "@/components/modules/admin/CardCommentAdmin";
 

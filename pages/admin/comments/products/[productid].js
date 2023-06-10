@@ -1,4 +1,4 @@
-import CommntesProductPageAdmin from '@/components/templates/admin/CommntesProductPage'
+import CommntesProductPageAdmin from '@/components/templates/admin/comments/CommntesProductPage'
 import Comment from '@/models/Comment';
 import Product from '@/models/Product';
 import connectDB from '@/utils/connectDB';

@@ -6,7 +6,7 @@ import React from 'react'
 function Articles({ articles }) {
 
   return (
-    <ArticlesPageAdmin articles={articles} />
+    <ArticlesPageAdmin articles={articles.docs} pageCount={articles.totalPages} page={articles.page - 1} />
   )
 }
 
@@ -14,11 +14,21 @@ export default Articles;
 
 
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps(context) {
   await connectDB()
 
-  const articles = await Article.find()
 
+
+  const { page = 1, limit = 8 } = context.query
+
+  const options = {
+    page: parseInt(page, 10),
+    limit: parseInt(limit, 10),
+    sort: { createdAt: -1 }
+  }
+
+
+  const articles = await Article.paginate({}, options)
 
 
 

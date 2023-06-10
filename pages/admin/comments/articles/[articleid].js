@@ -1,4 +1,4 @@
-import CommentsArticlePageAdmin from '@/components/templates/admin/CommentsArticlePage'
+import CommentsArticlePageAdmin from '@/components/templates/admin/comments/CommentsArticlePage'
 import Article from '@/models/Article';
 import Comment from '@/models/Comment';
 import connectDB from '@/utils/connectDB';

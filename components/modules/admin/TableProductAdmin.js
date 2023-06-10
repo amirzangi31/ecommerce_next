@@ -8,7 +8,7 @@ import { withSwal } from "react-sweetalert2";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-function TableProductAdmin({ products , swal}) {
+function TableProductAdmin({ products, swal }) {
 
   const router = useRouter()
 
@@ -19,8 +19,8 @@ function TableProductAdmin({ products , swal}) {
       showCancelButton: true,
       cancelButtonText: "خیر ",
       confirmButtonText: "بله  , حذف کنید!",
-      confirmButtonColor: "#e74c3c", 
-      cancelButtonColor: "#3498db", 
+      confirmButtonColor: "#e74c3c",
+      cancelButtonColor: "#3498db",
       reverseButtons: true,
     }).then(result => {
       if (result.isConfirmed) {
@@ -49,15 +49,16 @@ function TableProductAdmin({ products , swal}) {
             <td className="border-secondary-admin dark:border-dark-secondary-admin">{item.name}</td>
             <td className=" border-secondary-admin dark:border-dark-secondary-admin">{item.price.toLocaleString()}</td>
             <td className="border-secondary-admin dark:border-dark-secondary-admin">{item.description.length > 50 && "..."}{shortText(item.description, 50)}</td>
-            <td   className=" border-secondary-admin dark:border-dark-secondary-admin">
+            <td className=" border-secondary-admin dark:border-dark-secondary-admin">
               <div className="flex justify-center items-center gap-2">
                 <Link href={`/admin/products/${item._id}`}><Button className="btn-primary-admin">ویرایش</Button></Link>
                 <Button className="btn-error-admin" handler={() => deleteHandler(item)}>حذف</Button>
+                <Link href={`/admin/comments/products/${item._id}`}><Button className="btn-primary-admin">کامنت</Button></Link>
               </div>
             </td>
           </tr>
         ))}
-       
+
       </tbody>
     </table>
   );
@@ -66,7 +67,7 @@ function TableProductAdmin({ products , swal}) {
 
 
 
-export default withSwal(({ swal , products }, ref ) => (
+export default withSwal(({ swal, products }, ref) => (
   <TableProductAdmin swal={swal} products={products} />
 ));
 

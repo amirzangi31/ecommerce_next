@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LayoutAdmin from "./LayoutAdmin";
 import Button from "@/components/modules/Button";
 import Link from "next/link";
@@ -6,8 +6,9 @@ import shortText from "@/services/shortText";
 import { withSwal } from "react-sweetalert2";
 import axios from "axios";
 import { useRouter } from "next/router";
+import ReactPaginate from "react-paginate";
 
-function ArticlesPageAdmin({ articles, swal }) {
+function ArticlesPageAdmin({ articles, swal, pageCount, page }) {
 
   const router = useRouter()
 
@@ -28,6 +29,11 @@ function ArticlesPageAdmin({ articles, swal }) {
         axios.delete(`/api/article/${article._id}`).then(res => router.reload())
       }
     })
+  }
+  const changePage = ({ selected }) => {
+    const pageNum = selected + 1;
+    
+    router.push(`/admin/articles?page=${pageNum}&limit=8`)
   }
 
 
@@ -77,6 +83,17 @@ function ArticlesPageAdmin({ articles, swal }) {
           </svg>
         </Button>
       </Link>
+      <ReactPaginate
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={changePage}
+        
+        initialPage={page}
+        className='pagination my-2'
+        previousLabel="قبلی"
+        nextLabel="بعدی"
+      />
     </LayoutAdmin>
   );
 }
@@ -84,7 +101,7 @@ function ArticlesPageAdmin({ articles, swal }) {
 
 
 
-export default withSwal(({ swal, articles }, ref) => (
-  <ArticlesPageAdmin swal={swal} articles={articles} />
+export default withSwal(({ swal, articles, pageCount, page }, ref) => (
+  <ArticlesPageAdmin swal={swal} articles={articles} pageCount={pageCount} page={page} />
 ));
 

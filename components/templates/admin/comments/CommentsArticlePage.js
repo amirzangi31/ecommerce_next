@@ -1,5 +1,5 @@
 import React from 'react'
-import LayoutAdmin from './LayoutAdmin'
+import LayoutAdmin from '../LayoutAdmin'
 import CardCommentAdmin from '@/components/modules/admin/CardCommentAdmin'
 import Image from 'next/image'
 import axios from 'axios'
