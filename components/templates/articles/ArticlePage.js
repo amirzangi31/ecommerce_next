@@ -12,10 +12,10 @@ import useSWR from 'swr'
 function ArticlePage({ article }) {
   const { title, shortdes, description, image, _id, createdAt } = article;
 
-  const [comments, setComments] = useState([])
+
 
   const { data, error, isLoading } = useSWR(`/api/comment?parentid=${_id}&parenttype=article`, url => fetch(url).then(res => res.json()))
-  console.log(data, error, isLoading)
+
 
 
   return (
@@ -40,12 +40,20 @@ function ArticlePage({ article }) {
           </div>
         </div>
 
-        {comments.lnegth > 0 && <div className="box-title">نظرات</div>}
-        <div className="comment-content">
-          {comments.map((item, index) => (
-            <CardComment key={item._id} {...item} />
-          ))}
-        </div>
+        
+
+        {data?.data.length > 0 && (
+          <>
+            <div className="box-title">نظرات</div>
+            <div className="comment-content">
+              {data.data.map((item, index) => (
+                <CardComment key={item._id} {...item} />
+              ))}
+            </div>
+          </>
+        )}
+
+
 
         <div className="mt-12">
           <div className="box-title">ارسال نظر</div>

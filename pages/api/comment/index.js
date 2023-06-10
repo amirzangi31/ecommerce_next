@@ -24,6 +24,9 @@ const handler = async (req, res) => {
             return res.status(422).json({ status: "failed", message: "Invalid Data!" })
         }
 
+
+
+        //ذخیره براساس مقاله یا محصول
         if (typecomment === "article") {
             const article = await Article.findOne({ _id: parent })
             if (!article) {
@@ -31,7 +34,7 @@ const handler = async (req, res) => {
             }
             const newComment = await Comment.create({ ...req.body, article: parent })
 
-            article.comments = newComment._id
+            article.comments = [...article.comments, newComment._id]
             article.save()
             return res.status(201).json({ status: "success", data: article })
 
@@ -41,26 +44,24 @@ const handler = async (req, res) => {
                 res.status(422).json({ status: "success", message: "Invalid Data" })
             }
             const newComment = await Comment.create({ ...req.body, product: parent })
-            product.comments = newComment._id
+            product.comments = [...product.comments, newComment._id]
             product.save()
             return res.status(201).json({ status: "success", data: product })
 
         }
 
 
-
-
-
-    } else if (method === 'DELETE') {
-        const comment = await Comment.deleteOne({ _id: "647ef3fc2f7dffb7e1f864ac" })
-        res.status(200).json({ status: "success" })
-
     } else if (method === 'GET') {
         const { parentid, parenttype } = req.query
 
         if (parentid && parenttype) {
-            const comments = await Comment.find({ accepted: false, [parenttype]: parentid });
+       
+
+
+            const comments = await Comment.find({ accepted: true, [parenttype]: parentid });
             return res.status(200).json({ status: "success", data: comments })
+
+
         } else {
 
             const session = await getSession({ req })

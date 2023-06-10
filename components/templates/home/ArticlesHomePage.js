@@ -19,6 +19,7 @@ function ArticlesHomePage({ articles }) {
     slidesToShow: 2,
     slidesToScroll: 1,
     initialSlide: 0,
+    autoplaySpeed : 4000,
 
     responsive: [
       {

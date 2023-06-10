@@ -165,3 +165,29 @@ aside {
   background-color: rgba(0, 0, 0, 0.3);
 }
 /*-----------------upload image productform-------------------*/
+
+
+
+/*-----------------content comments-------------------*/
+.comments-content-admin{
+  @apply h-1/2 overflow-y-scroll p-2 ;
+  direction: ltr;
+}
+.comments-content-admin table{
+  
+  direction: rtl;
+}
+.comments-content-admin::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Track */
+.comments-content-admin::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+.comments-content-admin::-webkit-scrollbar-thumb {
+  @apply bg-bg-primary rounded-lg;
+}
+/*-----------------content comments-------------------*/

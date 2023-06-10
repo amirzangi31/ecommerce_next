@@ -21,19 +21,22 @@ function CommentForm({ parent, type }) {
 
   const submitHandler = async () => {
 
-    const res = await axios.patch("/api/comment/647ef9da2f7dffb7e1f864e8?type=accepted")
-    console.log(res)
+    try {
+      const res = await axios.post("/api/comment", form);
+      if (res.data.status === 'success') {
+        Toastify("success", "کامنت با موفقیت ارسال شد منتظر تایید ادمین باشید ماااچ")
+        setForm({
+          ...form,
+          name: "",
+          email: "",
+          comment: "",
+        })
+      }
+    } catch (error) {
 
+      Toastify("error", error)
+    }
 
-    // try {
-    //   const res = await axios.post("/api/comment", form);
-    //   console.log(res)
-    //   if (res.data.status === 'success') {
-    //     Toastify("success", "کامنت با موفقیت ارسال شد منتظر تایید ادمین باشید ماااچ")
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
   }
 
 

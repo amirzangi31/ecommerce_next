@@ -1,6 +1,7 @@
+import { convertToPersain } from "@/services/jalalimoment";
 import React from "react";
 
-function CardComment({ name, comment, answer }) {
+function CardComment({ name, comment, answer , createdAt }) {
   return (
     <div className="card-comment">
       <div className="card-comment__header">
@@ -9,7 +10,7 @@ function CardComment({ name, comment, answer }) {
           <span className="card-comment__name">{name}</span>
         </div>
         <div className="card-comment__date">
-          <p>asdf</p>
+          <p>{convertToPersain(createdAt)}</p>
         </div>
       </div>
       <div className="card-comment__body">

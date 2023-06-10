@@ -6,7 +6,7 @@ import connectDB from '@/utils/connectDB';
 import React from 'react'
 
 function ProductP({ product }) {
-  console.log(product)
+
   return (
     <ProductPage  product={product}  />
   )

@@ -27,7 +27,11 @@ const ProductSchema = new Schema({
     updatedAt: {
         type: Date,
         default: () => Date.now(),
-    }
+    },
+    comments: [{
+        type: mongoose.Types.ObjectId,
+        ref: "Comment"
+    }]
 }, {
     timestamps: true
 })
