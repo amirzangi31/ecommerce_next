@@ -8,7 +8,7 @@ import React from 'react'
 function ProductP({ product }) {
 
   return (
-    <ProductPage  product={product}  />
+    <ProductPage product={product} />
   )
 }
 
@@ -44,7 +44,7 @@ export async function getStaticProps(context) {
   const categories = await Category.find()
   const id = params.productid
 
-  const product = await Product.findOne({ _id: id })
+  const product = await Product.findOne({ _id: id }).populate("category")
 
 
   return {

@@ -9,6 +9,8 @@ function Layout({ children }) {
     const { pathname } = router;
 
 
+    
+
     useEffect(() => {
         if (pathname.includes("/admin") || pathname.includes("/signinadmin")) {
             setShow(false)

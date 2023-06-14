@@ -1,31 +1,22 @@
 import CardArticle from '@/components/modules/CardArticle';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate'
-const Items = ({ currentItems }) => {
 
-  return (
-    <>
-      {currentItems.map((item, index) => (
-        <CardArticle key={item._id} {...item} />
-      ))}
-    </>
-  );
-}
-function ArticlesPage({articles}) {
+function ArticlesPage({ articles, pageCount, page }) {
+
+
+  const router = useRouter()
 
 
 
-  const [itemOffset, setItemOffset] = useState(0);
-  const endOffset = itemOffset + 8;
 
-  const currentItems = articles.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(articles.length / 8);
+  const handlePageClick = async ({ selected }) => {
 
+    const pageNum = selected + 1
 
+    router.push(`/articles?page=${pageNum}&limit=8`)
 
-  const handlePageClick = async (event) => {
-    const newOffset = (event.selected * 8) % articles.length;
-    setItemOffset(newOffset);
   }
 
 
@@ -34,7 +25,13 @@ function ArticlesPage({articles}) {
     <section className="py-12">
       <div className="container mx-auto px-2">
         <h2 className="text-xl text-text-primary py-2 border-b border-text-secondary">محصولات</h2>
-        <div className="h-screen">
+        <div className="">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+            {articles.map((item) => (
+              <CardArticle key={item._id} {...item} />
+            ))}
+          </div>
           <div className="py-3">
             <ReactPaginate
               breakLabel="..."
@@ -44,12 +41,9 @@ function ArticlesPage({articles}) {
               pageCount={pageCount}
               previousLabel="< قبلی"
               className='pagination'
-              initialPage={0}
+              initialPage={page}
               renderOnZeroPageCount={null}
             />
-          </div>
-          <div className="grid grid-cols-4 gap-2">
-            <Items currentItems={currentItems} />
           </div>
         </div>
       </div>

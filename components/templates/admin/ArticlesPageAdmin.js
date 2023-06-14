@@ -59,6 +59,7 @@ function ArticlesPageAdmin({ articles, swal, pageCount, page }) {
               <td className="flex justify-center items-center gap-4">
                 <Link href={`/admin/articles/${item._id}`}><Button className="btn-primary-admin">ویرایش</Button></Link>
                 <Button className="btn-error-admin" handler={() => deleteHandler(item)}>حذف</Button>
+                <Link href={`/admin/comments/articles/${item._id}`}><Button className="btn-primary-admin">کامنت</Button></Link>
               </td>
             </tr>
           ))}

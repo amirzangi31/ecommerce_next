@@ -11,21 +11,15 @@ const handler = async (req, res) => {
             .json({ status: "failed", message: "error to connecting to db!" });
     }
 
-    const { email, password } = req.body
+    const { email, password , confirmpassword} = req.body
 
-    //----------------------------confirm get as req body----------------------------//
-    // |||
-    // |||
-    // |||
-    // |||
-    //----------------------------confirm get as req body----------------------------//
+    if (!email.trim() || !password.trim() || password.length < 8 || password !== confirmpassword) {
+        return res.status(422).json({ status: "failed", message: "Invalid data!" })
+    }
 
 
     const role = "user";
 
-    if (!email || !password || password !== confirmPassword) {
-        return res.status(401).json({ status: "failed", message: "Invalid Data!" })
-    }
 
     const userExist = await User.findOne({ email: email })
     if (userExist) {

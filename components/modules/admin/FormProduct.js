@@ -277,7 +277,7 @@ function FormProduct({
         <div className="confirm-upload">
           <p className="text-center">آیا میخواهید این عکس را اپلود کنید؟</p>
           <div className="upload-image-element mx-auto my-2 border border-primary-admin overflow-hidden">
-            <img src={createObjectURL} alt="" />
+            <Image src={createObjectURL} alt="dsaf" width={500} height={300} />
           </div>
           <div className="center gap-4">
             <Button handler={cancelHandler} className="btn-error-admin">
