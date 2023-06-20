@@ -106,7 +106,7 @@ function ProfilePage({ user }) {
 
 
   return (
-    <div className="container mx-auto pt-12">
+    <div className="container mx-auto pt-12 px-2">
       <form className="form w-full">
         <div className="flex justify-center items-center">
           {confirmUpload ? (

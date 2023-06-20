@@ -1,13 +1,13 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Image from "next/image";
 import { Fade } from 'react-reveal'
-import shortText from "@/services/shortText";
 import CardProduct from "@/components/modules/CardProduct";
+
+import SignModal from "@/components/modules/SignModal";
 
 function ProductSliderHomePage({ products }) {
   const settings = {
@@ -18,7 +18,7 @@ function ProductSliderHomePage({ products }) {
     slidesToShow: 2,
     slidesToScroll: 1,
     initialSlide: 0,
-    autoplaySpeed : 4000,
+    autoplaySpeed: 4000,
     responsive: [
       {
         breakpoint: 5000,
@@ -59,8 +59,15 @@ function ProductSliderHomePage({ products }) {
     ],
   };
 
+ 
+
+  const [signModal, setSignModal] = useState(false)
+
+
+
   return (
     <section className="products-home mt-24 pb-12">
+      <SignModal show={signModal} setShow={setSignModal} />
       <div className="flex justify-between items-center title">
         <h2>جدیدترین محصولات</h2>
         <Link href={"/products"}>
@@ -68,13 +75,14 @@ function ProductSliderHomePage({ products }) {
             سایر محصولات
           </button>
         </Link>
+
       </div>
       <div className="content-products mt-12">
         <Fade top>
           <Slider {...settings} className="product-slider">
             {
               products.map((item, index) => (
-                <CardProduct key={item._id} {...item} />
+                <CardProduct key={item._id} {...item} signShow={setSignModal} />
                 // <div className=" p-2" key={item._id}>
                 //   <div className="card-p">
                 //     <div className="card-p__image">

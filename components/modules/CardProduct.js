@@ -1,9 +1,47 @@
-import shortText from '@/services/shortText'
-import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
-function CardProduct({name , images  ,price , category , _id , description}) {
+
+//SERVICES
+import Toastify from '@/services/Toast'
+import shortText from '@/services/shortText'
+
+//AXIOS
+import axios from 'axios'
+
+//SESSION
+import { useSession } from 'next-auth/react'
+
+//NEXT COMPONENT
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+
+function CardProduct({ name, images, price, category, _id, description, signShow }) {
+
+    const session = useSession()
+    const router = useRouter()
+
+
+    const addHandler = async (id) => {
+
+        if (session.status === "unauthenticated") {
+            signShow(true)
+        } else {
+            try {
+                const res = await axios.post("/api/order", {
+                    productId: id
+                })
+
+                if (res.data.status === "success") {
+                    Toastify("success", res.data.message)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
     return (
         <div className=" p-2" >
             <div className="card-p">
@@ -34,7 +72,7 @@ function CardProduct({name , images  ,price , category , _id , description}) {
                                 جزِییات
                             </button>
                         </Link>
-                        <button type="button" className="btn-sm btn-primary">
+                        <button type="button" className="btn-sm btn-primary" onClick={() => addHandler(_id)}>
                             خرید
                         </button>
                     </div>

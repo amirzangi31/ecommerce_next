@@ -59,7 +59,7 @@ function ProductPage({ product }) {
 
   return (
     <div>
-      <div className="container mx-auto py-16">
+      <div className="container mx-auto py-16 px-2">
         <div className="product-details">
           <div className="product-details__up">
             <div className="product-details__up-right ">

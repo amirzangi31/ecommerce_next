@@ -15,7 +15,7 @@ function CardArticle({image , shortdes , title , _id}) {
             alt="name"
           />
         </div>
-        <div className="card-a__body">
+        <div className="card-a__body w-full">
           <div className="card-a__title">{shortText(title, 30)}{title.length > 30 && "..."}</div>
           <div className="card-a__des">
             {shortText(shortdes, 70)}{shortdes.length > 70 && "..."}
