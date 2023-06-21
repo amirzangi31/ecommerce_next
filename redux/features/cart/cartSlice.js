@@ -3,12 +3,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     loading: true,
-    carts: [],
+    cart: [],
     error: ""
 }
 
 const fetchCart = createAsyncThunk("cart/fetchCart", () => {
-    return fetch("/api/order").then(res => res.json()).then(data => data)
+    return fetch("/api/order?type=noPaid").then(res => res.json()).then(data => data)
 })
 
 
@@ -23,12 +23,12 @@ const cartSlice = createSlice({
         })
         builder.addCase(fetchCart.fulfilled, (state, action) => {
             state.loading = false
-            state.carts = action.payload
+            state.cart = action.payload
             state.error = ""
         })
         builder.addCase(fetchCart.rejected, (state, action) => {
             state.loading = false
-            state.carts = [],
+            state.cart = [],
                 state.error = action.error.message
         })
     }

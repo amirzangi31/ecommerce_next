@@ -6,36 +6,47 @@ import SearchComponenets from "./SearchComponenets";
 import Button from "../modules/Button";
 
 //SPINNER
-import { RotatingLines } from "react-loader-spinner";
+import { RotatingLines, ThreeDots } from "react-loader-spinner";
 
 // NEXTAUTH
 import { signOut, useSession } from "next-auth/react";
 
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
+//AXIOS
+import axios from "axios";
 import { fetchUser } from "@/redux/features/user/userSlice";
 
 
-//SWR
-import useSWR from 'swr'
+
 
 function Header() {
+
+  const [cartCount, setCartCount] = useState("")
+  const [cart, setCart] = useState({})
+
+
   const session = useSession();
 
-  //get user
-  const user = useSelector((state) => state.user.user.user);
+  const fetchCart = async () => {
+    const res = await axios("/api/order?type=noPaid")
+    setCart(res.data.data)
+    setCartCount(res.data.data.items.length)
+  }
 
-  const { data, error, isLoading } = useSWR(`/api/order?type=noPaid`, url => fetch(url).then(res => res.json()))
+
+  const dispatch = useDispatch()
+  const { user: { user }, loading } = useSelector(state => state.user)
 
   
-
-  const dispatch = useDispatch();
   useEffect(() => {
-    if (session.status === "authenticated") {
-      dispatch(fetchUser());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+    dispatch(fetchUser())
+  }, [dispatch])
+
+
+  useEffect(() => {
+    fetchCart()
+  }, [cart]);
 
 
   const [showMenu, setShowMenu] = useState(false);
@@ -239,12 +250,21 @@ function Header() {
                     />
                   </svg>
                   {
-                    isLoading ===false && data?.data?.items?.length > 0 &&  <span className="badge-secondary">
-                    {isLoading === false && data?.data?.items?.length}
-                  </span>
+                    <span className="badge-secondary">
+                      {!cartCount ? <ThreeDots
+                        height="10"
+                        width="10"
+                        radius="9"
+                        color="#1649ff"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                      /> : cartCount}
+                    </span>
                   }
-                
-                </Button> 
+
+                </Button>
               </Link>
               {
                 session.data.user.name === "admin" && (

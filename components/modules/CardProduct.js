@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 
 //SERVICES
@@ -15,9 +15,16 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { ThreeDots } from 'react-loader-spinner'
 
 
 function CardProduct({ name, images, price, category, _id, description, signShow }) {
+
+    const [loading, setLoading] = useState(false)
+
+
+    
+
 
     const session = useSession()
     const router = useRouter()
@@ -29,15 +36,18 @@ function CardProduct({ name, images, price, category, _id, description, signShow
             signShow(true)
         } else {
             try {
+                setLoading(true)
                 const res = await axios.post("/api/order", {
                     productId: id
                 })
 
                 if (res.data.status === "success") {
                     Toastify("success", res.data.message)
+                    setLoading(false)
                 }
             } catch (error) {
                 console.log(error)
+                setLoading(false)
             }
         }
     }
@@ -60,7 +70,7 @@ function CardProduct({ name, images, price, category, _id, description, signShow
                     </div>
                     <div className="card-p__price">
                         <p>
-                            قیمت : <span>${price.toLocaleString()}</span>
+                            قیمت : <span>{newFunction(price)}</span>
                         </p>
                         <p>
                             دسته بندی : <span>{category.name}</span>
@@ -72,8 +82,20 @@ function CardProduct({ name, images, price, category, _id, description, signShow
                                 جزِییات
                             </button>
                         </Link>
-                        <button type="button" className="btn-sm btn-primary" onClick={() => addHandler(_id)}>
-                            خرید
+                        <button type="button" disabled={loading} className="btn-sm btn-primary" onClick={() => addHandler(_id)}>
+                            {
+                                loading ?
+                                    <ThreeDots
+                                        height="30"
+                                        width="10"
+                                        radius="9"
+                                        color="#fff"
+                                        ariaLabel="three-dots-loading"
+                                        wrapperStyle={{}}
+                                        wrapperClassName=""
+                                        visible={true}
+                                    /> : "خرید"
+                            }
                         </button>
                     </div>
                 </div>
@@ -83,3 +105,10 @@ function CardProduct({ name, images, price, category, _id, description, signShow
 }
 
 export default CardProduct
+
+
+
+
+function newFunction(price) {
+    return price.toLocaleString()
+}

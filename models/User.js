@@ -23,6 +23,10 @@ const userSchema = new Schema({
         type: String,
         default: "user"
     },
+    isComplete: {
+        type: Boolean,
+        default: false
+    },
     phone: String,
     postalcode: String,
 })

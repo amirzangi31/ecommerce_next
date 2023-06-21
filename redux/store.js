@@ -1,12 +1,12 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
 import userReducer from './features/user/userSlice'
-import cartsReducer from './features/cart/cartSlice'
+import cartReducer from './features/cart/cartSlice'
 
 
 const store = configureStore({
     reducer: {
         user: userReducer,
-        carts: cartsReducer
+        cart: cartReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat()
 })

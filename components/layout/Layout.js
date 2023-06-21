@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+
 
 function Layout({ children }) {
+    const session = useSession()
     const [show, setShow] = useState(true)
     const router = useRouter()
     const { pathname } = router;
 
 
-    
+  
+
 
     useEffect(() => {
         if (pathname.includes("/admin") || pathname.includes("/signinadmin")) {
@@ -22,9 +26,9 @@ function Layout({ children }) {
 
     return (
         <>
-            {show && <Header />}
+            {show && <Header  />}
             <main className='min-h-[calc(100vh-280px)]'>
-                    {children}
+                {children}
             </main>
             {show && <Footer />}
         </>
