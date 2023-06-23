@@ -29,7 +29,9 @@ const handler = async (req, res) => {
     if (req.method === "GET") {
         const { name, email, profileimage, orders, createdAt, updatedAt, address, phone, _id, isComplete } = user
         return res.status(200).json({ status: "success", user: { _id, name, email, profileimage, orders, createdAt, updatedAt, address, phone, isComplete } })
-    } else if (req.method === "PATCH") {
+    }
+
+    else if (req.method === "PATCH") {
         const { name, postalcode, profileimage, password, phone, address } = req.body
 
         const verifyP = await verifyPassword(password, user.password)
@@ -51,6 +53,8 @@ const handler = async (req, res) => {
 
         if (!!user.name.trim() && !!user.phone.trim() && !!user.address.trim() && !!user.postalcode.trim()) {
             user.isComplete = true
+        } else if (!user.name.trim() && !user.phone.trim() && !user.address.trim() && !user.postalcode.trim()) {
+            user.isComplete = false
         }
 
 

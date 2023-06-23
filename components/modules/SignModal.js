@@ -28,6 +28,7 @@ function SignModal({ show, setShow }) {
             redirect: false
         })
         if (res.status === 200) {
+            router.reload()
             setShow(false)
         } else {
             Toastify("error", "ایمیل یا رمز عبور نامعتبر میباشد")

@@ -550,7 +550,7 @@ hr {
   @apply flex justify-start items-start  px-4 md:px-12 flex-col text-text-primary;
 }
 .product-details__up-left div {
-  @apply my-2 flex items-baseline gap-2;
+  @apply my-2 flex items-center gap-2;
 }
 .product-details__up-left span {
   @apply text-sm text-text-secondary;

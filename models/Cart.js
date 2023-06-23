@@ -46,6 +46,10 @@ const cartSchema = new Schema({
     isPaid: {
         type: Boolean,
         default: false
+    },
+    total: {
+        type: Number,
+        default: 0
     }
 
 })

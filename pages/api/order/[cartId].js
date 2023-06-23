@@ -63,6 +63,17 @@ const handler = async (req, res) => {
 
             return res.status(200).json({ status: "success" })
 
+        } else if (type === "payment") {
+            console.log("first")
+            const cart = await Cart.findOne({ _id: cartId })
+            
+            if (!cart) {
+                return res.status(404).json({ status: "failed ", message: "سبد خرید مورد نیاز یافت نشد!" })
+            }
+
+            cart.isPaid = true
+            cart.save()
+            return res.status(200).json({ status: "success", message: "سبد خرید با موفقیت پرداخت شد", data: cart })
         }
 
     }

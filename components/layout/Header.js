@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -22,31 +23,39 @@ import { fetchUser } from "@/redux/features/user/userSlice";
 
 function Header() {
 
-  const [cartCount, setCartCount] = useState("")
-  const [cart, setCart] = useState({})
+  const [cartCount, setCartCount] = useState(null)
+
 
 
   const session = useSession();
 
   const fetchCart = async () => {
-    const res = await axios("/api/order?type=noPaid")
-    setCart(res.data.data)
-    setCartCount(res.data.data.items.length)
+    try {
+      const res = await axios("/api/order?type=noPaid")
+      setCartCount(res.data.data.total)
+      return res.data.data.total
+    } catch (error) {
+      setCartCount(0)
+    }
   }
 
 
   const dispatch = useDispatch()
   const { user: { user }, loading } = useSelector(state => state.user)
 
-  
+
   useEffect(() => {
-    dispatch(fetchUser())
-  }, [dispatch])
+    if (session.status === "authenticated") {
+      dispatch(fetchUser())
+    }
+  }, [session.status])
 
 
   useEffect(() => {
-    fetchCart()
-  }, [cart]);
+    if (session.status === "authenticated") {
+      fetchCart()
+    }
+  }, [fetchCart]);
 
 
   const [showMenu, setShowMenu] = useState(false);
@@ -251,7 +260,7 @@ function Header() {
                   </svg>
                   {
                     <span className="badge-secondary">
-                      {!cartCount ? <ThreeDots
+                      {cartCount === null ? <ThreeDots
                         height="10"
                         width="10"
                         radius="9"

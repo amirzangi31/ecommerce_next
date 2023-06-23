@@ -6,15 +6,14 @@ import connectDB from "@/utils/connectDB";
 import { getSession } from "next-auth/react";
 
 
-const calculateTotalPrice = async (cartId) => {
+const calculateTotalPriceAndTotal = async (cartId) => {
 
     let cart = await Cart.findOne({ _id: cartId }).populate("items.product")
-    const result = cart.items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
-
-    cart.totalPrice = result
-
+    const totalPrice = cart.items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
+    const total = cart.items.reduce((sum, item) => sum + item.quantity, 0)
+    cart.totalPrice = totalPrice
+    cart.total = total
     cart = await cart.save()
-
     return cart
 }
 
@@ -94,7 +93,7 @@ const handler = async (req, res) => {
 
         try {
             const add = await addToCart(productId, quantity, user._id)
-            const result = await calculateTotalPrice(add._id)
+            const result = await calculateTotalPriceAndTotal(add._id)
             return res.status(200).json({
                 status: "success",
                 data: result,
@@ -112,20 +111,39 @@ const handler = async (req, res) => {
 
         const carts = await Cart.find({ user: user._id }).populate("items.product")
 
-        const noPaid = carts.filter(item => item.isPaid === false)
-        const isPaid = carts.filter(item => item.isPaid === true)
 
 
-        const result = await calculateTotalPrice(noPaid[0]._id)
+
+
+
+
+
 
         if (type === "noPaid") {
-
-            //get noPaid shopping cart
-            return res.status(200).json({ status: "success", data: result })
+            const noPaid = carts.filter(item => item.isPaid === false)
+            if (!noPaid.length) {
+                const newCart = await Cart.create({ user: user._id })
+                return res.status(201).json({ status: "success", data: newCart })
+            } else {
+                const result = await calculateTotalPriceAndTotal(noPaid[0]._id)
+                //get noPaid shopping cart
+                return res.status(200).json({ status: "success", data: result })
+            }
 
         } else {
 
-            return res.status(200).json({ status: "success", data: [...isPaid, result] })
+            const noPaid = carts.filter(item => item.isPaid === false)
+            const isPaid = carts.filter(item => item.isPaid === true)
+
+            if (!noPaid.length) {
+
+                return res.status(200).json({ status: "success", data: isPaid })
+            } else {
+
+                const result = await calculateTotalPriceAndTotal(noPaid[0]._id)
+                return res.status(200).json({ status: "success", data: [...isPaid, result] })
+            }
+
         }
 
 

@@ -8,10 +8,51 @@ import { AiFillLike, AiFillStar } from "react-icons/ai";
 
 import useSWR from "swr";
 import { convertToPersain } from "@/services/jalalimoment";
+import axios from "axios";
+import Toastify from "@/services/Toast";
+import { useSession } from "next-auth/react";
+import { isInCart, productCount } from "@/services/helper";
+import { ThreeDots } from "react-loader-spinner";
+import { BsTrash } from "react-icons/bs";
+import SignModal from "@/components/modules/SignModal";
 
 function ProductPage({ product }) {
   const [activeImage, setAciveImage] = useState(0);
   const [productProperties, setProductProperties] = useState([]);
+  const [cart, setCart] = useState({})
+  const [loadingCart, setLoadingCart] = useState(true)
+  const [signModal, setSignModal] = useState(false)
+
+
+
+
+  const session = useSession()
+
+
+
+
+
+  const fetchCart = async () => {
+    setLoadingCart(true)
+    try {
+      const res = await axios("/api/order?type=noPaid")
+      setCart(res.data.data)
+      setLoadingCart(false)
+      return res.data.data
+    } catch (error) {
+      setCart(null)
+      setLoadingCart(false)
+    }
+  }
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      fetchCart()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
 
   const {
     images,
@@ -24,6 +65,7 @@ function ProductPage({ product }) {
     createdAt,
   } = product;
 
+  //for show properties product in page
   const changeProperties = () => {
     const result = [];
 
@@ -36,6 +78,8 @@ function ProductPage({ product }) {
 
     setProductProperties(result);
   };
+
+
   useEffect(() => {
     if (properties) {
       changeProperties();
@@ -53,13 +97,65 @@ function ProductPage({ product }) {
     (url) => fetch(url).then((res) => res.json())
   );
 
-  const addHandler = () => {
-    console.log("item");
+
+
+  const increaseProduct = async () => {
+    setLoadingCart(true)
+    const res = await axios.patch(
+      `/api/order/${cart._id}?type=increase&&product=${_id}`
+    );
+    if (res.data.status === "success") {
+      await fetchCart()
+    }
+    setLoadingCart(false)
   };
+
+
+  const decreaseProduct = async () => {
+    setLoadingCart(true)
+    const res = await axios.patch(
+      `/api/order/${cart._id}?type=decrease&&product=${_id}`
+    );
+    if (res.data.status === "success") {
+      await fetchCart()
+
+
+    }
+    setLoadingCart(false)
+  };
+
+  async function deleteProduct() {
+    setLoadingCart(true)
+    const res = await axios.patch(
+      `/api/order/${cart._id}?type=delete&&product=${_id}`
+    );
+    if (res.data.status === 'success') {
+      await fetchCart()
+    }
+    setLoadingCart(false)
+  }
+
+
+  const addHandler = async () => {
+    if (session.status === "unauthenticated") {
+      setSignModal(true)
+      return
+    }
+    const res = await axios.post("/api/order", {
+      productId: _id
+    })
+    if (res.data.status === "success") {
+      Toastify("success", res.data.message)
+      await fetchCart()
+    }
+  };
+
 
   return (
     <div>
       <div className="container mx-auto py-16 px-2">
+        <SignModal show={signModal} setShow={setSignModal} />
+
         <div className="product-details">
           <div className="product-details__up">
             <div className="product-details__up-right ">
@@ -87,7 +183,7 @@ function ProductPage({ product }) {
                       src={item.link}
                       key={item.name}
                       alt="Zoom-images"
-                      className={`${index === activeImage && "active"}`}
+                      className={`${index === activeImage && "active"} rounded-lg`}
                       zoom="300"
                     />
                   </>
@@ -135,13 +231,54 @@ function ProductPage({ product }) {
                 {12}عدد
               </div>
               <div className="product-details__add ">
-                <button
+                {loadingCart === true && session.status === "authenticated" && <ThreeDots
+                  height="40"
+                  width="40"
+                  radius="9"
+                  color="#fff"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                />}
+
+                {session.status === "unauthenticated" && <button
                   type="button"
                   className=" btn-sm btn-primary"
                   onClick={addHandler}
                 >
                   اضافه کردن به سبد خرید
                 </button>
+                }
+
+              {
+                  !loadingCart && !isInCart(cart, _id) &&
+                  <button
+                    type="button"
+                    className=" btn-sm btn-primary"
+                    onClick={addHandler}
+                  >
+                    اضافه کردن به سبد خرید
+                  </button>
+                }
+                {
+                  !loadingCart && isInCart(cart, _id)
+                  &&
+                  <button type="button" className="btn-sm btn-primary" onClick={increaseProduct}>+</button>
+                }
+                {!loadingCart && productCount(cart, _id) && <p className="mx-4 inline-block text-2xl text-text-primary">{productCount(cart, _id)}</p>}
+                {
+                  !loadingCart && productCount(cart, _id) === 1 &&
+                  <button type="button" className="btn-sm btn-error" onClick={deleteProduct}>
+                    <BsTrash className="text-2xl" />
+                  </button>
+                }
+                {
+                  !loadingCart && productCount(cart, _id) > 1 &&
+                  <button type="button" className="btn-sm btn-error" onClick={decreaseProduct}>-</button>
+                } 
+
+
               </div>
             </div>
           </div>
