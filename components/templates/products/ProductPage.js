@@ -34,13 +34,14 @@ function ProductPage({ product }) {
 
   const fetchCart = async () => {
     setLoadingCart(true)
+
     try {
       const res = await axios("/api/order?type=noPaid")
       setCart(res.data.data)
       setLoadingCart(false)
       return res.data.data
     } catch (error) {
-      setCart(null)
+      setCart({})
       setLoadingCart(false)
     }
   }

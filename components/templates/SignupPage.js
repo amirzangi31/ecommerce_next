@@ -1,8 +1,10 @@
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useState } from 'react'
+import { ThreeDots } from 'react-loader-spinner';
 
 function SignupPage() {
+    const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -17,12 +19,20 @@ function SignupPage() {
     };
 
 
-    const submitHandler = async () => {
+    const submitHandler = async (e) => {
+        e.preventDefault()
+
+        setLoading(true)
         try {
             const res = await axios.post("/api/auth/signup", form)
-            
+            if (res.data.status === "success") {
+                setLoading(false)
+
+            }
+
         } catch (error) {
-            
+            console.log(error)
+            setLoading(false)
         }
     }
 
@@ -68,8 +78,21 @@ function SignupPage() {
                         />
                     </div>
                     <div className="sign-content__buttons">
-                        <button className="btn-sm btn-primary w-full my-2" onClick={submitHandler} type="button">
-                            ثبت نام{" "}
+                        <button disabled={loading} className="btn-sm btn-primary w-full my-2" onClick={submitHandler} type="submit">
+                            {loading ?
+                                <ThreeDots
+                                    height="20"
+                                    width="20"
+                                    radius="9"
+                                    color="#fff"
+                                    ariaLabel="three-dots-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClassName=""
+                                    visible={true}
+                                />
+                                :
+                                "ثبت نام"
+                            }
                         </button>
                         <p>
                             ایا قبلا ثبت نام کرده اید؟<Link href="/signin">ورود</Link>

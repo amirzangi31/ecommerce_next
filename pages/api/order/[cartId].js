@@ -72,6 +72,7 @@ const handler = async (req, res) => {
             }
 
             cart.isPaid = true
+            cart.datePaid =  Date.now()
             cart.save()
             return res.status(200).json({ status: "success", message: "سبد خرید با موفقیت پرداخت شد", data: cart })
         }

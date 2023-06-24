@@ -9,6 +9,10 @@ import { useSelector } from "react-redux";
 
 function ShoppingCartPage() {
   const [cart, setCart] = useState(null);
+  const [modal, setModal] = useState(false);
+  const [modalNoCart, setModalNoCart] = useState(false);
+  const [modalPayment, setModalPayment] = useState(false);
+  const [isPay, setIsPay] = useState(false);
 
   const {
     user: { user },
@@ -16,47 +20,26 @@ function ShoppingCartPage() {
     error,
   } = useSelector((state) => state.user);
 
-  const [modal, setModal] = useState(false);
-  const [modalNoCart, setModalNoCart] = useState(false);
-  const [modalPayment, setModalPayment] = useState(false)
-
-
   const payHandler = async () => {
-
     try {
-
-      const res = await axios.patch(`/api/order/${cart._id}?type=payment`)
-
-
-      console.log(res)
-
+      const res = await axios.patch(`/api/order/${cart._id}?type=payment`);
       if (res.data.status === "success") {
-        Toastify("success", "سبد خرید شما با موفقیت خریداری شد")
+        Toastify("success", "سبد خرید شما با موفقیت خریداری شد");
+        setModalPayment(false);
+        setIsPay(true);
       }
-
-
     } catch (error) {
-      Toastify("error", "سبد خرید مورد نیاز یافت نشد")
+      Toastify("error", "سبد خرید مورد نیاز یافت نشد");
     }
-
-
-
-
   };
-
 
   const modalPaymentHnadler = () => {
     if (!!user && user.isComplete) {
-
-      setModalPayment(true)
-
-
+      setModalPayment(true);
     } else {
-      setModal(true)
+      setModal(true);
     }
-  }
-
-
+  };
 
   const fetchCart = async () => {
     try {
@@ -71,6 +54,30 @@ function ShoppingCartPage() {
     fetchCart();
   }, [cart]);
 
+
+
+  if (isPay)
+    return (
+      <div className="container px-2 mx-auto py-16">
+        <p className="text-3xl text-bg-primary my-4 text-center">
+          سبد خرید با موفقیت پرداخت شد
+        </p>
+        <div className="flex justify-center items-center gap-2">
+          <Link href={"/products"}>
+            <button type="button" className="btn-sm btn-primary">
+              سفارش محصول
+            </button>
+          </Link>
+
+          <Link href={"/products"}>
+            <button type="button" className="btn-sm btn-secondary">
+              پیگیری سفارشات
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+
   return (
     <div className="container mx-auto px-2 py-16">
       <Modal show={modalNoCart} setShow={setModalNoCart}>
@@ -80,7 +87,7 @@ function ShoppingCartPage() {
             ممنونیم از شما که سایت ما را انتخاب کرده اید
           </p>
           <p className="text-xl my-2 text-error font-bold">
-            *شما هیچ سبد خرید فعالی برای نمایش ندارید{" "}*
+            *شما هیچ سبد خرید فعالی برای نمایش ندارید *
           </p>
           <p className="text-xl my-2">
             پیشنهاد ما این است که از محصول ما دیدن کنید
@@ -101,14 +108,53 @@ function ShoppingCartPage() {
       </Modal>
 
       <Modal show={modalPayment} setShow={setModalPayment}>
+        <div className="bg-bg-three rounded-lg border border-text-secondary p-2">
+          <p className="text-xl text-center text-text-primary">
+            ممنونیم از اعتماد شما{" "}
+          </p>
+          <p className="my-4 text-text-primary text-center">
+            اطلاعات شما برای ارسال محصول در صورت تایید بروی گزینه پرداخت نهایی
+            کلیک کند در غیر اینصورت با رفتن به بخش ویرایش پروفایل میتواند
+            اطلاعات خود را تغییر بدهید
+          </p>
 
-        <h1>asdvnalds</h1>
+          <div className="form ">
+            <div className="form__group">
+              <div className="my-2">
+                <label>نام ونام خانوداگی</label>
+                <p className="text-text-primary  w-full">{user?.name}</p>
+              </div>
+              <div className="my-2">
+                <label> شماره تماس</label>
+                <p className="text-text-primary  w-full">{user?.phone}</p>
+              </div>
+              <div className="my-2">
+                <label>آدرس</label>
+                <p className="text-text-primary  w-full">{user?.address}</p>
+              </div>
+              <div className="my-2">
+                <label>کد پستی</label>
+                <p className="text-text-primary  w-full">{user?.postalcode}</p>
+              </div>
+            </div>
 
-
+            <div className="flex justify-center items-center gap-3">
+              <Link href={"/dashboard/profile"}>
+                <button type="button" className="btn-sm btn-secondary">
+                  ویرایش پروفایل
+                </button>
+              </Link>
+              <button
+                type="button"
+                className="btn-sm btn-primary"
+                onClick={payHandler}
+              >
+                پرداخت نهایی
+              </button>
+            </div>
+          </div>
+        </div>
       </Modal>
-
-
-
 
       {!!cart ? (
         cart.items.length > 0 ? (
@@ -202,8 +248,10 @@ function ShoppingCartPage() {
               برای سفارش محصول میتوانید به صفحه محصولات بروید
             </p>
             <div className="flex justify-center items-center my-2 w-full">
-              <Link href={"/products"} >
-                <button type="button" className="btn-sm btn-primary" >رفتن به صفحه محصولات</button>
+              <Link href={"/products"}>
+                <button type="button" className="btn-sm btn-primary">
+                  رفتن به صفحه محصولات
+                </button>
               </Link>
             </div>
           </div>

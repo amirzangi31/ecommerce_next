@@ -27,8 +27,8 @@ const handler = async (req, res) => {
 
 
     if (req.method === "GET") {
-        const { name, email, profileimage, orders, createdAt, updatedAt, address, phone, _id, isComplete } = user
-        return res.status(200).json({ status: "success", user: { _id, name, email, profileimage, orders, createdAt, updatedAt, address, phone, isComplete } })
+        const { name, email, profileimage, orders, createdAt, updatedAt, address, postalcode, phone, _id, isComplete } = user
+        return res.status(200).json({ status: "success", user: { _id, name, email, profileimage, postalcode, orders, createdAt, updatedAt, address, phone, isComplete } })
     }
 
     else if (req.method === "PATCH") {

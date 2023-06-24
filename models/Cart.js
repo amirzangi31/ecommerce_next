@@ -34,6 +34,11 @@ const cartSchema = new Schema({
         type: Boolean,
         default: false
     },
+
+    dateConfirmAdmin: {
+        type: Date
+    },
+
     createdAt: {
         type: Date,
         default: () => Date.now()
@@ -47,6 +52,13 @@ const cartSchema = new Schema({
         type: Boolean,
         default: false
     },
+    datePaid: {
+        type: Date
+    },
+
+
+
+
     total: {
         type: Number,
         default: 0
