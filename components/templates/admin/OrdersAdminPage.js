@@ -3,6 +3,9 @@ import LayoutAdmin from "./LayoutAdmin";
 import Link from "next/link";
 import Button from "@/components/modules/Button";
 import Modal from "@/components/modules/modal/Modal";
+import axios from "axios";
+import Toastify from "@/services/Toast";
+import { useRouter } from "next/router";
 
 function OrdersAdminPage({ carts, isData }) {
   const [modal, setModal] = useState(false);
@@ -12,6 +15,8 @@ function OrdersAdminPage({ carts, isData }) {
     products: [],
     total: "",
     totalPrice: "",
+    confirm: "",
+    cancel: "",
   });
 
   const showInfoHandler = (data) => {
@@ -21,26 +26,42 @@ function OrdersAdminPage({ carts, isData }) {
       products: data.items,
       total: data.total,
       totalPrice: data.totalPrice,
+      confirm: data.confirmAdmin,
+      cancel: data.cancel,
     });
     setModal(true);
   };
 
+  const router = useRouter();
 
-  const confirmHandler = async (id) =>{
-      
-  }
-  const cancelHandler = async (id) =>{
-    
-  }
-
-
-
-
-
-
-
-
-
+  const confirmHandler = async (id) => {
+    try {
+      const res = await axios.patch("/api/order/admin?status=true", {
+        cartId: id,
+      });
+      if (res.data.status === "success") {
+        Toastify("error", "عملیات با موفقیت انجام شد");
+        setModal(false);
+        router.reload();
+      }
+    } catch (error) {
+      Toastify("error", "مشکلی پیش امده دوباره امتحان کنید");
+    }
+  };
+  const cancelHandler = async (id) => {
+    try {
+      const res = await axios.patch("/api/order/admin?status=false", {
+        cartId: id,
+      });
+      if (res.data.status === "success") {
+        Toastify("error", "عملیات با موفقیت انجام شد");
+        setModal(false);
+        router.reload();
+      }
+    } catch (error) {
+      Toastify("error", "مشکلی پیش امده دوباره امتحان کنید");
+    }
+  };
 
   if (!carts.length && isData === false) {
     return (
@@ -104,23 +125,37 @@ function OrdersAdminPage({ carts, isData }) {
               ))}
             </div>
           </div>
-
-          <div className="flex justify-center items-center flex-row-reverse gap-2 py-2">
-            <button
-              type="button"
-              onClick={() => confirmHandler(dataModal.cartId)}
-              className="btn-primary-admin"
-            >
-              تایید سبد خرید
-            </button>
-            <button
-              type="button"
-              onClick={() => cancelHandler(dataModal.cartId)}
-              className="btn-error-admin"
-            >
-              لغو سبد خرید
-            </button>
-          </div>
+          {dataModal.confirm ? (
+            <div className="text-center">
+              وضعیت :
+              {dataModal.cancel ? (
+                <span className="text-error font-bold text-xl">
+                  سبد خرید لغو شده
+                </span>
+              ) : (
+                <span className="text-bg-primary font-bold text-xl">
+                  سبد خرید تایید شده
+                </span>
+              )}
+            </div>
+          ) : (
+            <div className="flex justify-center items-center flex-row-reverse gap-2 py-2">
+              <button
+                type="button"
+                onClick={() => confirmHandler(dataModal.cartId)}
+                className="btn-primary-admin"
+              >
+                تایید سبد خرید
+              </button>
+              <button
+                type="button"
+                onClick={() => cancelHandler(dataModal.cartId)}
+                className="btn-error-admin"
+              >
+                لغو سبد خرید
+              </button>
+            </div>
+          )}
         </div>
       </Modal>
 
@@ -139,7 +174,10 @@ function OrdersAdminPage({ carts, isData }) {
             {carts.map((item, index) => (
               <tr key={item._id}>
                 <td>{index + 1}</td>
-                <td>{item.user.name}</td>
+                {console.log(item.confirmAdmin)}
+                <td className={`${item.cancel === true && "bg-error"}`}>
+                  {item.user.name}
+                </td>
                 <td>{item.total}</td>
                 <td>{item.totalPrice} ريال</td>
                 <td

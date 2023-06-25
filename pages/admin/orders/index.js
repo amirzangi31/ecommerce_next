@@ -26,7 +26,7 @@ export const getServerSideProps = async (context) => {
   if (confirm === "true") {
     if (date === "today") {
       const carts = await Cart.find({
-        createdAt: {
+        dateConfirmAdmin: {
           $gte: new Date(new Date().setHours(0o0, 0o0, 0o0)), // شروع امروز
           $lt: new Date(new Date().setHours(23, 59, 59)) // پایان امروز
         },
@@ -43,7 +43,27 @@ export const getServerSideProps = async (context) => {
       }
 
     } else if (date === "month") {
-      console.log("test")
+      const carts = await Cart.find({
+        dateConfirmAdmin: {
+          $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1), // شروع این ماه
+          $lt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59) // پایان این ماه
+        },
+        isPaid: true,
+        confirmAdmin: true
+      }).populate("user").populate("items.product")
+
+      
+
+
+      isData = true;
+
+
+      return {
+        props: {
+          carts: JSON.parse(JSON.stringify(carts)),
+          isData
+        }
+      }
     }
   } else if (confirm === "false") {
     if (date === "today") {
@@ -66,7 +86,27 @@ export const getServerSideProps = async (context) => {
         }
       }
     } else if (date === "month") {
-      console.log("test")
+      const carts = await Cart.find({
+        dateConfirmAdmin: {
+          $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1), // شروع این ماه
+          $lt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59) // پایان این ماه
+        },
+        isPaid: true,
+        confirmAdmin: false
+      }).populate("user").populate("items.product")
+
+      
+
+
+      isData = true;
+
+
+      return {
+        props: {
+          carts: JSON.parse(JSON.stringify(carts)),
+          isData
+        }
+      }
     }
   }
 

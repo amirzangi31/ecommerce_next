@@ -15,6 +15,7 @@ import { isInCart, productCount } from "@/services/helper";
 import { ThreeDots } from "react-loader-spinner";
 import { BsTrash } from "react-icons/bs";
 import SignModal from "@/components/modules/SignModal";
+import Loader from "@/components/modules/Loader";
 
 function ProductPage({ product }) {
   const [activeImage, setAciveImage] = useState(0);
@@ -232,16 +233,12 @@ function ProductPage({ product }) {
                 {12}عدد
               </div>
               <div className="product-details__add ">
-                {loadingCart === true && session.status === "authenticated" && <ThreeDots
-                  height="40"
-                  width="40"
-                  radius="9"
-                  color="#fff"
-                  ariaLabel="three-dots-loading"
-                  wrapperStyle={{}}
-                  wrapperClassName=""
-                  visible={true}
-                />}
+                {loadingCart === true && session.status === "authenticated" &&
+                 
+                <Loader width="40" height="40" color="#fff" />
+                
+                
+                }
 
                 {session.status === "unauthenticated" && <button
                   type="button"

@@ -378,6 +378,28 @@ hr {
 /*-------------------------comment form--------------------------*/
 
 /*-------------------------box title--------------------------*/
+.title-one {
+  @apply text-xl relative font-bold text-bg-primary py-2;
+}
+
+.title-one::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    
+    transparent 51%,
+    rgba(255,255,255, 1) 95%,
+    transparent 100%
+  );
+}
+
 .box-title {
   @apply my-2 py-2 text-xl text-center border-text-secondary rounded-lg text-text-primary;
   background: rgb(0, 0, 0);
@@ -398,6 +420,7 @@ hr {
     transparent 99%
   );
 }
+
 /*-------------------------box title--------------------------*/
 
 /*-------------------------comment content--------------------------*/
@@ -536,7 +559,7 @@ hr {
   @apply p-1   rounded-lg;
   box-shadow: 0px 0px 10px 1px rgba(255, 255, 255, 1);
 }
-.product-details__up-image  {
+.product-details__up-image {
   @apply flex-1;
 }
 .product-details__up-image figure {
@@ -565,7 +588,7 @@ hr {
   @apply flex justify-center items-center w-full;
 }
 
-.product-details__down tbody  {
+.product-details__down tbody {
   @apply relative;
 }
 .product-details__down tbody tr {
@@ -588,32 +611,59 @@ hr {
     transparent 90%
   );
 }
-.product-details__description{
+.product-details__description {
   @apply my-12 text-justify text-text-primary;
 }
 /*-----------------------product detailes----------------------------*/
 
-
-
 /*-----------------------cart content----------------------------*/
-.cart-content{
+.cart-content {
   @apply flex justify-between items-start  flex-row-reverse gap-4 relative;
-  
 }
-.cart-content_base-div{
-  @apply bg-bg-three p-4 rounded-lg border border-text-secondary ;
+.cart-content_base-div {
+  @apply bg-bg-three p-4 rounded-lg border border-text-secondary;
 }
 
 .cart-content_products {
-  @apply w-9/12 cart-content_base-div ;
+  @apply w-9/12 cart-content_base-div;
 }
 .cart-content_payment {
-  @apply w-3/12 cart-content_base-div ;
+  @apply w-3/12 cart-content_base-div;
 }
 .cart-content_payment p {
-  @apply text-text-primary ;
+  @apply text-text-primary;
 }
 
 /*-----------------------cart content----------------------------*/
 
 
+/*-----------------------table orders----------------------------*/
+
+.table-orders{
+  @apply w-full;
+}
+
+.table-orders thead  {
+  @apply bg-bg-primary border border-text-primary text-text-primary;
+}
+
+.table-orders thead tr th {
+  @apply py-2;
+}
+
+
+
+.table-orders tbody tr   {
+    @apply border ;
+}
+.table-orders tbody tr td  {
+    @apply py-4 text-center;
+}
+.table-orders tbody tr.success  {
+    @apply  text-bg-primary;
+}
+.table-orders tbody tr.error  {
+    @apply  text-error;
+}
+
+/*-----------------------table orders----------------------------*/

@@ -3,7 +3,8 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
-import { ThreeDots } from 'react-loader-spinner';
+
+import Loader from '../modules/Loader';
 
 function SigninPage() {
 
@@ -78,16 +79,9 @@ function SigninPage() {
 
                             {
                                 loading ?
-                                    <ThreeDots
-                                        height="20"
-                                        width="20"
-                                        radius="9"
-                                        color="#fff"
-                                        ariaLabel="three-dots-loading"
-                                        wrapperStyle={{}}
-                                        wrapperClassName=""
-                                        visible={true}
-                                    />
+
+                                    <Loader width="20" height="20" color="#fff" />
+
                                     :
                                     "ورود"
                             }

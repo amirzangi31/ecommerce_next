@@ -7,7 +7,7 @@ import SearchComponenets from "./SearchComponenets";
 import Button from "../modules/Button";
 
 //SPINNER
-import { RotatingLines, ThreeDots } from "react-loader-spinner";
+import { RotatingLines } from "react-loader-spinner";
 
 // NEXTAUTH
 import { signOut, useSession } from "next-auth/react";
@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 //AXIOS
 import axios from "axios";
 import { fetchUser } from "@/redux/features/user/userSlice";
+import Loader from "../modules/Loader";
 
 
 
@@ -223,6 +224,14 @@ function Header() {
                       )
                     }
                     <div className="flex justify-between items-center w-full">
+                      <Link href={"/dashboard"}>
+                        <button
+                          type="button"
+                          className="btn-sm btn-secondary hover:border hover:border-white"
+                        >
+                          داشبورد
+                        </button>
+                      </Link>
                       <Link href={"/dashboard/profile"}>
                         <button
                           type="button"
@@ -260,16 +269,13 @@ function Header() {
                   </svg>
                   {
                     <span className="badge-secondary">
-                      {cartCount === null ? <ThreeDots
-                        height="10"
-                        width="10"
-                        radius="9"
-                        color="#1649ff"
-                        ariaLabel="three-dots-loading"
-                        wrapperStyle={{}}
-                        wrapperClassName=""
-                        visible={true}
-                      /> : cartCount}
+                      {cartCount === null ? 
+                     
+                      
+                      <Loader width="10" height="10" color="#1649ff" />
+                      
+                      
+                      : cartCount}
                     </span>
                   }
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useState } from 'react'
-import { ThreeDots } from 'react-loader-spinner';
+import Loader from '../modules/Loader';
 
 function SignupPage() {
     const [loading, setLoading] = useState(false)
@@ -80,16 +80,9 @@ function SignupPage() {
                     <div className="sign-content__buttons">
                         <button disabled={loading} className="btn-sm btn-primary w-full my-2" onClick={submitHandler} type="submit">
                             {loading ?
-                                <ThreeDots
-                                    height="20"
-                                    width="20"
-                                    radius="9"
-                                    color="#fff"
-                                    ariaLabel="three-dots-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClassName=""
-                                    visible={true}
-                                />
+                             
+                                <Loader width="20" height="20" color="#fff" />
+                                
                                 :
                                 "ثبت نام"
                             }

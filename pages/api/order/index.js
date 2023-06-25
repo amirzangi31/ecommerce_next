@@ -109,23 +109,16 @@ const handler = async (req, res) => {
 
 
 
-        const carts = await Cart.find({ user: user._id }).populate("items.product")
-
-
-
-
-
-
-
-
+        const carts = await Cart.find({ user: user._id }).populate("items.product").populate("user")
 
         if (type === "noPaid") {
-            const noPaid = carts.filter(item => item.isPaid === false)
-            if (!noPaid.length) {
+            const cart = await Cart.findOne({user : user._id , isPaid : false})
+            
+            if (!cart) {
                 const newCart = await Cart.create({ user: user._id })
                 return res.status(201).json({ status: "success", data: newCart })
             } else {
-                const result = await calculateTotalPriceAndTotal(noPaid[0]._id)
+                const result = await calculateTotalPriceAndTotal(cart._id)
                 //get noPaid shopping cart
                 return res.status(200).json({ status: "success", data: result })
             }
@@ -136,12 +129,10 @@ const handler = async (req, res) => {
             const isPaid = carts.filter(item => item.isPaid === true)
 
             if (!noPaid.length) {
-
                 return res.status(200).json({ status: "success", data: isPaid })
             } else {
-
                 const result = await calculateTotalPriceAndTotal(noPaid[0]._id)
-                return res.status(200).json({ status: "success", data: [...isPaid, result] })
+                return res.status(200).json({ status: "success", data: [result,  ...isPaid] })
             }
 
         }

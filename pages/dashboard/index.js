@@ -1,8 +1,9 @@
+import DashboardPage from '@/components/templates/dashboard/DashboardPage'
 import React from 'react'
 
 function Dashboard() {
     return (
-        <div>Dashboard</div>
+        <DashboardPage /> 
     )
 }
 

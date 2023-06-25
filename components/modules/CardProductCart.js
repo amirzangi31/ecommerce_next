@@ -2,7 +2,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsTrash } from "react-icons/bs";
-import { ThreeDots } from "react-loader-spinner";
+import Loader from "./admin/Loader";
 
 function CardProductCart({ product, quantity, cartId, fetchCart }) {
   const [loadingCount, setLoadingCount] = useState(false);
@@ -58,16 +58,7 @@ function CardProductCart({ product, quantity, cartId, fetchCart }) {
         </button>
         <span className="mx-2">
           {loadingCount === true ? (
-            <ThreeDots
-              height="20"
-              width="20"
-              radius="9"
-              color="#fff"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClassName=""
-              visible={true}
-            />
+           <Loader width="20" height="20" color="#fff" /> 
           ) : (
             quantity
           )}

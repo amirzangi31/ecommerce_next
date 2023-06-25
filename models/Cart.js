@@ -55,10 +55,9 @@ const cartSchema = new Schema({
     datePaid: {
         type: Date
     },
-
-
-
-
+    cancel: {
+        type: Boolean
+    },
     total: {
         type: Number,
         default: 0

@@ -1,10 +1,11 @@
 import CardProductCart from "@/components/modules/CardProductCart";
+import Loader from "@/components/modules/Loader";
 import Modal from "@/components/modules/modal/Modal";
 import Toastify from "@/services/Toast";
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { ThreeDots } from "react-loader-spinner";
+
 import { useSelector } from "react-redux";
 
 function ShoppingCartPage() {
@@ -258,16 +259,7 @@ function ShoppingCartPage() {
         )
       ) : (
         <div className="flex justify-center items-center">
-          <ThreeDots
-            height="50"
-            width="50"
-            radius="9"
-            color="#fff"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            wrapperClassName=""
-            visible={true}
-          />
+         <Loader width="50" height="50" color="#fff"  /> 
         </div>
       )}
     </div>

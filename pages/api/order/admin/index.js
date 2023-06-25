@@ -1,3 +1,4 @@
+import Cart from "@/models/Cart";
 import connectDB from "@/utils/connectDB";
 import { getSession } from "next-auth/react";
 
@@ -21,8 +22,46 @@ const handler = async (req, res) => {
     }
 
 
+    if (req.method === "PATCH") {
 
-    res.json({})
+        const { cartId } = req.body
+        const { status } = req.query
+
+
+
+        const cart = await Cart.findOne({ _id: cartId })
+
+        if (!cart) {
+            return res.status(404).json({ status: "failed", message: "سبد خرید مورد نظر یافت نشد" })
+        }
+
+        if (status === "true") {
+            cart.step = "سفارشات شما تحویل پست داده شد"
+            cart.confirmAdmin = true
+            cart.dateConfirmAdmin = Date.now()
+
+            cart.save()
+
+            return res.status(200).json({ status: "success", message: "عملیات باموفقیت انجام شد", data: cart })
+
+        } else if (status === "false") {
+            cart.step = "سفارشات شما توسط ادمین لغو شد برای بازگشت وجه باشما تماس گرفته میشود"
+            cart.confirmAdmin = true
+            cart.cancel = true
+            cart.dateConfirmAdmin = Date.now()
+
+
+            cart.save()
+            return res.status(200).json({ status: "success", message: "عملیات باموفقیت انجام شد", data: cart })
+        }
+
+
+
+    }
+
+
+
+
 }
 
 
