@@ -70,7 +70,7 @@ function ShoppingCartPage() {
             </button>
           </Link>
 
-          <Link href={"/products"}>
+          <Link href={"/dashboard/ordertracking"}>
             <button type="button" className="btn-sm btn-secondary">
               پیگیری سفارشات
             </button>

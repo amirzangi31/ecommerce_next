@@ -63,7 +63,10 @@ const cartSchema = new Schema({
         default: 0
     }
 
-})
+}, {
+    timestamps: true
+}
+)
 
 
 const Cart = models.Cart || model("Cart", cartSchema)

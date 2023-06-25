@@ -35,6 +35,7 @@ function SigninPage() {
             redirect: false
         })
         if (res.status === 200) {
+            Toastify("success" , "ورود با موفقیت انجام شد منتظر انتقال به صفحه اصلی باشید")
             router.replace("/")
             setLoading(false)
         } else {

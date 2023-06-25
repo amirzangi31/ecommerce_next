@@ -2,7 +2,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsTrash } from "react-icons/bs";
-import Loader from "./admin/Loader";
+import Loader from "./Loader";
 
 function CardProductCart({ product, quantity, cartId, fetchCart }) {
   const [loadingCount, setLoadingCount] = useState(false);

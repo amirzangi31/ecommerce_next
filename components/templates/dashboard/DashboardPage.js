@@ -1,4 +1,7 @@
+import Loader from "@/components/modules/Loader";
 import Modal from "@/components/modules/modal/Modal";
+import Toastify from "@/services/Toast";
+import axios from "axios";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +12,9 @@ function DashboardPage() {
 
   const [ticket, setTicket] = useState("");
 
+  const [ticketLoading, setTicketLoading] = useState(false)
+
+
   const [modal, setModal] = useState(false);
 
   const signoutHandler = async () => {
@@ -18,7 +24,21 @@ function DashboardPage() {
   };
 
   const ticketHandler = async () => {
-    console.log(ticket);
+    setTicketLoading(true)
+    try {
+      const res = await axios.post("/api/ticket", {
+        text: ticket
+      })
+      setTicketLoading(false)
+      if (res.data.status === "success") {
+        Toastify("success", "تیکت با موفقیت ثبت شد")
+        setModal(false)
+        setTicket("")
+      }
+    } catch (error) {
+      setTicketLoading(false)
+      console.log(error)
+    }
   };
 
   return (
@@ -39,8 +59,9 @@ function DashboardPage() {
               type="button"
               className="btn-sm btn-primary"
               onClick={ticketHandler}
+              disabled={ticketLoading}
             >
-              ارسال تیکت
+              {ticketLoading ? <Loader width="25" height="25" color="#fff" /> : "ارسال تیکت"}
             </button>
           </div>
         </form>
@@ -59,25 +80,26 @@ function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-2 mt-4">
-        <Link href={"/dashbord/profile"} className="w-full ">
+        <Link href={"/dashboard/profile"} className="w-full ">
           <button type="button" className="btn-sm btn-primary w-full">
             پروفایل
           </button>
         </Link>
-        <Link href={"/dashbord/profile"} className="w-full ">
+        <Link href={"/dashboard/ordertracking"} className="w-full ">
           <button type="button" className="btn-sm btn-primary w-full">
             پیگیری سفارش
           </button>
         </Link>
-        <Link href={"/dashbord/profile"} className="w-full ">
+        <Link href={"/dashboard/tickets"} className="w-full ">
           <button type="button" className="btn-sm btn-primary w-full">
             همه تیکت ها
           </button>
         </Link>
 
-        <button type="button" className="btn-sm btn-primary w-full">
+        <button type="button" className="btn-sm btn-primary w-full" onClick={() => setModal(true)}>
           ارسال تیکت
         </button>
+
       </div>
       <button
         type="button"

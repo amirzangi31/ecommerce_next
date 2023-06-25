@@ -40,7 +40,7 @@ function OrdersAdminPage({ carts, isData }) {
         cartId: id,
       });
       if (res.data.status === "success") {
-        Toastify("error", "عملیات با موفقیت انجام شد");
+        Toastify("success", "عملیات با موفقیت انجام شد");
         setModal(false);
         router.reload();
       }
@@ -54,7 +54,7 @@ function OrdersAdminPage({ carts, isData }) {
         cartId: id,
       });
       if (res.data.status === "success") {
-        Toastify("error", "عملیات با موفقیت انجام شد");
+        Toastify("success", "عملیات با موفقیت انجام شد");
         setModal(false);
         router.reload();
       }
@@ -171,7 +171,8 @@ function OrdersAdminPage({ carts, isData }) {
             </tr>
           </thead>
           <tbody>
-            {carts.map((item, index) => (
+            {/* recverce( ) for Sort by newest */}
+            {carts.reverse().map((item, index) => (
               <tr key={item._id}>
                 <td>{index + 1}</td>
                 {console.log(item.confirmAdmin)}

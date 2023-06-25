@@ -8,7 +8,7 @@ import { getSession } from "next-auth/react";
 
 const calculateTotalPriceAndTotal = async (cartId) => {
 
-    let cart = await Cart.findOne({ _id: cartId }).populate("items.product")
+    let cart = await Cart.findOne({ _id: cartId }).populate("items.product").populate("user")
     const totalPrice = cart.items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
     const total = cart.items.reduce((sum, item) => sum + item.quantity, 0)
     cart.totalPrice = totalPrice
@@ -109,11 +109,10 @@ const handler = async (req, res) => {
 
 
 
-        const carts = await Cart.find({ user: user._id }).populate("items.product").populate("user")
 
         if (type === "noPaid") {
-            const cart = await Cart.findOne({user : user._id , isPaid : false})
-            
+            const cart = await Cart.findOne({ user: user._id, isPaid: false })
+
             if (!cart) {
                 const newCart = await Cart.create({ user: user._id })
                 return res.status(201).json({ status: "success", data: newCart })
@@ -124,23 +123,17 @@ const handler = async (req, res) => {
             }
 
         } else {
+            const isPaid = await Cart.find({ user: user._id, isPaid: true }).populate("items.product").populate("user")
+            const noPaid = await Cart.findOne({ user: user._id, isPaid: false })
 
-            const noPaid = carts.filter(item => item.isPaid === false)
-            const isPaid = carts.filter(item => item.isPaid === true)
-
-            if (!noPaid.length) {
+            if (!noPaid) {
                 return res.status(200).json({ status: "success", data: isPaid })
             } else {
-                const result = await calculateTotalPriceAndTotal(noPaid[0]._id)
-                return res.status(200).json({ status: "success", data: [result,  ...isPaid] })
+                const result = await calculateTotalPriceAndTotal(noPaid._id)
+                return res.status(200).json({ status: "success", data: [result, ...isPaid] })
             }
-
         }
-
-
     }
-
-
 }
 
 

@@ -270,9 +270,21 @@ hr {
   width: 50px;
   left: 10px !important;
 }
+.product-slider.order .slick-next {
+  @apply w-6 h-6;
+  width: 50px;
+  left: -20px !important;
+  
+}
 .product-slider .slick-prev {
   @apply w-12 h-12;
   right: 10px !important;
+  z-index: 10;
+}
+.product-slider.order .slick-prev {
+  @apply w-6 h-6;
+  right: -20px !important;
+  
   z-index: 10;
 }
 .product-slider .slick-next::before,
@@ -294,6 +306,25 @@ hr {
 .product-slider .slick-prev::after {
   content: "";
   @apply text-white text-3xl w-12 h-12 absolute top-0 left-0;
+  background-image: url("../public/images/icons/arrow_icon.png");
+  background-size: contain;
+  background-position: center;
+}
+.product-slider.order .slick-next::after {
+  content: "";
+  @apply text-white text-3xl w-6 h-6 absolute top-0 left-0;
+  background-image: url("../public/images/icons/arrow_icon.png");
+  background-size: contain;
+  background-position: center;
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+}
+.product-slider.order .slick-prev::after {
+  content: "";
+  @apply text-white text-3xl w-6 h-6 absolute top-0 left-0;
   background-image: url("../public/images/icons/arrow_icon.png");
   background-size: contain;
   background-position: center;
@@ -448,6 +479,10 @@ hr {
 
 .card-comment {
   @apply bg-bg-three border border-text-secondary rounded-lg p-1 my-2;
+}
+
+.card-comment.ticket {
+  @apply my-6;
 }
 .card-comment__header {
   @apply flex justify-between items-center;
@@ -667,3 +702,5 @@ hr {
 }
 
 /*-----------------------table orders----------------------------*/
+
+

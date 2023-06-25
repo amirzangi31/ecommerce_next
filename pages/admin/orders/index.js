@@ -52,9 +52,6 @@ export const getServerSideProps = async (context) => {
         confirmAdmin: true
       }).populate("user").populate("items.product")
 
-      
-
-
       isData = true;
 
 
@@ -87,7 +84,7 @@ export const getServerSideProps = async (context) => {
       }
     } else if (date === "month") {
       const carts = await Cart.find({
-        dateConfirmAdmin: {
+        datePaid: {
           $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1), // شروع این ماه
           $lt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59) // پایان این ماه
         },
