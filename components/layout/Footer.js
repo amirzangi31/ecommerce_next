@@ -107,13 +107,7 @@ function Footer() {
                     <Link href="/">محصولات</Link>
                   </li>
                   <li>
-                    <div
-                      className="search"
-                      onClick={() => {
-                        setShowSearch(true);
-                        setShowMenu(false);
-                      }}
-                    >
+                    <div className="search" >
                       جست و جو{" "}
                     </div>
                   </li>

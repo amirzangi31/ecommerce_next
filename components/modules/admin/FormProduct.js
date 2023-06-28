@@ -273,6 +273,14 @@ function FormProduct({
           ))}
         </div>
       )}
+
+
+
+
+
+
+
+      
       {confirmUpload ? (
         <div className="confirm-upload">
           <p className="text-center">آیا میخواهید این عکس را اپلود کنید؟</p>

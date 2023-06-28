@@ -1,21 +1,36 @@
-import CardComment from "@/components/modules/CardComment";
-import CommentForm from "@/components/modules/CommentForm";
+//REACT
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+
+//COMMENT
+import CardComment from "@/components/modules/CardComment";
+import CommentForm from "@/components/modules/CommentForm";
+
+//SESSION
+import { useSession } from "next-auth/react";
+
+//ICONS
+import { AiFillLike, AiFillStar } from "react-icons/ai";
+import { BsTrash } from "react-icons/bs";
+
+//HELPER
+import { isInCart, productCount } from "@/services/helper";
+import { convertToPersain } from "@/services/jalalimoment";
+import Toastify from "@/services/Toast";
+
+//COMPONENTS
+import Loader from "@/components/modules/Loader";
+import SignModal from "@/components/modules/SignModal";
+
+//IMAGE ZOOM
 import ImageZoom from "react-image-zooom";
 
-import { AiFillLike, AiFillStar } from "react-icons/ai";
-
+//SWR
 import useSWR from "swr";
-import { convertToPersain } from "@/services/jalalimoment";
+
+//AXIOS
 import axios from "axios";
-import Toastify from "@/services/Toast";
-import { useSession } from "next-auth/react";
-import { isInCart, productCount } from "@/services/helper";
-import { ThreeDots } from "react-loader-spinner";
-import { BsTrash } from "react-icons/bs";
-import SignModal from "@/components/modules/SignModal";
-import Loader from "@/components/modules/Loader";
+
 
 function ProductPage({ product }) {
   const [activeImage, setAciveImage] = useState(0);
@@ -23,10 +38,6 @@ function ProductPage({ product }) {
   const [cart, setCart] = useState({})
   const [loadingCart, setLoadingCart] = useState(true)
   const [signModal, setSignModal] = useState(false)
-
-
-
-
   const session = useSession()
 
 
@@ -234,10 +245,10 @@ function ProductPage({ product }) {
               </div>
               <div className="product-details__add ">
                 {loadingCart === true && session.status === "authenticated" &&
-                 
-                <Loader width="40" height="40" color="#fff" />
-                
-                
+
+                  <Loader width="40" height="40" color="#fff" />
+
+
                 }
 
                 {session.status === "unauthenticated" && <button
@@ -249,7 +260,7 @@ function ProductPage({ product }) {
                 </button>
                 }
 
-              {
+                {
                   !loadingCart && !isInCart(cart, _id) &&
                   <button
                     type="button"
@@ -274,7 +285,7 @@ function ProductPage({ product }) {
                 {
                   !loadingCart && productCount(cart, _id) > 1 &&
                   <button type="button" className="btn-sm btn-error" onClick={decreaseProduct}>-</button>
-                } 
+                }
 
 
               </div>

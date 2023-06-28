@@ -251,11 +251,11 @@ function ProfilePage({ user }) {
               onChange={changeHandler}
               value={form.password}
             />
-            {form.password.length < 8 && (
+
               <span className="text-xs my-1 text-error">
                 *وارد کردن رمز عبور صحیح برای تغییر اطلاعات الزامی میباشد*
               </span>
-            )}
+       
           </div>
         </div>
 

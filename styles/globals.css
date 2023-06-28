@@ -274,7 +274,6 @@ hr {
   @apply w-6 h-6;
   width: 50px;
   left: -20px !important;
-  
 }
 .product-slider .slick-prev {
   @apply w-12 h-12;
@@ -284,7 +283,7 @@ hr {
 .product-slider.order .slick-prev {
   @apply w-6 h-6;
   right: -20px !important;
-  
+
   z-index: 10;
 }
 .product-slider .slick-next::before,
@@ -424,9 +423,8 @@ hr {
   background: rgb(255, 255, 255);
   background: linear-gradient(
     90deg,
-    
     transparent 51%,
-    rgba(255,255,255, 1) 95%,
+    rgba(255, 255, 255, 1) 95%,
     transparent 100%
   );
 }
@@ -671,14 +669,13 @@ hr {
 
 /*-----------------------cart content----------------------------*/
 
-
 /*-----------------------table orders----------------------------*/
 
-.table-orders{
+.table-orders {
   @apply w-full;
 }
 
-.table-orders thead  {
+.table-orders thead {
   @apply bg-bg-primary border border-text-primary text-text-primary;
 }
 
@@ -686,21 +683,62 @@ hr {
   @apply py-2;
 }
 
-
-
-.table-orders tbody tr   {
-    @apply border ;
+.table-orders tbody tr {
+  @apply border;
 }
-.table-orders tbody tr td  {
-    @apply py-4 text-center;
+.table-orders tbody tr td {
+  @apply py-4 text-center;
 }
-.table-orders tbody tr.success  {
-    @apply  text-bg-primary;
+.table-orders tbody tr.success {
+  @apply text-bg-primary;
 }
-.table-orders tbody tr.error  {
-    @apply  text-error;
+.table-orders tbody tr.error {
+  @apply text-error;
 }
 
 /*-----------------------table orders----------------------------*/
 
+/*-----------------------serach navbar----------------------------*/
 
+.search-navbar {
+  @apply flex justify-start items-start gap-2 flex-col w-3/12;
+}
+.search-navbar__item {
+  @apply w-full  py-1 px-2 cursor-pointer;
+}
+.search-navbar__item .search-navbar__arrow-up{
+  @apply hidden;
+}
+.search-navbar__item .search-navbar__item-title {
+  @apply flex justify-between items-center w-full text-text-primary;
+}
+.search-navbar__item .serach-navbar__item-body {
+  @apply hidden;
+}
+.search-navbar__item .serach-navbar__item-body input ,
+.search-navbar__item .serach-navbar__item-body select {
+  @apply border bg-transparent rounded-lg border-text-secondary  w-full mt-2 p-1;
+}
+
+/* active */
+.search-navbar__item.active .serach-navbar__item-body {
+  @apply block;
+}
+.search-navbar__item.active .serach-navbar__item-body.price {
+  @apply flex justify-between items-center;
+}
+.search-navbar__item.active .serach-navbar__item-body span {
+  @apply mx-2;
+}
+.search-navbar__item.active .search-navbar__arrow-up {
+  @apply block;
+}
+.search-navbar__item.active .search-navbar__arrow-down {
+  @apply hidden;
+}
+
+
+
+
+
+/*-----------------------serach navbar----------------------------*/

@@ -43,11 +43,9 @@ export async function getStaticProps(context) {
   await connectDB()
   const categories = await Category.find()
   const id = params.productid
-
   const product = await Product.findOne({ _id: id }).populate("category")
-
-
   return {
-    props: { product: JSON.parse(JSON.stringify(product)) }
+    props: { product: JSON.parse(JSON.stringify(product)) },
+    revalidate: 24 * 60 * 60 //one day
   }
 }

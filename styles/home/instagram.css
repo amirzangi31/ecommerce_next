@@ -15,6 +15,9 @@
 .instagram-content__right {
   @apply flex justify-center items-center;
 }
+.instagram-content__right div {
+  @apply flex justify-center items-center;
+}
 
 .instagram-content__right img {
   width: 70%;
