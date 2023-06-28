@@ -5,9 +5,14 @@ import connectDB from '@/utils/connectDB';
 import React from 'react'
 
 function Search({ products, categories }) {
-
+  
   return (
-    <SearchPage products={products} categories={categories} />
+    <SearchPage
+      products={products.docs}
+      pageCount={products.totalPages}
+      page={products.page - 1}
+      categories={categories}
+    />
   )
 }
 
@@ -16,7 +21,7 @@ export default Search;
 
 
 export const getServerSideProps = async (context) => {
-  // const { name = "" , category = "", lowPrice = 0 , highPirce = 1000000000 } = context.query
+
   await connectDB()
 
   let query = {}
@@ -48,18 +53,54 @@ export const getServerSideProps = async (context) => {
   }
 
 
-  const categories = await Category.find().populate("parent")
+  const sort = {}
 
-  if (!Object.keys(query).length) {
-    return {
-      props: {
-        categories: JSON.parse(JSON.stringify(categories)),
-      },
+  if (context.query.sortBy) {
+    if (context.query.sortBy === "price") {
+      //ارزان ترین
+      sort.price = 1
+    } else if (context.query.sortBy === "-price") {
+      //گرانترین
+      sort.price = -1
+    } else if (context.query.sortBy === "-lasted") {
+      //جدیدترین
+      sort.createdAt = -1
+    } else if (context.query.sortBy === "lasted") {
+      //قدیمی ترین
+      sort.createdAt = 1
     }
   }
 
 
-  const result = await Product.find(query).populate("category")
+  const categories = await Category.find().populate("parent")
+
+  // if (!Object.keys(query).length) {
+  //   return {
+  //     props: {
+  //       categories: JSON.parse(JSON.stringify(categories)),
+  //     },
+  //   }
+  // }
+
+  const { page = 1, limit = 10 } = context.query
+
+
+  const option = {
+    page: parseInt(page, 10),
+    limit: parseInt(limit, 10),
+    sort,
+    populate: {
+      path: 'category',
+      select: '_id name',
+    },
+  }
+
+
+
+  // const result = await Product.find(query).sort(sort).populate("category")
+
+  const result = await Product.paginate(query, option)
+
 
   return {
     props: {
@@ -68,34 +109,3 @@ export const getServerSideProps = async (context) => {
     }
   }
 }
-// javascript
-
-// app.get('/products', (req, res) => {
-//   let query = {}
-//   if (req.query.category) {
-//     query.category = req.query.category
-//   }
-//   if (req.query.name) {
-//     query.name = {
-//       $regex: req.query.name,
-//       $options: 'i'
-//     }
-//   }
-//   if (req.query.lowPrice) {
-//     query.price = query.price || {}
-//     query.price.$gte = req.query.lowPrice
-//   }
-//   if (req.query.highPrice) {
-//     query.price = query.price || {}
-//     query.price.$lte = req.query.highPrice
-//   }
-
-//   Product.find(query, (err, products) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     } else {
-//       res.send(products)
-//     }
-//   })
-
-

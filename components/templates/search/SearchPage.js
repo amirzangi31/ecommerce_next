@@ -6,18 +6,19 @@ import {
   MdKeyboardDoubleArrowDown,
 } from "react-icons/md";
 
-function SearchPage({ products ,categories}) {
+import { CgSortAz } from "react-icons/cg";
+import ReactPaginate from "react-paginate";
+import CardProduct from "@/components/modules/CardProduct";
 
-
+function SearchPage({ products, categories, page, pageCount }) {
   const [numberActive, setNumberActive] = useState(0);
-  const [form, setForm] = useState({
-    name: "",
-    category: "",
-    lowPrice: "",
-    highPrice: "",
-  });
-
   const router = useRouter();
+  const [form, setForm] = useState({
+    name: router.query.name || "",
+    category: router.query.categroy || "",
+    lowPrice: +router.query.lowPrice || "",
+    highPrice: +router.query.highPrice || "",
+  });
 
   const changeHandler = (e) => {
     setForm({
@@ -37,7 +38,6 @@ function SearchPage({ products ,categories}) {
   };
 
   const filterHandler = () => {
-    console.log("first")
     let arrayUrl = [];
     for (let key in form) {
       if (form[key] !== "") {
@@ -50,8 +50,59 @@ function SearchPage({ products ,categories}) {
     router.push(`search?${url}`);
   };
 
+  //add sortBy
+  const setFilter = (path) => {
+    if (Object.keys(router.query).length === 0) {
+      const url = `/search?sortBy=${path}`;
+      router.push(url);
+    } else if (router.query.sortBy) {
+      const arrayUrl = [];
+      for (let key in router.query) {
+        if (key === "sortBy") {
+          arrayUrl.push(`${key}=${path}`);
+        } else {
+          arrayUrl.push(`${key}=${router.query[key]}`);
+        }
+      }
+      const url = arrayUrl.join("&&");
+      router.push(`search?${url}`);
+    } else {
+      const url = `${router.asPath}&&sortBy=${path}`;
+
+      router.push(url);
+    }
+  };
+
+  const handlePageClick = async (event) => {
+    const pageNum = event.selected + 1;
+
+    if (router.asPath === "/search" || router.asPath === "/search?") {
+      const url = `/search?page=${pageNum}`;
+      router.push(url);
+    } else if (router.query.page) {
+      const arrayUrl = [];
+      for (let key in router.query) {
+        if (key === "page") {
+          arrayUrl.push(`${key}=${pageNum}`);
+        } else {
+          arrayUrl.push(`${key}=${form[key]}`);
+        }
+      }
+      const url = arrayUrl.join("&&");
+
+      router.push(
+        `search?${url}${
+          router.query.sortBy && `&&sortBy=${router.query.sortBy}`
+        }`
+      );
+    } else {
+      const url = `${router.asPath}&&page=${pageNum}`;
+      router.push(url);
+    }
+  };
+
   return (
-    <div className="container mx-auto py-16 px-2">
+    <div className="container mx-auto py-16 px-2 flex">
       <div className="search-navbar">
         <div
           className={`search-navbar__item ${numberActive === 1 && "active"}`}
@@ -89,19 +140,21 @@ function SearchPage({ products ,categories}) {
             </span>
           </div>
           <div className="serach-navbar__item-body">
-            <select name="category" onChange={changeHandler}>
-              {categories.length > 0 &&  categories.map((item) => (
-                <option value={item._id} key={item._id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            {/* <input
-              type="text"
+            <select
               name="category"
-              value={form.category}
               onChange={changeHandler}
-            /> */}
+              defaultValue={router.query.category}
+            >
+              <option value="" >
+                بدون دسته بندی
+              </option>
+              {categories.length > 0 &&
+                categories.map((item) => (
+                  <option value={item._id} key={item._id}>
+                    {item.name}
+                  </option>
+                ))}
+            </select>
           </div>
         </div>
         <div
@@ -142,6 +195,57 @@ function SearchPage({ products ,categories}) {
             فیلتر
           </button>
         </div>
+      </div>
+      <div className="products-search ">
+        <div className="products-search__filter">
+          <div className="flex justify-between items-center text-text-primary">
+            <CgSortAz className="text-3xl" />
+            نمایش براساس:
+          </div>
+          <div className="mx-2">
+            <span
+              className={router.query.sortBy === "-lasted" && "active"}
+              onClick={() => setFilter("-lasted")}
+            >
+              جدیدترین{" "}
+            </span>
+            <span
+              className={router.query.sortBy === "lasted" && "active"}
+              onClick={() => setFilter("lasted")}
+            >
+              قدیمی ترین{" "}
+            </span>
+            <span
+              className={router.query.sortBy === "-price" && "active"}
+              onClick={() => setFilter("-price")}
+            >
+              گران ترین{" "}
+            </span>
+            <span
+              className={router.query.sortBy === "price" && "active"}
+              onClick={() => setFilter("price")}
+            >
+              ارزان ترین{" "}
+            </span>
+          </div>
+        </div>
+        <div className="products-search__content">
+          {products.map((item) => (
+            <CardProduct {...item} key={item._id} />
+          ))}
+        </div>
+
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="بعدی >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={pageCount}
+          previousLabel="< قبلی"
+          className="pagination"
+          initialPage={page}
+          renderOnZeroPageCount={null}
+        />
       </div>
     </div>
   );

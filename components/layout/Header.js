@@ -18,14 +18,17 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { fetchUser } from "@/redux/features/user/userSlice";
 import Loader from "../modules/Loader";
+import { useRouter } from "next/router";
 
 
 
 
 function Header() {
-
+  const [showMenu, setShowMenu] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [changeColorNavbar, setChangeColorNavbar] = useState(true);
   const [cartCount, setCartCount] = useState(null)
-
+  const router = useRouter()
 
 
   const session = useSession();
@@ -52,6 +55,14 @@ function Header() {
   }, [session.status])
 
 
+  useEffect(() =>{
+
+    setShowSearch(false)
+
+
+  } , [router.pathname])
+
+
   useEffect(() => {
     if (session.status === "authenticated") {
       fetchCart()
@@ -59,9 +70,7 @@ function Header() {
   }, [fetchCart]);
 
 
-  const [showMenu, setShowMenu] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-  const [changeColorNavbar, setChangeColorNavbar] = useState(true);
+
 
   const handleScroll = () => {
     const scrollTop = document.documentElement.scrollTop;

@@ -706,7 +706,7 @@ hr {
 .search-navbar__item {
   @apply w-full  py-1 px-2 cursor-pointer;
 }
-.search-navbar__item .search-navbar__arrow-up{
+.search-navbar__item .search-navbar__arrow-up {
   @apply hidden;
 }
 .search-navbar__item .search-navbar__item-title {
@@ -715,7 +715,7 @@ hr {
 .search-navbar__item .serach-navbar__item-body {
   @apply hidden;
 }
-.search-navbar__item .serach-navbar__item-body input ,
+.search-navbar__item .serach-navbar__item-body input,
 .search-navbar__item .serach-navbar__item-body select {
   @apply border bg-transparent rounded-lg border-text-secondary  w-full mt-2 p-1;
 }
@@ -737,8 +737,21 @@ hr {
   @apply hidden;
 }
 
-
-
-
+/* products */
+.products-search {
+  @apply w-9/12 pr-2;
+}
+.products-search__filter {
+  @apply border border-text-secondary bg-bg-three rounded-lg py-2 flex justify-start items-center;
+}
+.products-search__filter span{
+  @apply text-sm cursor-pointer;
+}
+.products-search__filter span.active{
+  @apply bg-bg-primary text-lg text-text-primary rounded-lg px-2 mx-2;
+}
+.products-search__content {
+  @apply grid grid-cols-3 gap-2;
+}
 
 /*-----------------------serach navbar----------------------------*/
