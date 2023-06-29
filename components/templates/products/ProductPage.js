@@ -30,41 +30,20 @@ import useSWR from "swr";
 
 //AXIOS
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "@/redux/features/cart/cartSlice";
 
 
 function ProductPage({ product }) {
   const [activeImage, setAciveImage] = useState(0);
   const [productProperties, setProductProperties] = useState([]);
-  const [cart, setCart] = useState({})
-  const [loadingCart, setLoadingCart] = useState(true)
+  const [loadingCart, setLoadingCart] = useState(false)
   const [signModal, setSignModal] = useState(false)
   const session = useSession()
+  const dispatch = useDispatch()
 
 
-
-
-
-  const fetchCart = async () => {
-    setLoadingCart(true)
-
-    try {
-      const res = await axios("/api/order?type=noPaid")
-      setCart(res.data.data)
-      setLoadingCart(false)
-      return res.data.data
-    } catch (error) {
-      setCart({})
-      setLoadingCart(false)
-    }
-  }
-
-  useEffect(() => {
-    if (session.status === "authenticated") {
-      fetchCart()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+  const { cart, loading } = useSelector(state => state.cart)
 
 
   const {
@@ -112,46 +91,48 @@ function ProductPage({ product }) {
 
 
 
+  //increase one product in shopping cart
   const increaseProduct = async () => {
     setLoadingCart(true)
     const res = await axios.patch(
-      `/api/order/${cart._id}?type=increase&&product=${_id}`
+      `/api/order/${cart.data._id}?type=increase&&product=${_id}`
     );
+
     if (res.data.status === "success") {
-      await fetchCart()
+      dispatch(fetchCart())
     }
     setLoadingCart(false)
   };
 
-
+  //decrease one product in shopping cart
   const decreaseProduct = async () => {
     setLoadingCart(true)
     const res = await axios.patch(
-      `/api/order/${cart._id}?type=decrease&&product=${_id}`
+      `/api/order/${cart.data._id}?type=decrease&&product=${_id}`
     );
     if (res.data.status === "success") {
-      await fetchCart()
-
-
+      dispatch(fetchCart())
     }
     setLoadingCart(false)
   };
-
+  //delete  product in shopping cart
   async function deleteProduct() {
     setLoadingCart(true)
     const res = await axios.patch(
-      `/api/order/${cart._id}?type=delete&&product=${_id}`
+      `/api/order/${cart.data._id}?type=delete&&product=${_id}`
     );
     if (res.data.status === 'success') {
-      await fetchCart()
+      dispatch(fetchCart())
     }
     setLoadingCart(false)
   }
 
-
+  //add  product in shopping cart
   const addHandler = async () => {
+    setLoadingCart(true)
     if (session.status === "unauthenticated") {
       setSignModal(true)
+      setLoadingCart(false)
       return
     }
     const res = await axios.post("/api/order", {
@@ -159,8 +140,10 @@ function ProductPage({ product }) {
     })
     if (res.data.status === "success") {
       Toastify("success", res.data.message)
-      await fetchCart()
+      dispatch(fetchCart())
     }
+
+    setLoadingCart(false)
   };
 
 
@@ -241,50 +224,71 @@ function ProductPage({ product }) {
               </div>
               <div className="product-details__quantity">
                 <span className="">موجودی محصول : </span>
-                {12}عدد
+                {34}عدد
               </div>
+
               <div className="product-details__add ">
-                {loadingCart === true && session.status === "authenticated" &&
-
+                {loading === true && session.status === "authenticated" &&
                   <Loader width="40" height="40" color="#fff" />
-
-
                 }
 
-                {session.status === "unauthenticated" && <button
-                  type="button"
-                  className=" btn-sm btn-primary"
-                  onClick={addHandler}
-                >
-                  اضافه کردن به سبد خرید
-                </button>
-                }
-
-                {
-                  !loadingCart && !isInCart(cart, _id) &&
+                {session.status === "unauthenticated" &&
                   <button
                     type="button"
-                    className=" btn-sm btn-primary"
+                    disabled={loadingCart}
+                    className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
                     onClick={addHandler}
                   >
                     اضافه کردن به سبد خرید
                   </button>
                 }
+
                 {
-                  !loadingCart && isInCart(cart, _id)
-                  &&
-                  <button type="button" className="btn-sm btn-primary" onClick={increaseProduct}>+</button>
+                  !loading && !isInCart(cart.data, _id) &&
+                  <button
+                    type="button"
+
+                    disabled={loadingCart}
+                    className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
+                    onClick={addHandler}
+                  >
+                    اضافه کردن به سبد خرید
+                  </button>
                 }
-                {!loadingCart && productCount(cart, _id) && <p className="mx-4 inline-block text-2xl text-text-primary">{productCount(cart, _id)}</p>}
+
+
+
+
+
                 {
-                  !loadingCart && productCount(cart, _id) === 1 &&
-                  <button type="button" className="btn-sm btn-error" onClick={deleteProduct}>
+                  !loading && isInCart(cart.data, _id)
+                  &&
+                  <button type="button"
+
+
+                    disabled={loadingCart}
+                    className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
+
+                    onClick={increaseProduct}>+</button>
+                }
+
+
+                {!loading && productCount(cart.data, _id) && <p className="mx-4 inline-block text-2xl text-text-primary">{productCount(cart.data, _id)}</p>}
+                {
+                  !loading && productCount(cart.data, _id) === 1 &&
+                  <button type="button"
+                    disabled={loadingCart}
+                    className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
+                    onClick={deleteProduct}>
                     <BsTrash className="text-2xl" />
                   </button>
                 }
                 {
-                  !loadingCart && productCount(cart, _id) > 1 &&
-                  <button type="button" className="btn-sm btn-error" onClick={decreaseProduct}>-</button>
+                  !loading && productCount(cart.data, _id) > 1 &&
+                  <button type="button"
+                    disabled={loadingCart}
+                    className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
+                    onClick={decreaseProduct}>-</button>
                 }
 
 

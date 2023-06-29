@@ -19,6 +19,7 @@ import axios from "axios";
 import { fetchUser } from "@/redux/features/user/userSlice";
 import Loader from "../modules/Loader";
 import { useRouter } from "next/router";
+import { fetchCart } from "@/redux/features/cart/cartSlice";
 
 
 
@@ -27,25 +28,20 @@ function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [changeColorNavbar, setChangeColorNavbar] = useState(true);
-  const [cartCount, setCartCount] = useState(null)
   const router = useRouter()
+  const cartData = useSelector(state => state.cart)
 
 
   const session = useSession();
 
-  const fetchCart = async () => {
-    try {
-      const res = await axios("/api/order?type=noPaid")
-      setCartCount(res.data.data.total)
-      return res.data.data.total
-    } catch (error) {
-      setCartCount(0)
-    }
-  }
-
-
   const dispatch = useDispatch()
   const { user: { user }, loading } = useSelector(state => state.user)
+
+
+  useEffect(() => {
+    console.log("first")
+    dispatch(fetchCart())
+  }, [])
 
 
   useEffect(() => {
@@ -55,21 +51,12 @@ function Header() {
   }, [session.status])
 
 
-  useEffect(() =>{
+  useEffect(() => {
 
     setShowSearch(false)
 
 
-  } , [router.pathname])
-
-
-  useEffect(() => {
-    if (session.status === "authenticated") {
-      fetchCart()
-    }
-  }, [fetchCart]);
-
-
+  }, [router.pathname])
 
 
   const handleScroll = () => {
@@ -278,13 +265,14 @@ function Header() {
                   </svg>
                   {
                     <span className="badge-secondary">
-                      {cartCount === null ? 
-                     
                       
-                      <Loader width="10" height="10" color="#1649ff" />
-                      
-                      
-                      : cartCount}
+                      {cartData.loading === true &&
+
+
+                        <Loader width="10" height="10" color="#1649ff" />
+
+                      }
+                      {cartData.loading === false && cartData.cart.data.total}
                     </span>
                   }
 

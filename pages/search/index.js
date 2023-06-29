@@ -5,7 +5,7 @@ import connectDB from '@/utils/connectDB';
 import React from 'react'
 
 function Search({ products, categories }) {
-  console.log(products)
+  
   return (
     <SearchPage
       products={products.docs}
