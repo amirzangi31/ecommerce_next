@@ -43,6 +43,7 @@ const handler = async (req, res) => {
                 console.log(err)
             })
         } else if (type === "decrease") {
+            
             Cart.findOneAndUpdate({
                 _id: cartId,
                 "items.product": product

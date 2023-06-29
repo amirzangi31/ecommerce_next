@@ -3,11 +3,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { BsTrash } from "react-icons/bs";
 import Loader from "./Loader";
+import { useDispatch } from "react-redux";
+import { fetchCart } from "@/redux/features/cart/cartSlice";
 
-function CardProductCart({ product, quantity, cartId, fetchCart }) {
+function CardProductCart({ product, quantity, cartId }) {
   const [loadingCount, setLoadingCount] = useState(false);
 
-
+  const dispatch = useDispatch()
 
 
   const increaseProduct = async () => {
@@ -16,17 +18,18 @@ function CardProductCart({ product, quantity, cartId, fetchCart }) {
       `/api/order/${cartId}?type=increase&&product=${product._id}`
     );
     if (res.data.status === "success") {
-      await fetchCart()
+      dispatch(fetchCart())
       setLoadingCount(false);
     }
   };
+  
   const decreaseProduct = async () => {
     setLoadingCount(true);
     const res = await axios.patch(
       `/api/order/${cartId}?type=decrease&&product=${product._id}`
     );
     if (res.data.status === "success") {
-      await fetchCart()
+      dispatch(fetchCart())
       setLoadingCount(false);
     }
   };
@@ -37,7 +40,7 @@ function CardProductCart({ product, quantity, cartId, fetchCart }) {
       `/api/order/${cartId}?type=delete&&product=${product._id}`
     );
     if (res.data.status === 'success') {
-      await fetchCart()
+      dispatch(fetchCart())
     }
     setLoadingCount(false);
   }
@@ -58,7 +61,7 @@ function CardProductCart({ product, quantity, cartId, fetchCart }) {
         </button>
         <span className="mx-2">
           {loadingCount === true ? (
-           <Loader width="20" height="20" color="#fff" /> 
+            <Loader width="20" height="20" color="#fff" />
           ) : (
             quantity
           )}

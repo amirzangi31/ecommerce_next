@@ -1,19 +1,25 @@
+import React, { useState } from "react";
 import CardProductCart from "@/components/modules/CardProductCart";
 import Loader from "@/components/modules/Loader";
 import Modal from "@/components/modules/modal/Modal";
 import Toastify from "@/services/Toast";
 import axios from "axios";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 
 function ShoppingCartPage() {
-  const [cart, setCart] = useState(null);
+
   const [modal, setModal] = useState(false);
   const [modalNoCart, setModalNoCart] = useState(false);
   const [modalPayment, setModalPayment] = useState(false);
   const [isPay, setIsPay] = useState(false);
+
+  const cartData = useSelector(state => state.cart)
+
+
+  
+
 
   const {
     user: { user },
@@ -41,19 +47,6 @@ function ShoppingCartPage() {
       setModal(true);
     }
   };
-
-  const fetchCart = async () => {
-    try {
-      const res = await axios("/api/order?type=noPaid");
-      setCart(res.data.data);
-    } catch (error) {
-      setModalNoCart(true);
-    }
-  };
-
-  useEffect(() => {
-    fetchCart();
-  }, [cart]);
 
 
 
@@ -157,111 +150,113 @@ function ShoppingCartPage() {
         </div>
       </Modal>
 
-      {!!cart ? (
-        cart.items.length > 0 ? (
-          <>
-            <Modal show={modal} setShow={setModal}>
-              <div className="bg-bg-three text-white p-2 rounded-lg border border-text-secondary">
-                <div>
-                  <span className="text-2xl block text-error">توجه !</span>
-                  <p className="my-2 text-center">
-                    شما هنوز پروفایل خود را کامل نکرده اید برای پرداخت لطفا
-                    پروفایل خود را تکمیل کنید
-                  </p>
-                  <p className="my-2 text-center">
-                    لطفا با دقت اطلاعات پروفایل را تکمیل کنید زیرا محصولات شما
-                    به این اطلاعات فرستاده میشوند
-                  </p>
-                  <div className="my-2 flex justify-center items-center gap-2 flex-row-reverse">
-                    <Link href={"/dashboard/profile"}>
-                      <button type="button" className="btn-sm btn-primary">
-                        تکمیل پروفایل
-                      </button>
-                    </Link>
-                    <button
-                      type="button"
-                      className="btn-sm btn-error"
-                      onClick={() => setModal(false)}
-                    >
-                      انصراف
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </Modal>
-            <div className="cart-content">
-              <div className="cart-content_products">
-                {!!cart &&
-                  cart.items.map((item) => (
-                    <CardProductCart
-                      key={item._id}
-                      {...item}
-                      cartId={cart._id}
-                      fetchCart={fetchCart}
-                    />
-                  ))}
-              </div>
-              <div className="cart-content_payment">
-                <p className="text-xl font-bold text-center border-b py-2">
-                  تسویه حساب{" "}
-                </p>
-                <div className="my-2">
-                  <p className="my-2">
-                    تعداد کل محصولات :{" "}
-                    <span className="text-bg-primary">
-                      {!!cart &&
-                        cart.items.reduce(
-                          (sum, item) => sum + item.quantity,
-                          0
-                        )}
-                    </span>
-                  </p>
-                  <p className="my-2">
-                    قیمت کل :{" "}
-                    <span className="text-bg-primary">
-                      {!!cart && cart.totalPrice.toLocaleString()}
-                    </span>
-                  </p>
-                  <p className="my-2">
-                    {" "}
-                    هزینه ارسال : <span className="text-bg-primary"></span>
-                  </p>
 
-                  <button
-                    disabled={loading}
-                    type="button"
-                    className={`btn-sm btn-primary w-full ${loading && "opacity-50"
-                      }`}
-                    onClick={modalPaymentHnadler}
-                  >
-                    پرداخت
+      {!cartData.loading && cartData.cart.data.total > 0 &&
+        <Modal show={modal} setShow={setModal}>
+          <div className="bg-bg-three text-white p-2 rounded-lg border border-text-secondary">
+            <div>
+              <span className="text-2xl block text-error">توجه !</span>
+              <p className="my-2 text-center">
+                شما هنوز پروفایل خود را کامل نکرده اید برای پرداخت لطفا
+                پروفایل خود را تکمیل کنید
+              </p>
+              <p className="my-2 text-center">
+                لطفا با دقت اطلاعات پروفایل را تکمیل کنید زیرا محصولات شما
+                به این اطلاعات فرستاده میشوند
+              </p>
+              <div className="my-2 flex justify-center items-center gap-2 flex-row-reverse">
+                <Link href={"/dashboard/profile"}>
+                  <button type="button" className="btn-sm btn-primary">
+                    تکمیل پروفایل
                   </button>
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="flex justify-between items-center flex-col gap-4">
-            <p className="text-3xl text-error text-center">
-              سبد خرید شما خالی است
-            </p>
-            <p className="text-2xl my-2  text-center">
-              برای سفارش محصول میتوانید به صفحه محصولات بروید
-            </p>
-            <div className="flex justify-center items-center my-2 w-full">
-              <Link href={"/products"}>
-                <button type="button" className="btn-sm btn-primary">
-                  رفتن به صفحه محصولات
+                </Link>
+                <button
+                  type="button"
+                  className="btn-sm btn-error"
+                  onClick={() => setModal(false)}
+                >
+                  انصراف
                 </button>
-              </Link>
+              </div>
             </div>
           </div>
-        )
-      ) : (
-        <div className="flex justify-center items-center">
-         <Loader width="50" height="50" color="#fff"  /> 
+        </Modal>
+      }
+      <div className="cart-content">
+        <div className="cart-content_products">
+          {!cartData.loading &&
+            cartData.cart.data.items.map((item) => (
+
+              <CardProductCart
+                key={item._id}
+                {...item}
+                cartId={cartData.cart.data._id}
+
+              />
+            ))}
+
+          {cartData.loading && <div className="flex justify-center items-center">
+            <Loader width={40} height={40} color={"#fff"} />
+          </div>}
+
+
         </div>
-      )}
+        <div className="cart-content_payment">
+          <p className="text-xl font-bold text-center border-b py-2">
+            تسویه حساب{" "}
+          </p>
+          <div className="my-2">
+            <p className="my-2">
+              تعداد کل محصولات :{" "}
+              <span className="text-bg-primary">
+                {!cartData.loading &&
+                  cartData.cart.data.items.reduce(
+                    (sum, item) => sum + item.quantity,
+                    0
+                  )}
+              </span>
+            </p>
+            <p className="my-2">
+              قیمت کل :{" "}
+              <span className="text-bg-primary">
+                {!cartData.loading && cartData.cart.data.totalPrice.toLocaleString()}
+              </span>
+            </p>
+            <p className="my-2">
+              {" "}
+              هزینه ارسال : <span className="text-bg-primary"></span>
+            </p>
+
+            <button
+              disabled={loading}
+              type="button"
+              className={`btn-sm btn-primary w-full ${loading && "opacity-50"
+                }`}
+              onClick={modalPaymentHnadler}
+            >
+              پرداخت
+            </button>
+          </div>
+        </div>
+      </div>
+      {!cartData.loading && cartData.cart.data.total === 0 &&
+        <div className="flex justify-between items-center flex-col gap-4">
+          <p className="text-3xl text-error text-center">
+            سبد خرید شما خالی است
+          </p>
+          <p className="text-2xl my-2  text-center">
+            برای سفارش محصول میتوانید به صفحه محصولات بروید
+          </p>
+          <div className="flex justify-center items-center my-2 w-full">
+            <Link href={"/products"}>
+              <button type="button" className="btn-sm btn-primary">
+                رفتن به صفحه محصولات
+              </button>
+            </Link>
+          </div>
+        </div>
+      }
+
     </div>
   );
 }
