@@ -30,6 +30,7 @@ import useSWR from "swr";
 
 //AXIOS
 import axios from "axios";
+import Link from "next/link";
 
 
 function ProductPage({ product }) {
@@ -235,10 +236,10 @@ function ProductPage({ product }) {
                 <span className="">قیمت محصول : </span>
                 {price.toLocaleString()}ريال
               </div>
-              <div className="product-details__category">
+              <Link href={`/search?category=${category._id}`} className="product-details__category">
                 <span className="">دسته بندی محصول : </span>
                 {category.name}
-              </div>
+              </Link>
               <div className="product-details__quantity">
                 <span className="">موجودی محصول : </span>
                 {12}عدد

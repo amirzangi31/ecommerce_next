@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+//ICONS
 import {
   MdKeyboardDoubleArrowUp,
   MdKeyboardDoubleArrowDown,
 } from "react-icons/md";
-
 import { CgSortAz } from "react-icons/cg";
+
+//REACT PAGINATE
 import ReactPaginate from "react-paginate";
+
+//COMPONENTS
 import CardProduct from "@/components/modules/CardProduct";
 
 function SearchPage({ products, categories, page, pageCount }) {
@@ -27,6 +31,7 @@ function SearchPage({ products, categories, page, pageCount }) {
     });
   };
 
+  //active field filter
   const activeHandler = (e, num) => {
     if (e.target.nodeName !== "INPUT" && e.target.nodeName !== "SELECT") {
       if (num === numberActive) {
@@ -37,6 +42,7 @@ function SearchPage({ products, categories, page, pageCount }) {
     }
   };
 
+  //filter the products
   const filterHandler = () => {
     let arrayUrl = [];
     for (let key in form) {
@@ -73,6 +79,7 @@ function SearchPage({ products, categories, page, pageCount }) {
     }
   };
 
+  //react paginate handler
   const handlePageClick = async (event) => {
     const pageNum = event.selected + 1;
 
@@ -145,9 +152,7 @@ function SearchPage({ products, categories, page, pageCount }) {
               onChange={changeHandler}
               defaultValue={router.query.category}
             >
-              <option value="" >
-                بدون دسته بندی
-              </option>
+              <option value="">بدون دسته بندی</option>
               {categories.length > 0 &&
                 categories.map((item) => (
                   <option value={item._id} key={item._id}>
@@ -197,55 +202,67 @@ function SearchPage({ products, categories, page, pageCount }) {
         </div>
       </div>
       <div className="products-search ">
-        <div className="products-search__filter">
-          <div className="flex justify-between items-center text-text-primary">
-            <CgSortAz className="text-3xl" />
-            نمایش براساس:
+        {!!products.length && (
+          <div className="products-search__filter">
+            <div className="flex justify-between items-center text-text-primary">
+              <CgSortAz className="text-3xl" />
+              نمایش براساس:
+            </div>
+
+            <div className="mx-2">
+              <span
+                className={router.query.sortBy === "-lasted" ? "active" : ""}
+                onClick={() => setFilter("-lasted")}
+              >
+                جدیدترین{" "}
+              </span>
+              <span
+                className={router.query.sortBy === "lasted" ? "active" : ""}
+                onClick={() => setFilter("lasted")}
+              >
+                قدیمی ترین{" "}
+              </span>
+              <span
+                className={router.query.sortBy === "-price" ? "active" : ""}
+                onClick={() => setFilter("-price")}
+              >
+                گران ترین{" "}
+              </span>
+              <span
+                className={router.query.sortBy === "price" ? "active" : ""}
+                onClick={() => setFilter("price")}
+              >
+                ارزان ترین{" "}
+              </span>
+            </div>
           </div>
-          <div className="mx-2">
-            <span
-              className={router.query.sortBy === "-lasted" && "active"}
-              onClick={() => setFilter("-lasted")}
-            >
-              جدیدترین{" "}
-            </span>
-            <span
-              className={router.query.sortBy === "lasted" && "active"}
-              onClick={() => setFilter("lasted")}
-            >
-              قدیمی ترین{" "}
-            </span>
-            <span
-              className={router.query.sortBy === "-price" && "active"}
-              onClick={() => setFilter("-price")}
-            >
-              گران ترین{" "}
-            </span>
-            <span
-              className={router.query.sortBy === "price" && "active"}
-              onClick={() => setFilter("price")}
-            >
-              ارزان ترین{" "}
-            </span>
-          </div>
-        </div>
+        )}
         <div className="products-search__content">
           {products.map((item) => (
             <CardProduct {...item} key={item._id} />
           ))}
         </div>
 
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="بعدی >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          pageCount={pageCount}
-          previousLabel="< قبلی"
-          className="pagination"
-          initialPage={page}
-          renderOnZeroPageCount={null}
-        />
+        {!products.length && (
+          <div className="h-96 flex justify-center items-center">
+            <p className="text-center text-2xl text-text-primary ">
+              محصول مورد نظر یافت نشد !
+            </p>
+          </div>
+        )}
+        {!!products.length && (
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="بعدی >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={pageCount}
+            previousLabel="< قبلی"
+            className="pagination"
+            initialPage={page}
+            renderOnZeroPageCount={null}
+          />
+        )}
       </div>
     </div>
   );

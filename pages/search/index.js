@@ -6,6 +6,8 @@ import React from 'react'
 
 function Search({ products, categories }) {
   
+  
+
   return (
     <SearchPage
       products={products.docs}
@@ -73,6 +75,10 @@ export const getServerSideProps = async (context) => {
 
 
   const categories = await Category.find().populate("parent")
+
+  //دسته بندی هاایی که والد دارند
+  // const categoriesWithParent = await Category.find({ parent: { $ne: null } }).exec();
+
 
   // if (!Object.keys(query).length) {
   //   return {

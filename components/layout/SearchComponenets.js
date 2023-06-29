@@ -1,12 +1,26 @@
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 function SearchComponenets({ show, setShow }) {
+  const [search, setSearch] = useState("")
+  const router = useRouter()
+
+
   const closeSearchHandler = (e) => {
     if (e.target.id === "search" || e.target.id === "search-container") {
       setShow(false);
     }
   };
+
+
+
+  const searchHandler = () => {
+
+    const url = `/search?name=${search}`
+    router.push(url)
+  }
+
 
   return (
     <div
@@ -16,8 +30,8 @@ function SearchComponenets({ show, setShow }) {
     >
       <div className="container mx-auto" id="search-container">
         <div className="search-modal__inner">
-          <input type="text" placeholder="جست و جو در محصولات" />
-          <button type="button">
+          <input type="text" placeholder="جست و جو در محصولات" value={search} onChange={e => setSearch(e.target.value)} />
+          <button type="button" onClick={searchHandler}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -35,7 +49,7 @@ function SearchComponenets({ show, setShow }) {
           </button>
         </div>
         <Link href={"/search"} className="btn-pish">
-        <button type="button" className="btn-sm btn-primary">رفتن به صفحه جست و جو پیشرفته</button>
+          <button type="button" className="btn-sm btn-primary">رفتن به صفحه جست و جو پیشرفته</button>
         </Link>
       </div>
     </div>

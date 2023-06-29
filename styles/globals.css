@@ -745,10 +745,10 @@ hr {
   @apply border border-text-secondary bg-bg-three rounded-lg py-2 flex justify-start items-center;
 }
 .products-search__filter span{
-  @apply text-sm cursor-pointer;
+  @apply  cursor-pointer;
 }
 .products-search__filter span.active{
-  @apply bg-bg-primary text-lg text-text-primary rounded-lg px-2 mx-2;
+  @apply bg-bg-primary  text-text-primary rounded-lg px-2 mx-2;
 }
 .products-search__content {
   @apply grid grid-cols-3 gap-2;
