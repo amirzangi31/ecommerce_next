@@ -243,50 +243,56 @@ function ProductPage({ product }) {
                     اضافه کردن به سبد خرید
                   </button>
                 }
-
                 {
-                  !loading && !isInCart(cart.data, _id) &&
-                  <button
-                    type="button"
+                  session.status === "authenticated" && (
+                    <>
 
-                    disabled={loadingCart}
-                    className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
-                    onClick={addHandler}
-                  >
-                    اضافه کردن به سبد خرید
-                  </button>
+                      {!loading && !isInCart(cart.data, _id) &&
+                        <button
+                          type="button"
+
+                          disabled={loadingCart}
+                          className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
+                          onClick={addHandler}
+                        >
+                          اضافه کردن به سبد خرید
+                        </button>
+                      }
+
+
+                      {!loading && isInCart(cart.data, _id)
+                        &&
+                        <button type="button"
+
+
+                          disabled={loadingCart}
+                          className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
+
+                          onClick={increaseProduct}>+</button>}
+
+
+
+                      {!loading && productCount(cart.data, _id) && <p className="mx-4 inline-block text-2xl text-text-primary">{productCount(cart.data, _id)}</p>}
+                      {
+                        !loading && productCount(cart.data, _id) === 1 &&
+                        <button type="button"
+                          disabled={loadingCart}
+                          className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
+                          onClick={deleteProduct}>
+                          <BsTrash className="text-2xl" />
+                        </button>
+                      }
+                      {
+                        !loading && productCount(cart.data, _id) > 1 &&
+                        <button type="button"
+                          disabled={loadingCart}
+                          className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
+                          onClick={decreaseProduct}>-</button>
+                      }
+                    </>
+                  )
                 }
 
-                {
-                  !loading && isInCart(cart.data, _id)
-                  &&
-                  <button type="button"
-
-
-                    disabled={loadingCart}
-                    className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
-
-                    onClick={increaseProduct}>+</button>
-                }
-
-
-                {!loading && productCount(cart.data, _id) && <p className="mx-4 inline-block text-2xl text-text-primary">{productCount(cart.data, _id)}</p>}
-                {
-                  !loading && productCount(cart.data, _id) === 1 &&
-                  <button type="button"
-                    disabled={loadingCart}
-                    className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
-                    onClick={deleteProduct}>
-                    <BsTrash className="text-2xl" />
-                  </button>
-                }
-                {
-                  !loading && productCount(cart.data, _id) > 1 &&
-                  <button type="button"
-                    disabled={loadingCart}
-                    className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
-                    onClick={decreaseProduct}>-</button>
-                }
 
 
               </div>

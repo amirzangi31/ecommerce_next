@@ -18,8 +18,6 @@ function ShoppingCartPage() {
   const cartData = useSelector(state => state.cart)
 
 
-  
-
 
   const {
     user: { user },

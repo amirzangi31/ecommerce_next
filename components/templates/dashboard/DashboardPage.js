@@ -90,6 +90,11 @@ function DashboardPage() {
             پیگیری سفارش
           </button>
         </Link>
+        <Link href={"/dashboard/requestfallowup"} className="w-full ">
+          <button type="button" className="btn-sm btn-primary w-full">
+            پیگیری درخواست
+          </button>
+        </Link>
         <Link href={"/dashboard/tickets"} className="w-full ">
           <button type="button" className="btn-sm btn-primary w-full">
             همه تیکت ها

@@ -1,10 +1,14 @@
+import SignModal from "@/components/modules/SignModal";
+import Modal from "@/components/modules/modal/Modal";
+import Toastify from "@/services/Toast";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { RiCustomerService2Fill } from "react-icons/ri";
 
-
-import { Fade } from 'react-reveal'
+import { Fade } from "react-reveal";
 
 const data = [
   {
@@ -30,8 +34,110 @@ const data = [
   },
 ];
 
+const successHandler = (status) => {
+  if (status === "success") {
+    Toastify("success", "درخواست باموفقیت ارسال شد");
+  } else {
+    return;
+  }
+};
+
 function RequestHomePage() {
   const [activeSliceIndex, setActiveSliceIndex] = useState(0);
+  const [modalSale, setModalSale] = useState(false);
+  const [modalRepire, setModalRepire] = useState(false);
+  const [modalCounseling, setModalCounseling] = useState(false);
+  const [modalSign, setModalSign] = useState(false);
+
+  const [form, setForm] = useState({
+    sale: "",
+    repire: "",
+    counseling: "",
+  });
+
+  const session = useSession();
+
+  const showModal = (ind) => {
+    if (session.status === "authenticated") {
+      switch (ind) {
+        case 0:
+          setModalSale(true);
+          break;
+        case 1:
+          setModalRepire(true);
+          break;
+        case 2:
+          setModalCounseling(true);
+          break;
+
+        default:
+          break;
+      }
+    } else if (session.status === "loading") {
+      return;
+    } else {
+      setModalSign(true);
+    }
+  };
+
+  const changeHandler = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const sendHandler = async (type) => {
+    if (type === "sale") {
+      try {
+        
+        const res = await axios.post(`/api/request?type=${type}`, {
+          requestText: form.sale,
+        });
+        
+        successHandler(res.data.status);
+        setForm({
+          ...form,
+          sale: "",
+        });
+        setModalSale(false);
+      } catch (error) {
+          Toastify("error" , "لطفا درخواست خود را وارد کنید")
+      }
+      } else if (type === "repire") {
+      try {
+        
+        const res = await axios.post(`/api/request?type=${type}`, {
+          requestText: form.repire,
+        });
+        
+        successHandler(res.data.status);
+        setForm({
+          ...form,
+          repire: "",
+        });
+        setModalRepire(false);
+      } catch (error) {
+          Toastify("error" , "لطفا درخواست خود را وارد کنید")
+      }
+      } else if (type === "counseling") {
+      try {
+        
+        const res = await axios.post(`/api/request?type=${type}`, {
+          requestText: form.counseling,
+        });
+        
+        successHandler(res.data.status);
+        setForm({
+          ...form,
+          counseling: "",
+        });
+        setModalCounseling(false);
+      } catch (error) {
+          Toastify("error" , "لطفا درخواست خود را وارد کنید")
+      }
+      }
+  };
 
   return (
     <section className="requests pb-12 mt-24">
@@ -44,9 +150,103 @@ function RequestHomePage() {
         </p>
       </div>
 
+      <Modal show={modalSale} setShow={setModalSale}>
+        <div className="bg-bg-three border border-text-secondary rounded-lg  p-2">
+          <p className="text-bg-primary text-center text-xl ">
+            ارسال درخواست برای مشاوره خرید
+          </p>
+          <p className="text-sm text-text-primary text-center my-4">
+            بعد از ارسال درخواست منتظر تماس مشاورین ما باشید و همچنین میتوانید
+            درخواست خود از بخش پیگیری درخواست در داشبورد پیگیری کنید ممنونیم از
+            انتخاب شما
+          </p>
+          <textarea
+            onChange={changeHandler}
+            name="sale"
+            value={form.sale}
+            rows="10"
+            cols="30"
+            className="w-full bg-transparent border border-text-secondary rounded-lg"
+            placeholder="درخواست ...."
+          ></textarea>
+          <div className="flex justify-end items-center">
+            <button
+              type="button"
+              className="btn-sm btn-primary"
+              onClick={() => sendHandler("sale")}
+            >
+              ارسال درخواست{" "}
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal show={modalRepire} setShow={setModalRepire}>
+        <div className="bg-bg-three border border-text-secondary rounded-lg  p-2">
+          <p className="text-bg-primary text-center text-xl ">
+            ارسال درخواست برای مشاوره تعمیر
+          </p>
+          <p className="text-sm text-text-primary text-center my-4">
+            بعد از ارسال درخواست منتظر تماس مشاورین ما باشید و همچنین میتوانید
+            درخواست خود از بخش پیگیری درخواست در داشبورد پیگیری کنید ممنونیم از
+            انتخاب شما
+          </p>
+          <textarea
+            onChange={changeHandler}
+            name="repire"
+            value={form.repire}
+            rows="10"
+            cols="30"
+            className="w-full bg-transparent border border-text-secondary rounded-lg"
+            placeholder="درخواست ...."
+          ></textarea>
+          <div className="flex justify-end items-center">
+            <button
+              type="button"
+              className="btn-sm btn-primary"
+              onClick={() => sendHandler("repire")}
+            >
+              ارسال درخواست{" "}
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal show={modalCounseling} setShow={setModalCounseling}>
+        <div className="bg-bg-three border border-text-secondary rounded-lg  p-2">
+          <p className="text-bg-primary text-center text-xl ">
+            ارسال درخواست برای پرسش و پاسخ
+          </p>
+          <p className="text-sm text-text-primary text-center my-4">
+            بعد از ارسال درخواست منتظر تماس مشاورین ما باشید و همچنین میتوانید
+            درخواست خود از بخش پیگیری درخواست در داشبورد پیگیری کنید ممنونیم از
+            انتخاب شما
+          </p>
+          <textarea
+            onChange={changeHandler}
+            name="counseling"
+            value={form.counseling}
+            rows="10"
+            cols="30"
+            className="w-full bg-transparent border border-text-secondary rounded-lg"
+            placeholder="درخواست ...."
+          ></textarea>
+          <div className="flex justify-end items-center">
+            <button
+              type="button"
+              className="btn-sm btn-primary"
+              onClick={() => sendHandler("counseling")}
+            >
+              ارسال درخواست{" "}
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <SignModal show={modalSign} setShow={setModalSign}></SignModal>
+
       <div className="content-request ">
         <Fade right>
-
           <div className="flex flex-col justify-center items-center">
             {data.map((item, index) => (
               <div
@@ -97,11 +297,14 @@ function RequestHomePage() {
                 {activeSliceIndex === index && (
                   <div className="request-description">
                     {item.des}
-                    <Link href={item.link} className="mr-auto">
-                      <button type="button" className="btn-sm btn-primary">
-                        درخواست
-                      </button>
-                    </Link>
+
+                    <button
+                      type="button"
+                      className="btn-sm btn-primary mr-auto"
+                      onClick={() => showModal(index)}
+                    >
+                      درخواست
+                    </button>
                   </div>
                 )}
               </div>
@@ -124,11 +327,9 @@ function RequestHomePage() {
                     />
                   )
               )}
-
             </div>
           </div>
         </Fade>
-
       </div>
     </section>
   );

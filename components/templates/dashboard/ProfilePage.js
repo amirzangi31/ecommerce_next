@@ -1,9 +1,11 @@
 import Button from "@/components/modules/Button";
+import { fetchUser } from "@/redux/features/user/userSlice";
 import Toastify from "@/services/Toast";
 import axios from "axios";
 import Image from "next/image";
 import React, { useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
+import { useDispatch } from "react-redux";
 
 function ProfilePage({ user }) {
 
@@ -24,7 +26,7 @@ function ProfilePage({ user }) {
   const [uploadLoading, setUploadLoading] = useState(false)
 
 
-
+  const dispatch = useDispatch()
 
 
 
@@ -97,6 +99,7 @@ function ProfilePage({ user }) {
       })
       Toastify("success", "اطلاعات با موفقیت بروزرسانی شد")
       setSaveLoading(false)
+      dispatch(fetchUser())
     } catch (error) {
       Toastify("error", "اطلاعات  را به درستی وارد کنید")
       setSaveLoading(false)
@@ -252,10 +255,10 @@ function ProfilePage({ user }) {
               value={form.password}
             />
 
-              <span className="text-xs my-1 text-error">
-                *وارد کردن رمز عبور صحیح برای تغییر اطلاعات الزامی میباشد*
-              </span>
-       
+            <span className="text-xs my-1 text-error">
+              *وارد کردن رمز عبور صحیح برای تغییر اطلاعات الزامی میباشد*
+            </span>
+
           </div>
         </div>
 

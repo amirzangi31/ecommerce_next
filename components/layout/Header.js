@@ -32,6 +32,7 @@ function Header() {
   const cartData = useSelector(state => state.cart)
 
 
+
   const session = useSession();
 
   const dispatch = useDispatch()
@@ -39,7 +40,6 @@ function Header() {
 
 
   useEffect(() => {
-    console.log("first")
     dispatch(fetchCart())
   }, [])
 
@@ -272,7 +272,7 @@ function Header() {
                         <Loader width="10" height="10" color="#1649ff" />
 
                       }
-                      {cartData.loading === false && cartData.cart.data.total}
+                      {cartData.loading === false && cartData.cart.data?.total}
                     </span>
                   }
 
