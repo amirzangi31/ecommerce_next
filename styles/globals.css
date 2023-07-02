@@ -81,6 +81,9 @@ hr {
   @apply w-5 h-5 text-xs center rounded-full absolute top-0 right-0 font-bold;
 }
 
+.badge-primary-m {
+  @apply w-5 h-5 text-xs center rounded-full absolute top-0 -left-5 font-bold bg-bg-primary text-text-primary;
+}
 .badge-primary {
   @apply badge bg-bg-primary text-text-primary;
 }
@@ -228,7 +231,7 @@ hr {
   @apply flex justify-center items-center;
 }
 .close-modal {
-  @apply w-12 h-12 rounded-full text-whiteone cursor-pointer absolute top-3 right-2 center;
+  @apply w-12 h-12 rounded-full text-whiteone cursor-pointer absolute top-3 right-2 center z-50;
   @apply dark:text-dark-whiteone;
   @apply border-2 border-whiteone;
 }
@@ -369,13 +372,14 @@ hr {
   @apply text-text-primary my-4 text-center text-xl;
 }
 .article-content__info {
-  @apply my-2  p-2  text-text-primary text-sm flex justify-between  items-center;
+  @apply my-2  p-2  text-text-primary  md:text-sm flex justify-between  items-center ;
+  font-size: 10px;
 }
 .article-content__shortdes {
-  @apply my-2 text-center bg-bg-three p-2 rounded-lg border border-text-secondary;
+  @apply my-4 text-center bg-bg-three p-2 rounded-lg border border-text-secondary;
 }
 .article-content__description {
-  @apply my-2;
+  @apply my-4;
 }
 .article-content__description img {
   @apply mx-auto;
@@ -549,7 +553,7 @@ hr {
 /*-----------------------base form----------------------------*/
 
 .form {
-  @apply flex justify-center items-center flex-col;
+  @apply flex justify-center items-center flex-col py-2;
 }
 
 .form__group {
@@ -651,17 +655,17 @@ hr {
 
 /*-----------------------cart content----------------------------*/
 .cart-content {
-  @apply flex justify-between items-start  flex-row-reverse gap-4 relative;
+  @apply flex justify-between items-start flex-col-reverse  lg:flex-row-reverse gap-4 relative;
 }
 .cart-content_base-div {
   @apply bg-bg-three p-4 rounded-lg border border-text-secondary;
 }
 
 .cart-content_products {
-  @apply w-9/12 cart-content_base-div;
+  @apply w-full lg:w-9/12 cart-content_base-div;
 }
 .cart-content_payment {
-  @apply w-3/12 cart-content_base-div;
+  @apply w-full lg:w-3/12 cart-content_base-div;
 }
 .cart-content_payment p {
   @apply text-text-primary;
@@ -671,8 +675,27 @@ hr {
 
 /*-----------------------table orders----------------------------*/
 
+.table-content {
+  @apply overflow-x-scroll xl:overflow-x-hidden pb-2;
+}
+/* width */
+.table-content::-webkit-scrollbar {
+  @apply w-1 h-2;
+}
+
+/* Track */
+.table-content::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+.table-content::-webkit-scrollbar-thumb {
+  @apply bg-bg-primary rounded-lg;
+}
+
 .table-orders {
-  @apply w-full;
+  @apply lg:w-full;
+  min-width: 1284px;
 }
 
 .table-orders thead {
@@ -701,7 +724,7 @@ hr {
 /*-----------------------serach navbar----------------------------*/
 
 .search-navbar {
-  @apply flex justify-start items-start gap-2 flex-col w-3/12;
+  @apply flex justify-start items-start gap-2 flex-col w-full lg:w-3/12 mb-4 lg:mb-0;
 }
 .search-navbar__item {
   @apply w-full  py-1 px-2 cursor-pointer;
@@ -739,19 +762,19 @@ hr {
 
 /* products */
 .products-search {
-  @apply w-9/12 pr-2;
+  @apply lg:w-9/12 pr-2;
 }
 .products-search__filter {
-  @apply border border-text-secondary bg-bg-three rounded-lg py-2 flex justify-start items-center;
+  @apply border border-text-secondary bg-bg-three rounded-lg py-2 flex justify-start items-start flex-col lg:flex-row lg:items-center;
 }
-.products-search__filter span{
-  @apply  cursor-pointer;
+.products-search__filter span {
+  @apply cursor-pointer ;
 }
-.products-search__filter span.active{
+.products-search__filter span.active {
   @apply bg-bg-primary  text-text-primary rounded-lg px-2 mx-2;
 }
 .products-search__content {
-  @apply grid grid-cols-3 gap-2;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2;
 }
 
 /*-----------------------serach navbar----------------------------*/

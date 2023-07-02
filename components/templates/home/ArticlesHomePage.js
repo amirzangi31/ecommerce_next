@@ -66,7 +66,8 @@ function ArticlesHomePage({ articles }) {
       <div className="flex justify-between items-center title">
         <h2>جدیدترین مقالات</h2>
         <Link href={"/articles"}>
-          <button type="button" className="btn-md btn-primary">
+        <button type="button" className="btn-sm sm:btn-md btn-primary">
+
             سایر مقالات
           </button>
         </Link>

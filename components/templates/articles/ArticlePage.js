@@ -23,8 +23,8 @@ function ArticlePage({ article }) {
       <div className="container mx-auto py-12 px-2">
         <div className="article-content">
           <div className="article-content__info">
-            <div>نوشته شده در تاریخ : {convertToPersain(createdAt)}</div>
-            <div>مدت زمان برای خواندن : 20دقیقه</div>
+            <div >نوشته شده در تاریخ : {convertToPersain(createdAt)}</div>
+            <div >مدت زمان برای خواندن : 20دقیقه</div>
           </div>
 
           <div className="article-content__image">
@@ -33,7 +33,13 @@ function ArticlePage({ article }) {
             </Zoom>
           </div>
           <div className="article-content__title">{title}</div>
+          <div className="title-one ">
+            توضیحات کوتاه : 
+          </div>
           <div className="article-content__shortdes">{shortdes}</div>
+          <div className="title-one ">
+            مقاله  : 
+          </div>
 
           <div className="article-content__description ">
             {parse(description)}

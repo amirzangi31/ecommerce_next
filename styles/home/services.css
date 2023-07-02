@@ -10,6 +10,6 @@
 }
 
 .title h2 {
-    @apply text-3xl text-text-primary font-bold;
+    @apply text-2xl text-text-primary font-bold sm:text-3xl;
 
 }

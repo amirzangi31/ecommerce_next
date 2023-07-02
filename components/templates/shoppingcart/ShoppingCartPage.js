@@ -149,7 +149,7 @@ function ShoppingCartPage() {
       </Modal>
 
 
-      {!cartData.loading && cartData.cart.data.total > 0 &&
+      {!cartData.loading && cartData.cart.data?.total > 0 &&
         <Modal show={modal} setShow={setModal}>
           <div className="bg-bg-three text-white p-2 rounded-lg border border-text-secondary">
             <div>

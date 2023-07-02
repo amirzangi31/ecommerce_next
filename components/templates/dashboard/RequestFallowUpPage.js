@@ -48,7 +48,7 @@ function RequestFallowUpPage({ requests }) {
       )}
 
       {requests.length > 0 && (
-        <div className="mt-8">
+        <div className="mt-8 table-content ">
           <table className="table-orders">
             <thead>
               <tr>

@@ -135,7 +135,7 @@ function OrderTrickingPage() {
 
       <h2 className="title-one">پیگیری سفارشات</h2>
 
-      <div className="mt-8">
+      <div className="mt-8 table-content">
         {loading && (
           <div className="flex justify-center items-center w-full">
             <Loader width="50" height="50" color="#fff" />

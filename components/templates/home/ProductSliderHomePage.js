@@ -71,7 +71,7 @@ function ProductSliderHomePage({ products }) {
       <div className="flex justify-between items-center title">
         <h2>جدیدترین محصولات</h2>
         <Link href={"/products"}>
-          <button type="button" className="btn-md btn-primary">
+          <button type="button" className="btn-sm sm:btn-md btn-primary">
             سایر محصولات
           </button>
         </Link>

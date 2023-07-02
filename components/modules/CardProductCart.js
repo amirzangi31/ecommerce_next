@@ -50,7 +50,7 @@ function CardProductCart({ product, quantity, cartId }) {
       <div>
         <Image src={product.images[0].link} width={50} height={50} alt="test" />
       </div>
-      <div className="w-3/12 text-center">{product.name}</div>
+      <div className="w-6/12 lg:w-3/12 text-center">{product.name}</div>
       <div className="w-3/12  flex  justify-center items-center ">
         <button
           className={`btn-sm btn-primary ${loadingCount && "opacity-50"}`}

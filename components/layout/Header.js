@@ -54,7 +54,7 @@ function Header() {
   useEffect(() => {
 
     setShowSearch(false)
-
+    setShowMenu(false)
 
   }, [router.pathname])
 
@@ -110,6 +110,9 @@ function Header() {
               <Link href="/products">محصولات</Link>
             </li>
             <li>
+              <Link href="/articles">مقالات</Link>
+            </li>
+            <li>
               <div
                 className="search"
                 onClick={() => {
@@ -160,7 +163,26 @@ function Header() {
               <Link href="/">درباره ما</Link>
             </li>
             <li className="lg:hidden">
-              <Link href="/">سبد خرید</Link>
+              <Link href="/dashboard">داشبورد</Link>
+            </li>
+            {session.status === "authenticated" && session.data.user.name === "admin" && (
+              <li className="lg:hidden">
+                <Link href="/admin">قسمت ادمین</Link>
+              </li>
+            )}
+
+            <li className="lg:hidden">
+              <Link href="/cart" className="relative">
+                سبد خرید <span className="badge-primary-m">
+                  {cartData.loading === true &&
+
+
+                    <Loader width="10" height="10" color="#1649ff" />
+
+                  }
+                  {cartData.loading === false && cartData.cart.data?.total}
+                </span>
+              </Link>
             </li>
           </ul>
         </nav>
@@ -265,7 +287,7 @@ function Header() {
                   </svg>
                   {
                     <span className="badge-secondary">
-                      
+
                       {cartData.loading === true &&
 
 
