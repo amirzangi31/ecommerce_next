@@ -27,7 +27,7 @@ function ShoppingCartPage() {
 
   const payHandler = async () => {
     try {
-      const res = await axios.patch(`/api/order/${cart._id}?type=payment`);
+      const res = await axios.patch(`/api/order/${cartData.cart.data._id}?type=payment`);
       if (res.data.status === "success") {
         Toastify("success", "سبد خرید شما با موفقیت خریداری شد");
         setModalPayment(false);
@@ -180,63 +180,66 @@ function ShoppingCartPage() {
           </div>
         </Modal>
       }
-      <div className="cart-content">
-        <div className="cart-content_products">
-          {!cartData.loading &&
-            cartData.cart.data.items.map((item) => (
+      {!cartData.loading && cartData.cart.data.total > 0 && (
+        <div className="cart-content">
+          <div className="cart-content_products">
+            {!cartData.loading &&
+              cartData.cart.data.items.map((item) => (
 
-              <CardProductCart
-                key={item._id}
-                {...item}
-                cartId={cartData.cart.data._id}
+                <CardProductCart
+                  key={item._id}
+                  {...item}
+                  cartId={cartData.cart.data._id}
 
-              />
-            ))}
+                />
+              ))}
 
-          {cartData.loading && <div className="flex justify-center items-center">
-            <Loader width={40} height={40} color={"#fff"} />
-          </div>}
+            {cartData.loading && <div className="flex justify-center items-center">
+              <Loader width={40} height={40} color={"#fff"} />
+            </div>}
 
 
-        </div>
-        <div className="cart-content_payment">
-          <p className="text-xl font-bold text-center border-b py-2">
-            تسویه حساب{" "}
-          </p>
-          <div className="my-2">
-            <p className="my-2">
-              تعداد کل محصولات :{" "}
-              <span className="text-bg-primary">
-                {!cartData.loading &&
-                  cartData.cart.data.items.reduce(
-                    (sum, item) => sum + item.quantity,
-                    0
-                  )}
-              </span>
+          </div>
+          <div className="cart-content_payment">
+            <p className="text-xl font-bold text-center border-b py-2">
+              تسویه حساب{" "}
             </p>
-            <p className="my-2">
-              قیمت کل :{" "}
-              <span className="text-bg-primary">
-                {!cartData.loading && cartData.cart.data.totalPrice.toLocaleString()}
-              </span>
-            </p>
-            <p className="my-2">
-              {" "}
-              هزینه ارسال : <span className="text-bg-primary"></span>
-            </p>
+            <div className="my-2">
+              <p className="my-2">
+                تعداد کل محصولات :{" "}
+                <span className="text-bg-primary">
+                  {!cartData.loading &&
+                    cartData.cart.data.items.reduce(
+                      (sum, item) => sum + item.quantity,
+                      0
+                    )}
+                </span>
+              </p>
+              <p className="my-2">
+                قیمت کل :{" "}
+                <span className="text-bg-primary">
+                  {!cartData.loading && cartData.cart.data.totalPrice && cartData.cart.data.totalPrice.toLocaleString()}
+                </span>
+              </p>
+              <p className="my-2">
+                {" "}
+                هزینه ارسال : <span className="text-bg-primary"></span>
+              </p>
 
-            <button
-              disabled={loading}
-              type="button"
-              className={`btn-sm btn-primary w-full ${loading && "opacity-50"
-                }`}
-              onClick={modalPaymentHnadler}
-            >
-              پرداخت
-            </button>
+              <button
+                disabled={loading}
+                type="button"
+                className={`btn-sm btn-primary w-full ${loading && "opacity-50"
+                  }`}
+                onClick={modalPaymentHnadler}
+              >
+                پرداخت
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
       {!cartData.loading && cartData.cart.data.total === 0 &&
         <div className="flex justify-between items-center flex-col gap-4">
           <p className="text-3xl text-error text-center">

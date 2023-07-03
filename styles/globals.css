@@ -521,7 +521,7 @@ hr {
 
 /*-------------------------form signup and signin--------------------------*/
 .sign-content {
-  @apply flex justify-center items-center px-2;
+  @apply flex justify-center items-center p-2;
   min-height: calc(100vh - 300px);
 }
 .sign-content form {
@@ -539,9 +539,17 @@ hr {
 .sign-content__group input {
   @apply w-full   bg-transparent border border-text-secondary rounded-lg p-1 my-1;
 }
+.sign-content__group input.error {
+  @apply  border-error ;
+}
+.sign-content__group input.success {
+  @apply  border-bg-primary ;
+}
+
 .sign-content__group input::placeholder {
   @apply text-xs;
 }
+
 .sign-content__buttons p {
   @apply text-xs text-center my-1;
 }
@@ -655,14 +663,14 @@ hr {
 
 /*-----------------------cart content----------------------------*/
 .cart-content {
-  @apply flex justify-between items-start flex-col-reverse  lg:flex-row-reverse gap-4 relative;
+  @apply flex justify-between items-center flex-col-reverse  lg:items-start lg:flex-row-reverse gap-4 relative;
 }
 .cart-content_base-div {
   @apply bg-bg-three p-4 rounded-lg border border-text-secondary;
 }
 
 .cart-content_products {
-  @apply w-full lg:w-9/12 cart-content_base-div;
+  @apply w-full lg:w-9/12 cart-content_base-div overflow-x-scroll md:overflow-x-hidden ;
 }
 .cart-content_payment {
   @apply w-full lg:w-3/12 cart-content_base-div;
@@ -778,3 +786,27 @@ hr {
 }
 
 /*-----------------------serach navbar----------------------------*/
+
+
+/*-----------------------card product cart----------------------------*/
+
+
+.card-product-cart{
+  @apply flex justify-between items-center gap-1 flex-row-reverse text-text-primary my-2;
+  min-width: 600px;
+}
+/*-----------------------card product cart----------------------------*/
+
+
+
+
+/*-----------------------error style validate form----------------------------*/
+
+.text-error-validate{
+  @apply text-xs text-error;
+}
+
+
+
+/*-----------------------error style validate form----------------------------*/
+

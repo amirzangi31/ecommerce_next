@@ -6,6 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 function DashboardPage() {
   const session = useSession();
@@ -13,6 +14,10 @@ function DashboardPage() {
   const [ticket, setTicket] = useState("");
 
   const [ticketLoading, setTicketLoading] = useState(false)
+
+
+  const { laoding, user } = useSelector(state => state.user)
+  console.log(user)
 
 
   const [modal, setModal] = useState(false);
@@ -67,17 +72,20 @@ function DashboardPage() {
         </form>
       </Modal>
 
-      <div className="flex justify-center items-center">
-        {session.status === "authenticated" && (
-          <Image
-            src={session.data?.user?.image}
-            width={200}
-            height={200}
-            alt="profile"
-            className="rounded-lg w-48"
-          />
-        )}
-      </div>
+      {!laoding && user.user.profileimage && (
+
+        <div className="flex justify-center items-center">
+          {session.status === "authenticated" && (
+            <Image
+              src={user.user.profileimage}
+              width={200}
+              height={200}
+              alt="profile"
+              className="rounded-lg w-48"
+            />
+          )}
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-2 mt-4">
         <Link href={"/dashboard/profile"} className="w-full ">

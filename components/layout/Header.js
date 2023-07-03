@@ -125,13 +125,14 @@ function Header() {
             </li>
             <li>
               <Link href="/">دسته بندی ها</Link>
+              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-4 h-4"
+                className="w-4 h-4 hidden lg:block"
               >
                 <path
                   strokeLinecap="round"
@@ -139,7 +140,7 @@ function Header() {
                   d="M19.5 8.25l-7.5 7.5-7.5-7.5"
                 />
               </svg>
-              <div className="drop-down-nav ">
+              <div className="drop-down-nav hidden lg:block ">
                 <div className="drop-down-nav__inner">
                   <div className="drop-down-nav__link">
                     <Link href="/">link_1</Link>
@@ -162,14 +163,26 @@ function Header() {
             <li>
               <Link href="/">درباره ما</Link>
             </li>
-            <li className="lg:hidden">
-              <Link href="/dashboard">داشبورد</Link>
-            </li>
+            {session.status === "authenticated" && (
+              <li className="lg:hidden">
+                <Link href="/dashboard">داشبورد</Link>
+              </li>
+            )}
+            {session.status === "unauthenticated" && (
+
+              <li className="lg:hidden">
+                <Link href="/signin">ثبتنام / ورود</Link>
+              </li>
+            )}
+
             {session.status === "authenticated" && session.data.user.name === "admin" && (
               <li className="lg:hidden">
                 <Link href="/admin">قسمت ادمین</Link>
               </li>
             )}
+
+
+
 
             <li className="lg:hidden">
               <Link href="/cart" className="relative">
@@ -184,10 +197,17 @@ function Header() {
                 </span>
               </Link>
             </li>
+            {session.status === "authenticated" && (
+              <li className="lg:hidden" onClick={signoutHandler}>
+                خروج
+              </li>
+            )}
           </ul>
         </nav>
         {session.status === "loading" && (
-          <span>
+          <span
+            className="hidden lg:block"
+          >
             <RotatingLines
               strokeColor="white"
               strokeWidth="5"

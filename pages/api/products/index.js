@@ -13,6 +13,7 @@ const handler = async (req, res) => {
     }
     const { method } = req
 
+    const { query } = req
 
 
     if (method === 'POST') {
@@ -38,9 +39,15 @@ const handler = async (req, res) => {
 
         return res.status(201).json({ status: "success", message: 'product created', data: newProduct })
     } else if (method === "GET") {
-        const products = await Product.find()
- 
 
+        if (query.category) {
+            const products = await Product.find({ category: query.category }).sort({ createdAt: -1 })
+            
+            return res.status(200).json({ status: "success", data: products })
+        }
+
+
+        const products = await Product.find()
         return res.status(200).json({ status: "success", data: products });
     }
 }

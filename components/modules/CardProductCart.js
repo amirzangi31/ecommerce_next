@@ -46,7 +46,7 @@ function CardProductCart({ product, quantity, cartId }) {
   }
 
   return (
-    <div className="flex justify-between items-center gap-1 flex-row-reverse text-text-primary my-2">
+    <div className="card-product-cart">
       <div>
         <Image src={product.images[0].link} width={50} height={50} alt="test" />
       </div>

@@ -35,6 +35,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "@/redux/features/cart/cartSlice";
 
 
+
 function ProductPage({ product }) {
   const [activeImage, setAciveImage] = useState(0);
   const [productProperties, setProductProperties] = useState([]);
@@ -42,6 +43,8 @@ function ProductPage({ product }) {
   const [signModal, setSignModal] = useState(false)
   const session = useSession()
   const dispatch = useDispatch()
+
+
 
 
   const { cart, loading } = useSelector(state => state.cart)
@@ -89,6 +92,14 @@ function ProductPage({ product }) {
     `/api/comment?parentid=${_id}&parenttype=product`,
     (url) => fetch(url).then((res) => res.json())
   );
+
+  const products = useSWR(
+    `/api/products?category=${product.category._id}`,
+    url => fetch(url).then(res => res.json())
+  )
+
+
+
 
 
 
@@ -343,6 +354,14 @@ function ProductPage({ product }) {
         <div className="box-title">ارسال نظر</div>
         <CommentForm parent={_id} type="product" />
       </div>
+
+
+ 
+
+
+
+
+
     </div>
   );
 }
