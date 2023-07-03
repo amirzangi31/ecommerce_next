@@ -272,7 +272,7 @@ function CategoriesPageAdmin({ categories }) {
               onChange={changeHandler}
             />
           </div>
-          <div className="input-content__group">
+          {/* <div className="input-content__group">
             <label htmlFor="parent">والد</label>
             <select
               name="parent"
@@ -287,7 +287,7 @@ function CategoriesPageAdmin({ categories }) {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
         </div>
 
         <div className="input-content my-2">
