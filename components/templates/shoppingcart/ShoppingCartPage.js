@@ -180,7 +180,7 @@ function ShoppingCartPage() {
           </div>
         </Modal>
       }
-      {!cartData.loading && cartData.cart.data.total > 0 && (
+      {!cartData.loading && cartData.cart?.data?.total > 0 && (
         <div className="cart-content">
           <div className="cart-content_products">
             {!cartData.loading &&
@@ -240,7 +240,7 @@ function ShoppingCartPage() {
         </div>
       )}
 
-      {!cartData.loading && cartData.cart.data.total === 0 &&
+      {!cartData.loading && cartData.cart?.data?.total === 0 &&
         <div className="flex justify-between items-center flex-col gap-4">
           <p className="text-3xl text-error text-center">
             سبد خرید شما خالی است

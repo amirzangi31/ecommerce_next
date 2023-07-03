@@ -372,7 +372,7 @@ hr {
   @apply text-text-primary my-4 text-center text-xl;
 }
 .article-content__info {
-  @apply my-2  p-2  text-text-primary  md:text-sm flex justify-between  items-center ;
+  @apply my-2  p-2  text-text-primary  md:text-sm flex justify-between  items-center;
   font-size: 10px;
 }
 .article-content__shortdes {
@@ -540,10 +540,10 @@ hr {
   @apply w-full   bg-transparent border border-text-secondary rounded-lg p-1 my-1;
 }
 .sign-content__group input.error {
-  @apply  border-error ;
+  @apply border-error;
 }
 .sign-content__group input.success {
-  @apply  border-bg-primary ;
+  @apply border-bg-primary;
 }
 
 .sign-content__group input::placeholder {
@@ -570,12 +570,23 @@ hr {
 .form__group div {
   @apply flex justify-between items-start flex-col;
 }
+.form__group .label-group {
+  @apply flex justify-between items-center flex-row;
+}
+
 .form__group label {
   @apply text-xs;
 }
 .form__group input {
   @apply p-2 rounded-lg border border-text-secondary bg-transparent w-full my-1 text-sm;
 }
+.form__group input.error {
+  @apply border-error;
+}
+.form__group input.success {
+  @apply border-bg-primary;
+}
+
 .form__group input::placeholder {
   @apply text-xs text-text-secondary;
 }
@@ -670,7 +681,7 @@ hr {
 }
 
 .cart-content_products {
-  @apply w-full lg:w-9/12 cart-content_base-div overflow-x-scroll md:overflow-x-hidden ;
+  @apply w-full lg:w-9/12 cart-content_base-div overflow-x-scroll md:overflow-x-hidden;
 }
 .cart-content_payment {
   @apply w-full lg:w-3/12 cart-content_base-div;
@@ -776,7 +787,7 @@ hr {
   @apply border border-text-secondary bg-bg-three rounded-lg py-2 flex justify-start items-start flex-col lg:flex-row lg:items-center;
 }
 .products-search__filter span {
-  @apply cursor-pointer ;
+  @apply cursor-pointer;
 }
 .products-search__filter span.active {
   @apply bg-bg-primary  text-text-primary rounded-lg px-2 mx-2;
@@ -787,26 +798,18 @@ hr {
 
 /*-----------------------serach navbar----------------------------*/
 
-
 /*-----------------------card product cart----------------------------*/
 
-
-.card-product-cart{
+.card-product-cart {
   @apply flex justify-between items-center gap-1 flex-row-reverse text-text-primary my-2;
   min-width: 600px;
 }
 /*-----------------------card product cart----------------------------*/
 
-
-
-
 /*-----------------------error style validate form----------------------------*/
 
-.text-error-validate{
+.text-error-validate {
   @apply text-xs text-error;
 }
 
-
-
 /*-----------------------error style validate form----------------------------*/
-

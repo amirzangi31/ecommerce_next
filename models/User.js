@@ -18,7 +18,10 @@ const userSchema = new Schema({
     address: {
         type: String
     },
-
+    card :{
+        type : String,
+    }
+    ,
     role: {
         type: String,
         default: "user"

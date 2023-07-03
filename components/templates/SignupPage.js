@@ -8,6 +8,8 @@ import signValidate from '@/validations/signValidate';
 
 function SignupPage() {
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
+
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -29,26 +31,19 @@ function SignupPage() {
     }, [form, touched])
 
 
-
-
-
-
-
-    const router = useRouter()
-
-
-    const changeHandler = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-        });
-    };
     const focusHandler = e => {
         setTouched({
             ...touched,
             [e.target.name]: true
         })
     }
+    const changeHandler = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        });
+    };
+   
 
 
 

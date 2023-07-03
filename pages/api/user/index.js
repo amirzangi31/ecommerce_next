@@ -27,41 +27,33 @@ const handler = async (req, res) => {
 
 
     if (req.method === "GET") {
-        const { name, email, profileimage, orders, createdAt, updatedAt, address, postalcode, phone, _id, isComplete } = user
-        return res.status(200).json({ status: "success", user: { _id, name, email, profileimage, postalcode, orders, createdAt, updatedAt, address, phone, isComplete } })
+        const { name, email, profileimage, orders, createdAt, updatedAt, address, postalcode, phone, _id, isComplete, card } = user
+        return res.status(200).json({ status: "success", user: { _id, name, email, profileimage, postalcode, orders, card, createdAt, updatedAt, address, phone, isComplete } })
     }
 
     else if (req.method === "PATCH") {
-        const { name, postalcode, profileimage, password, phone, address } = req.body
+        const { name, postalcode, profileimage, password, phone, address, card } = req.body
 
         const verifyP = await verifyPassword(password, user.password)
 
         if (!verifyP) {
             return res.status(422).json({ status: "failed", message: "Invalid data!" })
         }
-
-
-
-
-
-        user.name = name || ""
-        user.postalcode = postalcode || ""
-        user.address = address || ""
-        user.phone = phone || ""
-        user.profileimage = profileimage || ""
+        user.name = name 
+        user.postalcode = postalcode 
+        user.address = address 
+        user.phone = phone 
+        user.profileimage = profileimage 
+        user.card = card 
         user.updatedAt = Date.now()
 
-        if (!!user.name.trim() && !!user.phone.trim() && !!user.address.trim() && !!user.postalcode.trim()) {
+        if (!!user.name.trim() && !!user.phone.trim() && !!user.address.trim() && !!user.postalcode.trim() && !!user.card.trim()) {
             user.isComplete = true
-        } else if (!user.name.trim() && !user.phone.trim() && !user.address.trim() && !user.postalcode.trim()) {
+        } else if (!user.name.trim() && !user.phone.trim() && !user.address.trim() && !user.postalcode.trim() && !user.card.trim()) {
             user.isComplete = false
         }
 
-
-
         user.save()
-
-
 
         return res.status(200).json({
             status: "success",
@@ -74,7 +66,8 @@ const handler = async (req, res) => {
                 address: user.address,
                 profileimage: user.profileimage,
                 updatedAt: user.updatedAt,
-                isComplete: user.isComplete
+                isComplete: user.isComplete,
+                card: user.card
             }
         })
     }

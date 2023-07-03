@@ -1,9 +1,10 @@
-import Button from "@/components/modules/Button";
 import { fetchUser } from "@/redux/features/user/userSlice";
 import Toastify from "@/services/Toast";
+import validateProfile from "@/validations/validateProfile";
+import { getBankNameFromCardNumber } from "@persian-tools/persian-tools";
 import axios from "axios";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useDispatch } from "react-redux";
 
@@ -17,7 +18,22 @@ function ProfilePage({ user }) {
     password: "",
     phone: user?.phone || "",
     email: user?.email || "",
+    card: user?.card || ""
   });
+
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({
+    name: !!user?.name || false,
+    profileimage: !!user?.image || false,
+    postalcode: !!user?.postalcode || false,
+    address: !!user?.address || false,
+    password: false,
+    phone: !!user?.phone || false,
+    email: !!user?.email || false,
+    card: !!user?.card || false,
+
+  })
+
 
   const [confirmUpload, setConfirmUpload] = useState(false);
   const [image, setImage] = useState("");
@@ -27,6 +43,12 @@ function ProfilePage({ user }) {
 
 
   const dispatch = useDispatch()
+
+
+
+  useEffect(() => {
+    setErrors(validateProfile(form).error)
+  }, [form, touched])
 
 
 
@@ -48,6 +70,14 @@ function ProfilePage({ user }) {
       [e.target.name]: e.target.value,
     });
   };
+
+
+  const focusHandler = e => {
+    setTouched({
+      ...touched,
+      [e.target.name]: true
+    })
+  }
 
   //cancel upload image
   const cancelHandler = () => {
@@ -90,19 +120,34 @@ function ProfilePage({ user }) {
 
   // save info user
   const saveHandler = async () => {
-    setSaveLoading(true)
-    try {
-      const res = await axios.patch("/api/user", form)
-      setForm({
-        ...form,
-        password: ""
+    const validate = validateProfile(form).errorLength
+    if (validate === 0) {
+      setSaveLoading(true)
+      try {
+        const res = await axios.patch("/api/user", form)
+        setForm({
+          ...form,
+          password: ""
+        })
+        Toastify("success", "اطلاعات با موفقیت بروزرسانی شد")
+        setSaveLoading(false)
+        dispatch(fetchUser())
+      } catch (error) {
+        console.log(error)
+        Toastify("error", "اطلاعات  را به درستی وارد کنید")
+        setSaveLoading(false)
+      }
+    } else {
+      setTouched({
+        name: true,
+        profileimage: true,
+        postalcode: true,
+        address: true,
+        password: true,
+        phone: true,
+        email: true,
+        card: true,
       })
-      Toastify("success", "اطلاعات با موفقیت بروزرسانی شد")
-      setSaveLoading(false)
-      dispatch(fetchUser())
-    } catch (error) {
-      Toastify("error", "اطلاعات  را به درستی وارد کنید")
-      setSaveLoading(false)
     }
   }
 
@@ -195,72 +240,151 @@ function ProfilePage({ user }) {
               />
             </>
           )}
+
         </div>
         <div className="form__group">
           <div>
-            <label htmlFor="name">نام و نام خانوادگی : </label>
+            <div className="label-group w-full">
+
+              <label htmlFor="name">نام و نام خانوادگی : </label>
+              {errors.name && touched.name && <span className="text-error-validate">{errors.name}</span>}
+
+            </div>
             <input
               type="text"
               name="name"
               id="name"
               value={form.name}
+              onFocus={focusHandler}
+              className={
+                `
+                ${errors.name && touched.name && "error"}
+                ${!errors.name && touched.name && "success"}
+                `
+              }
               onChange={changeHandler}
               placeholder="رضا احمدی"
             />
           </div>
           <div>
-            <label htmlFor="phone">شماره همراه :</label>
+            <div className="label-group w-full">
+              <label htmlFor="phone">شماره همراه :</label>
+              {errors.phone && touched.phone && <span className="text-error-validate">{errors.phone}</span>}
+            </div>
             <input
               type="text"
               name="phone"
               id="phone"
               onChange={changeHandler}
+              onFocus={focusHandler}
+              className={
+                `
+                ${errors.phone && touched.phone && "error"}
+                ${!errors.phone && touched.phone && "success"}
+                `
+              }
               value={form.phone}
+
               placeholder="09123456789"
             />
           </div>
         </div>
         <div className="form__group">
           <div>
-            <label htmlFor="postalcode"> کد پستی : </label>
+            <div className="label-group w-full">
+              <label htmlFor="postalcode"> کد پستی : </label>
+              {errors.postalcode && touched.postalcode && <span className="text-error-validate">{errors.postalcode}</span>}
+            </div>
             <input
               type="text"
               name="postalcode"
               id="postalcode"
               onChange={changeHandler}
+              onFocus={focusHandler}
+              className={
+                `
+                ${errors.postalcode && touched.postalcode && "error"}
+                ${!errors.postalcode && touched.postalcode && "success"}
+                `
+              }
               value={form.postalcode}
+
               placeholder="76391-45145"
             />
           </div>
           <div>
-            <label htmlFor="address">آدرس :</label>
+            <div className="label-group w-full">
+              <label htmlFor="address">آدرس :</label>
+              {errors.address && touched.address && <span className="text-error-validate">{errors.address}</span>}
+            </div>
             <input
               type="text"
               name="address"
               id="address"
               onChange={changeHandler}
+              onFocus={focusHandler}
+              className={
+                `
+                ${errors.address && touched.address && "error"}
+                ${!errors.address && touched.address && "success"}
+                `
+              }
               value={form.address}
+
               placeholder="کرمان-زنگی آباد -خیابان شهید بهشتی"
             />
           </div>
         </div>
         <div className="form__group">
           <div>
-            <label htmlFor="password">رمز عبور *: </label>
+            <div className="label-group w-full">
+              <label htmlFor="card">شماره کارت بانکی جهت بازگشت وجه : {<span className="text-bg-primary">{getBankNameFromCardNumber(form.card)}</span>}</label>
+              {errors.card && touched.card && <span className="text-error-validate">{errors.card}</span>}
+            </div>
+            <input
+              type="number"
+              name="card"
+              id="card"
+              onChange={changeHandler}
+              onFocus={focusHandler}
+              className={
+                `
+                ${errors.card && touched.card && "error"}
+                ${!errors.card && touched.card && "success"}
+                `
+              }
+              value={form.card}
+
+              placeholder="8787××××××××6037"
+            />
+          </div>
+          <div>
+            <div className="label-group w-full">
+              <label htmlFor="password">رمز عبور *: </label>
+              {errors.password && touched.password && <span className="text-error-validate">{errors.password}</span>}
+            </div>
             <input
               type="password"
               name="password"
               id="password"
               onChange={changeHandler}
+              onFocus={focusHandler}
+              className={
+                `
+                ${errors.password && touched.password && "error"}
+                ${!errors.password && touched.password && "success"}
+                `
+              }
               value={form.password}
+
             />
 
-            <span className="text-xs my-1 text-error">
-              *وارد کردن رمز عبور صحیح برای تغییر اطلاعات الزامی میباشد*
-            </span>
 
           </div>
         </div>
+        <span className="text-xs my-1 text-error">
+          *وارد کردن رمز عبور صحیح برای تغییر اطلاعات الزامی میباشد*
+        </span>
 
         <div className="w-full flex justify-end items-center">
           <button

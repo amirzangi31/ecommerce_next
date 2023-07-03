@@ -7,6 +7,7 @@ import TableCategoryAdmin from "@/components/modules/admin/TableCategoryAdmin";
 import { useRouter } from "next/router";
 import uploadImageHandler from "@/services/uploadimage";
 import Image from "next/image";
+import Loader from "@/components/modules/admin/Loader";
 
 function CategoriesPageAdmin({ categories }) {
   const [edited, setEdited] = useState(false);
@@ -14,7 +15,7 @@ function CategoriesPageAdmin({ categories }) {
   const [image, setImage] = useState("");
   const [createObjectURL, setCreateObjectURL] = useState("");
   const [confirmUpload, setConfirmUpload] = useState(false);
-
+  const [uploadLoading, setUploadLoading] = useState(false)
   const router = useRouter();
 
   const [form, setForm] = useState({
@@ -24,7 +25,7 @@ function CategoriesPageAdmin({ categories }) {
     image: "",
   });
 
- 
+
 
 
 
@@ -36,7 +37,7 @@ function CategoriesPageAdmin({ categories }) {
       properties: form.properties.map((item) => {
         return { name: item.name, value: item.value.split("-") };
       }),
-      image : form.image
+      image: form.image
     };
     if (!edited) {
       //created
@@ -115,7 +116,7 @@ function CategoriesPageAdmin({ categories }) {
 
   // active edited
   const editedCategory = (category) => {
-    const { name, parent, properties , image } = category;
+    const { name, parent, properties, image } = category;
 
     setCategoryId(category._id);
     setEdited(true);
@@ -126,7 +127,7 @@ function CategoriesPageAdmin({ categories }) {
         name: item.name,
         value: item.value.join("-"),
       })),
-      image : category.image
+      image: category.image
     });
   };
 
@@ -166,17 +167,34 @@ function CategoriesPageAdmin({ categories }) {
 
 
 
-  //upload image in local
+  //upload image in cloudinary
   const uploadImage = async () => {
-    const uploadImage = await uploadImageHandler(image, "/api/uploadimage");
-    if (uploadImage.status === 200) {
-      setForm({
-        ...form,
-        image: `/images/products/${image.name}`,
-      });
+    setUploadLoading(true)
+    const formData = new FormData()
+    formData.append("file", image);
+    formData.append("upload_preset", "adminEcommerce");
+
+    try {
+      const res = await fetch('https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload', {
+        method: "POST",
+        body: formData
+      })
+      const data = await res.json()
+      if (data.secure_url) {
+        setForm({
+          ...form,
+          image: data.secure_url
+        });
+      }
+
+
+      setUploadLoading(false)
+      cancelHandler();
+    } catch (error) {
+      console.log(error)
+      setUploadLoading(false)
     }
 
-    cancelHandler();
   };
 
 
@@ -191,19 +209,29 @@ function CategoriesPageAdmin({ categories }) {
               <Image src={createObjectURL} alt="asdf" width={500} height={300} />
             </div>
             <div className="center gap-4">
-              <Button handler={cancelHandler} className="btn-error-admin">
-                خیر
-              </Button>
-              <Button handler={uploadImage} className="btn-primary-admin">
-                بله
-              </Button>
+              {
+                uploadLoading ? (
+                  <Loader />
+                ) : (
+                  <>
+                    <Button handler={cancelHandler} className="btn-error-admin">
+                      خیر
+                    </Button>
+                    <Button handler={uploadImage} className="btn-primary-admin">
+                      بله
+                    </Button>
+                  </>
+                )
+              }
+
+
             </div>
           </div>
         ) : (
           <div className="center my-3">
             <label htmlFor="upload" className="upload-image-element">
               {form.image ? (
-                <Image src={form.image} alt="image" width={700} height={500} /> 
+                <Image src={form.image} alt="image" width={700} height={500} />
               ) : (
                 <>
                   <span className="text-xs">بارگذاری عکس</span>
