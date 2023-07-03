@@ -1,17 +1,15 @@
 import mongoose, { Schema, models, model } from "mongoose"
 
-const categorySchema = new Schema({
+const brandSchema = new Schema({
     name: {
         type: String,
         required: true
     },
-    brands: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: "Brand"
-        }
-    ],
     image: String,
+    parent: {
+        type: mongoose.Types.ObjectId,
+        ref: "Category"
+    },
     createdAt: {
         type: Date,
         default: () => Date.now(),
@@ -19,10 +17,10 @@ const categorySchema = new Schema({
     }
 })
 
-const Category = models.Category || model("Category", categorySchema)
+const Brand = models.Brand || model("Brand", brandSchema)
 
 
-export default Category
+export default Brand
 
 
 
