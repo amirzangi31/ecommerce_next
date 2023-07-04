@@ -38,7 +38,7 @@ function TableProductAdmin({ products, swal }) {
           <th></th>
           <th>نام محصول</th>
           <th>قیمت</th>
-          <th>توضیحات</th>
+          <th>توضیحات کوتاه</th>
           <th></th>
         </tr>
       </thead>
@@ -48,7 +48,7 @@ function TableProductAdmin({ products, swal }) {
             <td className=" border-secondary-admin dark:border-dark-secondary-admin">{index + 1}</td>
             <td className="border-secondary-admin dark:border-dark-secondary-admin">{item.name}</td>
             <td className=" border-secondary-admin dark:border-dark-secondary-admin">{item.price.toLocaleString()}</td>
-            <td className="border-secondary-admin dark:border-dark-secondary-admin">{item.description.length > 50 && "..."}{shortText(item.description, 50)}</td>
+            <td className="border-secondary-admin dark:border-dark-secondary-admin">{item.shortDes.length > 50 && "..."}{shortText(item.shortDes, 50)}</td>
             <td className=" border-secondary-admin dark:border-dark-secondary-admin">
               <div className="flex justify-center items-center gap-2">
                 <Link href={`/admin/products/${item._id}`}><Button className="btn-primary-admin">ویرایش</Button></Link>

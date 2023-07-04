@@ -21,7 +21,7 @@ const handler = async (req, res) => {
             return res.status(401).json({ status: "failed", message: "You are not logged in!" })
         }
 
-        const { name, properties, parent , image } = req.body
+        const { name, brands , image } = req.body
         const category = await Category.findOne({ name })
         if (category) {
             return res.status(422).json({ status: 'failed', message: "Category is doesn't exist" })
@@ -31,9 +31,10 @@ const handler = async (req, res) => {
             return res.status(422).json({ status: "failed", message: 'Invalid data!' })
         }
 
-        const newCategory = await Category.create({ name, parent: parent.toString() || undefined, properties , image })
+        const newCategory = await Category.create({ name,  brands , image })
 
         return res.status(201).json({ status: "success", message: 'Category created', data: newCategory })
+        
     } else if (method === 'GET') {
         const categories = await Category.find()
 

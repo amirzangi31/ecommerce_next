@@ -22,8 +22,8 @@ const handler = async (req, res) => {
             return res.status(401).json({ status: "failed", message: "You are not logged in!" })
         }
 
-        const { name, description, price, category } = req.body
-
+        const { name, description, price, category , brand , shortDes , properties } = req.body
+        
 
 
         const product = await Product.findOne({ name })
@@ -31,13 +31,13 @@ const handler = async (req, res) => {
             return res.status(422).json({ status: 'failed', message: "Product is doesn't exist" })
         }
 
-        if (!name || !description || !price) {
+        if (!name || !description || !price || !brand || !shortDes) {
             return res.status(422).json({ status: "failed", message: 'Invalid data!' })
         }
 
-        const newProduct = await Product.create({ ...req.body, category: category || undefined })
+        const newProduct = await Product.create({ ...req.body })
 
-        return res.status(201).json({ status: "success", message: 'product created', data: newProduct })
+        return res.status(201).json({ status: "success", message: 'محصول با موفقیت اضافه شد', data: newProduct })
     } else if (method === "GET") {
 
         if (query.category) {

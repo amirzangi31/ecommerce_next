@@ -16,7 +16,7 @@ export default AddProduct;
 export async function getServerSideProps() {
     await connectDB()
 
-    const categories = await Category.find().populate("parent")
+    const categories = await Category.find()
 
 
     return {

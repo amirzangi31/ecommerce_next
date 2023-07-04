@@ -33,22 +33,18 @@ import axios from "axios";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "@/redux/features/cart/cartSlice";
-
-
+//HTML PARSER
+import parse from "html-react-parser";
 
 function ProductPage({ product }) {
   const [activeImage, setAciveImage] = useState(0);
   const [productProperties, setProductProperties] = useState([]);
-  const [loadingCart, setLoadingCart] = useState(false)
-  const [signModal, setSignModal] = useState(false)
-  const session = useSession()
-  const dispatch = useDispatch()
+  const [loadingCart, setLoadingCart] = useState(false);
+  const [signModal, setSignModal] = useState(false);
+  const session = useSession();
+  const dispatch = useDispatch();
 
-
-
-
-  const { cart, loading } = useSelector(state => state.cart)
-
+  const { cart, loading } = useSelector((state) => state.cart);
 
   const {
     images,
@@ -56,8 +52,10 @@ function ProductPage({ product }) {
     _id,
     price,
     category,
+    brand,
     properties,
     description,
+    shortDes,
     createdAt,
   } = product;
 
@@ -74,7 +72,6 @@ function ProductPage({ product }) {
 
     setProductProperties(result);
   };
-
 
   useEffect(() => {
     if (properties) {
@@ -95,69 +92,63 @@ function ProductPage({ product }) {
 
   const products = useSWR(
     `/api/products?category=${product.category._id}`,
-    url => fetch(url).then(res => res.json())
-  )
-
-
-
-
-
+    (url) => fetch(url).then((res) => res.json())
+  );
 
   //increase one product in shopping cart
   const increaseProduct = async () => {
-    setLoadingCart(true)
+    setLoadingCart(true);
     const res = await axios.patch(
       `/api/order/${cart.data._id}?type=increase&&product=${_id}`
     );
 
     if (res.data.status === "success") {
-      dispatch(fetchCart())
+      dispatch(fetchCart());
     }
-    setLoadingCart(false)
+    setLoadingCart(false);
   };
 
   //decrease one product in shopping cart
   const decreaseProduct = async () => {
-    setLoadingCart(true)
+    setLoadingCart(true);
     const res = await axios.patch(
       `/api/order/${cart.data._id}?type=decrease&&product=${_id}`
     );
     if (res.data.status === "success") {
-      dispatch(fetchCart())
+      dispatch(fetchCart());
     }
-    setLoadingCart(false)
+    setLoadingCart(false);
   };
   //delete  product in shopping cart
   async function deleteProduct() {
-    setLoadingCart(true)
+    setLoadingCart(true);
     const res = await axios.patch(
       `/api/order/${cart.data._id}?type=delete&&product=${_id}`
     );
-    if (res.data.status === 'success') {
-      dispatch(fetchCart())
+    if (res.data.status === "success") {
+      dispatch(fetchCart());
     }
-    setLoadingCart(false)
+    setLoadingCart(false);
   }
 
   //add  product in shopping cart
   const addHandler = async () => {
-    setLoadingCart(true)
+    setLoadingCart(true);
     if (session.status === "unauthenticated") {
-      setSignModal(true)
-      setLoadingCart(false)
-      return
+      setSignModal(true);
+      setLoadingCart(false);
+      return;
     }
     const res = await axios.post("/api/order", {
-      productId: _id
-    })
+      productId: _id,
+    });
     if (res.data.status === "success") {
-      Toastify("success", res.data.message)
-      dispatch(fetchCart())
+      Toastify("success", res.data.message);
+      dispatch(fetchCart());
     }
 
-    setLoadingCart(false)
+    setLoadingCart(false);
   };
-
 
   return (
     <div>
@@ -191,7 +182,9 @@ function ProductPage({ product }) {
                       src={item.link}
                       key={item.name}
                       alt="Zoom-images"
-                      className={`${index === activeImage && "active"} rounded-lg`}
+                      className={`${
+                        index === activeImage && "active"
+                      } rounded-lg`}
                       zoom="300"
                     />
                   </>
@@ -230,112 +223,141 @@ function ProductPage({ product }) {
                 <span className="">قیمت محصول : </span>
                 {price.toLocaleString()}ريال
               </div>
-              <Link href={`/search?category=${category._id}`} className="product-details__category">
+              <Link
+                href={`/search?category=${category._id}`}
+                className="product-details__category"
+              >
                 <span className="">دسته بندی محصول : </span>
                 {category.name}
               </Link>
+
+              <Link
+                href={`/search?category=${category._id}&&brand=${brand}`}
+                className="product-details__category"
+              >
+                <span className="">برند محصول : </span>
+                {brand}
+              </Link>
+
               <div className="product-details__quantity">
                 <span className="">موجودی محصول : </span>
                 {34}عدد
               </div>
 
               <div className="product-details__add ">
-                {loading === true && session.status === "authenticated" &&
+                {loading === true && session.status === "authenticated" && (
                   <Loader width="40" height="40" color="#fff" />
-                }
+                )}
 
-                {session.status === "unauthenticated" &&
+                {session.status === "unauthenticated" && (
                   <button
                     type="button"
                     disabled={loadingCart}
-                    className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
+                    className={`btn-sm btn-primary ${
+                      loadingCart && "opacity-50"
+                    }`}
                     onClick={addHandler}
                   >
                     اضافه کردن به سبد خرید
                   </button>
-                }
-                {
-                  session.status === "authenticated" && (
-                    <>
+                )}
+                {session.status === "authenticated" && (
+                  <>
+                    {!loading && !isInCart(cart.data, _id) && (
+                      <button
+                        type="button"
+                        disabled={loadingCart}
+                        className={`btn-sm btn-primary ${
+                          loadingCart && "opacity-50"
+                        }`}
+                        onClick={addHandler}
+                      >
+                        اضافه کردن به سبد خرید
+                      </button>
+                    )}
 
-                      {!loading && !isInCart(cart.data, _id) &&
-                        <button
-                          type="button"
+                    {!loading && isInCart(cart.data, _id) && (
+                      <button
+                        type="button"
+                        disabled={loadingCart}
+                        className={`btn-sm btn-primary ${
+                          loadingCart && "opacity-50"
+                        }`}
+                        onClick={increaseProduct}
+                      >
+                        +
+                      </button>
+                    )}
 
-                          disabled={loadingCart}
-                          className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
-                          onClick={addHandler}
-                        >
-                          اضافه کردن به سبد خرید
-                        </button>
-                      }
-
-
-                      {!loading && isInCart(cart.data, _id)
-                        &&
-                        <button type="button"
-
-
-                          disabled={loadingCart}
-                          className={`btn-sm btn-primary ${loadingCart && "opacity-50"}`}
-
-                          onClick={increaseProduct}>+</button>}
-
-
-
-                      {!loading && productCount(cart.data, _id) && <p className="mx-4 inline-block text-2xl text-text-primary">{productCount(cart.data, _id)}</p>}
-                      {
-                        !loading && productCount(cart.data, _id) === 1 &&
-                        <button type="button"
-                          disabled={loadingCart}
-                          className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
-                          onClick={deleteProduct}>
-                          <BsTrash className="text-2xl" />
-                        </button>
-                      }
-                      {
-                        !loading && productCount(cart.data, _id) > 1 &&
-                        <button type="button"
-                          disabled={loadingCart}
-                          className={`btn-sm btn-error ${loadingCart && "opacity-50"}`}
-                          onClick={decreaseProduct}>-</button>
-                      }
-                    </>
-                  )
-                }
-
-
-
+                    {!loading && productCount(cart.data, _id) && (
+                      <p className="mx-4 inline-block text-2xl text-text-primary">
+                        {productCount(cart.data, _id)}
+                      </p>
+                    )}
+                    {!loading && productCount(cart.data, _id) === 1 && (
+                      <button
+                        type="button"
+                        disabled={loadingCart}
+                        className={`btn-sm btn-error ${
+                          loadingCart && "opacity-50"
+                        }`}
+                        onClick={deleteProduct}
+                      >
+                        <BsTrash className="text-2xl" />
+                      </button>
+                    )}
+                    {!loading && productCount(cart.data, _id) > 1 && (
+                      <button
+                        type="button"
+                        disabled={loadingCart}
+                        className={`btn-sm btn-error ${
+                          loadingCart && "opacity-50"
+                        }`}
+                        onClick={decreaseProduct}
+                      >
+                        -
+                      </button>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
           <div className="product-details__down w-full my-12 ">
+         
             <div>
-              {productProperties.length > 0 && (
-                <table className="w-full ">
-                  <thead className="">
-                    <tr className="box-titleone">
-                      <th></th>
-                      <th className="text-text-primary py-2 ">ویژگی</th>
-                      <th className="text-text-primary py-2 ">مقدار</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {productProperties.length > 0 &&
-                      productProperties.map((item, index) => (
-                        <tr key={item.property} className="text-text-primary ">
-                          <td>{index + 1} - </td>
-                          <td className="text-center py-2">{item.property}</td>
-                          <td className="text-center py-2">{item.value}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              )}
+              <div className="product-details__shortDes">{shortDes}</div>
             </div>
-            <div>
-              <div className="box-title">درباره محصول</div>
-              <div className="product-details__description">{description}</div>
+            <div className="flex justify-between items-start flex-col md:flex-row relative gap-1">
+              <div className="w-full md:w-3/12  md:sticky md:top-20 md:left-0">
+                <div className="box-title">ویژگی ها</div>
+                <div>
+                  <table className=" w-full">
+                    <thead>
+                      <tr>
+                        <th> </th>
+                        <th> </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {properties.length > 0 &&(
+                        properties.map((item , index) => (
+                          <tr key={item._id}>
+                            <td className="text-center py-4 text-bg-primary font-bold text-lg">{item.name}</td>
+                            <td className="text-center py-4 text-text-primary">{item.value}</td>
+                        </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="w-full md:w-9/12">
+                <div className="box-title">درباره محصول</div>
+                <div className="product-details__description">
+                  {parse(description)}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -354,14 +376,6 @@ function ProductPage({ product }) {
         <div className="box-title">ارسال نظر</div>
         <CommentForm parent={_id} type="product" />
       </div>
-
-
- 
-
-
-
-
-
     </div>
   );
 }

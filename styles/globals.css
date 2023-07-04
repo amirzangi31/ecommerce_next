@@ -667,8 +667,20 @@ hr {
     transparent 90%
   );
 }
+.product-details__shortDes {
+  @apply my-8 text-justify bg-bg-three p-2 rounded-lg border border-text-secondary text-text-primary;
+}
 .product-details__description {
   @apply my-12 text-justify text-text-primary;
+}
+.product-details__description h2 {
+  @apply my-2 text-2xl ;
+}
+.product-details__description h3{
+  @apply my-2 text-xl ;
+}
+.product-details__description img {
+  @apply mx-auto my-2 rounded-lg w-1/2;
 }
 /*-----------------------product detailes----------------------------*/
 

@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 
 
-function CardProduct({ name, images, price, category, _id, description, signShow }) {
+function CardProduct({ name, images, price, category, _id, description, shortDes }) {
 
     return (
         <Link href={`/products/${_id}`}>
@@ -27,7 +27,7 @@ function CardProduct({ name, images, price, category, _id, description, signShow
                     <div className="card-p__body">
                         <div className="card-p__title">{name}</div>
                         <div className="card-p__des">
-                            {shortText(description, 70)}{description.length > 70 && "..."}
+                            {shortText(shortDes, 70)}{shortDes.length > 70 && "..."}
                         </div>
                         <div className="card-p__price">
                             <p>

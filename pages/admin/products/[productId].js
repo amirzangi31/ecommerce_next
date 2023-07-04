@@ -19,8 +19,8 @@ export default EditProduct;
 export async function getServerSideProps({ query }) {
     await connectDB()
     const { productId } = query
-    const product = await Product.findOne({ _id: productId })
-    const categories = await Category.find().populate("parent")
+    const product = await Product.findOne({ _id: productId }).populate("category")
+    const categories = await Category.find()
 
 
     return {

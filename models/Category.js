@@ -7,8 +7,7 @@ const categorySchema = new Schema({
     },
     brands: [
         {
-            type: mongoose.Types.ObjectId,
-            ref: "Brand"
+            type: Object
         }
     ],
     image: String,

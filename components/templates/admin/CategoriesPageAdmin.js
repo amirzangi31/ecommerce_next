@@ -20,8 +20,8 @@ function CategoriesPageAdmin({ categories }) {
 
   const [form, setForm] = useState({
     name: "",
-    parent: "",
-    properties: [],
+
+    brands: [],
     image: "",
   });
 
@@ -33,12 +33,12 @@ function CategoriesPageAdmin({ categories }) {
   const addCategory = async () => {
     const data = {
       name: form.name,
-      parent: form.parent,
-      properties: form.properties.map((item) => {
-        return { name: item.name, value: item.value.split("-") };
+      brands: form.brands.map((item) => {
+        return { name: item.name };
       }),
       image: form.image
     };
+
     if (!edited) {
       //created
       const res = await axios.post("/api/categories", data);
@@ -47,8 +47,8 @@ function CategoriesPageAdmin({ categories }) {
         Toastify("success", "دسته بندی با موفقیت ساخته شد");
         setForm({
           name: "",
-          parent: "",
-          properties: [],
+          brands: [],
+          image : ""
         });
         router.reload();
       }
@@ -60,8 +60,8 @@ function CategoriesPageAdmin({ categories }) {
         Toastify("success", "دسته بندی با موفقیت ویرایش شد");
         setForm({
           name: "",
-          parent: "",
-          properties: [],
+          brands: [],
+          image : ""
         });
         router.reload();
       }
@@ -74,60 +74,48 @@ function CategoriesPageAdmin({ categories }) {
   const addProperty = () => {
     setForm({
       ...form,
-      properties: [...form.properties, { name: "", value: "" }],
+      brands: [...form.brands, { name: ""}],
     });
   };
 
 
   // delete property row
   const deleteProperty = (itemIndex) => {
-    const filterProperty = form.properties.filter(
+    const filterProperty = form.brands.filter(
       (item, pIndex) => pIndex !== itemIndex
     );
 
     setForm({
       ...form,
-      properties: filterProperty,
+      brands: filterProperty,
     });
   };
 
 
   // chnage propery(name , value)
   const changeNameProperty = (indexToChange, value) => {
-    const properties = form.properties;
-    properties[indexToChange].name = value;
+    const brands = form.brands;
+    brands[indexToChange].name = value;
 
     setForm({
       ...form,
-      properties: [...properties],
+      brands: [...brands],
     });
   };
-  const changeValueProperty = (indexToChange, value) => {
-    const properties = form.properties;
-    properties[indexToChange].value = value;
-
-    setForm({
-      ...form,
-      properties: [...properties],
-    });
-  };
-
 
 
   // active edited
   const editedCategory = (category) => {
-    const { name, parent, properties, image } = category;
+    const { name, brands, image } = category;
 
     setCategoryId(category._id);
     setEdited(true);
     setForm({
       name,
-      parent: parent?._id,
-      properties: properties.map((item) => ({
+      brands: brands.map((item) => ({
         name: item.name,
-        value: item.value.join("-"),
       })),
-      image: category.image
+      image
     });
   };
 
@@ -136,8 +124,8 @@ function CategoriesPageAdmin({ categories }) {
     setEdited(false);
     setForm({
       name: "",
-      parent: "",
-      properties: [],
+      brands: [],
+      image: ""
     });
   };
 
@@ -272,33 +260,17 @@ function CategoriesPageAdmin({ categories }) {
               onChange={changeHandler}
             />
           </div>
-          {/* <div className="input-content__group">
-            <label htmlFor="parent">والد</label>
-            <select
-              name="parent"
-              id="parent"
-              value={form.parent}
-              onChange={changeHandler}
-            >
-              <option value="">بدون والد</option>
-              {categories.map((item) => (
-                <option key={item._id} value={item._id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </div> */}
         </div>
 
         <div className="input-content my-2">
           <div className="input-content__group">
             <Button className="btn-secondary-admin" handler={addProperty}>
-              اضافه کردن ویژگی
+              اضافه کردن برند
             </Button>
           </div>
         </div>
 
-        {form.properties.map((item, index) => (
+        {form.brands.map((item, index) => (
           <div
             key={index}
             className="flex justify-between items-center w-full my-1 gap-2"
@@ -307,20 +279,12 @@ function CategoriesPageAdmin({ categories }) {
               <label htmlFor="">نام</label>
               <input
                 type="text"
-                placeholder="برای مثال(رنگ)"
+                placeholder="asus"
                 value={item.name}
                 onChange={(e) => changeNameProperty(index, e.target.value)}
               />
             </div>
-            <div className="w-full">
-              <label htmlFor="">مقدار</label>
-              <input
-                type="text"
-                placeholder="برای مثال (قرمز , ابی)"
-                value={item.value}
-                onChange={(e) => changeValueProperty(index, e.target.value)}
-              />
-            </div>
+
             <div className="flex justify-center items-end h-full mt-auto">
               <Button
                 className="btn-error-admin my-1"

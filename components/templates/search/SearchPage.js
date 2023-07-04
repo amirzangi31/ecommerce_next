@@ -109,7 +109,7 @@ function SearchPage({ products, categories, page, pageCount }) {
 
   return (
     <div className="container mx-auto py-16 px-2 flex">
-      <div className="flex justify-between items-start flex-col">
+      <div className="flex justify-between items-start flex-col lg:flex-row">
 
         <div className="search-navbar">
           <div

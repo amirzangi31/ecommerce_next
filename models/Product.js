@@ -13,6 +13,11 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
+    shortDes: {
+        type: String,
+        required: true
+    }
+    ,
     description: {
         type: String,
         required: true
@@ -22,7 +27,14 @@ const ProductSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Category"
     },
-    properties: { type: Object },
+    properties: [
+        { name: String, value: String }
+    ],
+    brand: {
+        type: String,
+        required: true
+    }
+    ,
     createdAt: {
         type: Date,
         default: () => Date.now(),

@@ -191,3 +191,9 @@ aside {
   @apply bg-bg-primary rounded-lg;
 }
 /*-----------------content comments-------------------*/
+
+/*-----------------input property admin-------------------*/
+.input-property-admin::placeholder{
+  @apply text-text-primary;
+}
+/*-----------------input property admin-------------------*/

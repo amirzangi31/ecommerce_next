@@ -24,7 +24,7 @@ const handler = async (req, res) => {
 
         return res.status(200).json({ status: "success", message: "Product is deleted" })
     } else if (method === "PATCH") {
-        const { name, price, images, description, category , properties } = req.body;
+        const { name, price, images, description, properties , category , brand , shortDes } = req.body;
         const product = await Product.findOne({ _id: id })
 
 
@@ -36,8 +36,10 @@ const handler = async (req, res) => {
         product.price = price || product.price
         product.description = description || product.description
         product.images = images || product.images
+        product.brand = brand || product.brand
         product.properties = properties || product.properties
-        product.category = category || product.category || undefined
+        product.shortDes = shortDes || product.shortDes
+        product.category = category || product.category
         product.updatedAt = Date.now()
         product.save()
         return res.status(200).json({ status: "success", data: product, message: "Product is updated" })

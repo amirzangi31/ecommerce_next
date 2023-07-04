@@ -18,13 +18,12 @@ export default Categories;
 export async function getServerSideProps({ req }) {
   await connectDB()
 
-  const categories = await Category.find().populate("parent")
+  const categories = await Category.find()
+
 
   
 
   return {
     props: { categories: JSON.parse(JSON.stringify(categories)) }
   }
-
-
 }

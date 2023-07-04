@@ -74,7 +74,7 @@ export const getServerSideProps = async (context) => {
   }
 
 
-  const categories = await Category.find().populate("parent")
+  const categories = await Category.find()
 
   //دسته بندی هاایی که والد دارند
   // const categoriesWithParent = await Category.find({ parent: { $ne: null } }).exec();

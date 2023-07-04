@@ -23,7 +23,7 @@ const handler = async (req, res) => {
         const category = await Category.deleteOne({ _id: id })
         return res.status(200).json({ status: 'success', message: 'Category is deleted' })
     } else if (method === "PATCH") {
-        const { name, parent, properties  , image } = req.body
+        const { name, brands  , image } = req.body
         const session = await getSession({ req })
         if (!session || session.user.name !== "admin") {
             return res.status(401).json({ status: "failed", message: "You are not logged in!" })
@@ -34,10 +34,8 @@ const handler = async (req, res) => {
         }
         const category = await Category.findOne({ _id: id })
         category.name = name
-        category.parent = parent || undefined
-        category.properties = properties
+        category.brands = brands
         category.image = image
-
         category.save()
 
         return res.status(200).json({ status: "success", message: "Category is updated", data: category })

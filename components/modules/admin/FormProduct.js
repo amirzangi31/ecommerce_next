@@ -14,6 +14,7 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { ReactSortable } from "react-sortablejs";
 import { convertToPersain } from "@/services/jalalimoment";
 import { baseurl } from "@/lib/baseurl";
+import Editor from "../Editor/Editor";
 
 function FormProduct({
   name,
@@ -23,57 +24,58 @@ function FormProduct({
   edit,
   _id,
   category,
+  brand,
   categories,
-  properties,
   createdAt,
   updatedAt,
+  shortDes,
+  properties
 }) {
   const [form, setForm] = useState({
     name: name || "",
     price: price || "",
     description: description || "",
     images: images || [],
-    category: category || "",
-    properties: [],
+    category: category?._id || "",
+    brand: brand || "",
+    shortDes: shortDes || "",
+    properties: properties || [],
   });
 
-  const [productProperties, setProductProperties] = useState(properties || {});
   const [confirmUpload, setConfirmUpload] = useState(false);
   const [image, setImage] = useState("");
   const [createObjectURL, setCreateObjectURL] = useState("");
-  const [uploadLoading, setUploadLoading] = useState(false)
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [brands, setBrands] = useState(category?.brands || []);
 
-
-  //getall properties and filter propties this product with parent properties
-  const getPropertiesCat = async () => {
-    if (form.category) {
-      const filterCategories = categories.filter(
-        (item) => item._id === form.category
-      );
-      // const parentP = [...filterCategories[0].parent.properties] : []
-
-      let pAll = filterCategories[0].parent
-        ? [
-          ...filterCategories[0].parent.properties,
-          ...filterCategories[0].properties,
-        ]
-        : [...filterCategories[0].properties];
-
-      setForm({
-        ...form,
-        properties: pAll,
-      });
-    } else {
-      setForm({
-        ...form,
-        properties: [],
-      });
-    }
+  //descritpion for editor
+  const desHandler = (text) => {
+    setForm({
+      ...form,
+      description: text,
+    });
   };
-  useEffect(() => {
-    getPropertiesCat();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.category]);
+
+  //activate brands input select
+  const changeHandlerCategory = (e) => {
+    if (e.target.value === "") {
+      setBrands([]);
+    }
+
+    setForm({
+      ...form,
+      category: e.target.value,
+    });
+
+    const filterCategory = categories.find(
+      (item) => item._id === e.target.value
+    );
+
+    if (filterCategory) {
+      setBrands(filterCategory.brands);
+    }
+    return;
+  };
 
   // sortable for images function
   const updateImageOrder = (images) => {
@@ -106,43 +108,29 @@ function FormProduct({
 
   //upload image in local
   const uploadImage = async () => {
-
     // const uploadImage = await uploadImageHandler(image, "/api/uploadimage");
-    setUploadLoading(true)
-    const formData = new FormData()
+    setUploadLoading(true);
+    const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", "adminEcommerce");
 
-
-    const res = await fetch('https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload', {
-      method: "POST",
-      body: formData
-    })
-    const data = await res.json()
-
-    // if (uploadImage.status === 200) {
-    //   setForm({
-    //     ...form,
-    //     images: [
-    //       ...form.images,
-    //       { name: image.name, link: `${baseurl}images/products/${image.name}` },
-    //     ],
-    //   });
-    // }
-
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const data = await res.json();
 
     if (data.secure_url) {
       setForm({
         ...form,
-        images: [
-          ...form.images,
-          { name: image.name, link: data.secure_url },
-        ],
+        images: [...form.images, { name: image.name, link: data.secure_url }],
       });
     }
 
-    
-    setUploadLoading(false)
+    setUploadLoading(false);
     cancelHandler();
   };
 
@@ -161,17 +149,12 @@ function FormProduct({
   const saveHandler = async () => {
     if (edit) {
       // updated
-      const res = await axios.patch(`/api/products/${_id}`, {
-        ...form,
-        properties: productProperties,
-      });
+      const res = await axios.patch(`/api/products/${_id}`, form);
       Toastify("success", "محصول با موفقیت ویرایش شد");
     } else {
       //created
-      const res = await axios.post("/api/products", {
-        ...form,
-        properties: productProperties,
-      });
+      const res = await axios.post("/api/products", form);
+
       if (res.data.status === "success") {
         Toastify("success", "محصول با موفقیت ساخته شد");
         setForm({
@@ -180,28 +163,77 @@ function FormProduct({
           description: "",
           category: "",
           images: [],
-          properties: [],
+          brand: "",
         });
       }
     }
   };
 
-  // change property for product
-  const setPropertiesProp = (propName, value) => {
-    setProductProperties((prev) => {
-      const newProductProperties = { ...prev };
-      newProductProperties[propName] = value;
-      return newProductProperties;
+  //for add property and deleteproperty and changevalueproperty
+  const addProperty = () => {
+    const property = { name: "", value: "" };
+
+    setForm({
+      ...form,
+      properties: [...form.properties, property],
     });
   };
 
+  const changeHandlerPropertyName = (e, index) => {
+    const properties = [...form.properties]
+    properties[index].name = e.target.value
+    setForm({
+      ...form ,
+      properties 
+    })
+  };
+
+  const changeHandlerPropertyValue = (e, index) => {
+    const properties = [...form.properties]
+    properties[index].value = e.target.value
+    setForm({
+      ...form ,
+      properties 
+    })
+    
+  };
+
+  const deleteProperty = (indexP) => {
+
+    const filterProperties = form.properties.filter((item , index) => index !== indexP)
+
+    setForm({
+      ...form,
+      properties : [...filterProperties]
+    })
+    
+  }
+
+
+
+
   return (
     <div className="form-admin">
-      {createdAt &&
+      {createdAt && (
         <div className="flex justify-between items-center my-2">
-          <div><span className="text-primary-admin dark:text-dark-primary-admin">ساخته شده در تاریخ : </span><span className="text-whiteone dark:text-dark-whiteone font-bold">{convertToPersain(createdAt)}</span></div>
-          <div><span className="text-primary-admin dark:text-dark-primary-admin">بروزرسانی شده در تاریخ : </span><span className="text-whiteone dark:text-dark-whiteone font-bold">{convertToPersain(updatedAt)}</span></div>
-        </div>}
+          <div>
+            <span className="text-primary-admin dark:text-dark-primary-admin">
+              ساخته شده در تاریخ :{" "}
+            </span>
+            <span className="text-whiteone dark:text-dark-whiteone font-bold">
+              {convertToPersain(createdAt)}
+            </span>
+          </div>
+          <div>
+            <span className="text-primary-admin dark:text-dark-primary-admin">
+              بروزرسانی شده در تاریخ :{" "}
+            </span>
+            <span className="text-whiteone dark:text-dark-whiteone font-bold">
+              {convertToPersain(updatedAt)}
+            </span>
+          </div>
+        </div>
+      )}
       <div className="input-content">
         <div className="input-content__group">
           <label>نام محصول</label>
@@ -228,7 +260,7 @@ function FormProduct({
           <select
             name="category"
             value={form.category}
-            onChange={changeHandler}
+            onChange={changeHandlerCategory}
           >
             <option value="">بدون دسته بندی</option>
             {categories.map((item) => (
@@ -238,49 +270,66 @@ function FormProduct({
             ))}
           </select>
         </div>
+
+        {brands.length > 0 && (
+          <div className="input-content__group">
+            <label>برند :</label>
+            <select name="brand" value={form.brand} onChange={changeHandler}>
+              <option value="">لطفا برند را انتخاب کنید</option>
+              {brands.map((item, index) => (
+                <option key={index} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
-      {form.properties?.length > 0 && (
-        <div>
-          {form.properties.map((item) => (
-            <div key={item.name} className="input-content">
-              <div className="input-content__group">
-                <label className="label-secondary">نام ویژگی</label>
-                <input
-                  type="text"
-                  className="input-secondary"
-                  disabled={true}
-                  value={item.name}
-                />
-              </div>
-              <div className="input-content__group">
-                <label className="label-secondary">مقدار </label>
+      {/* properties */}
+      <div className="my-2">
+        <button
+          type="button"
+          onClick={addProperty}
+          className="btn-primary-admin w-6/12 mx-auto"
+        >
+          اضافه کردن ویژگی
+        </button>
 
-                <select
-                  name="property"
-                  className="input-secondary"
-                  value={productProperties[item.name]}
-                  onChange={(e) => setPropertiesProp(item.name, e.target.value)}
+        <div className="input-content">
+          {form.properties.length > 0 &&
+            form.properties.map((item, index) => (
+              <div key={index} className="flex justify-between items-center">
+                <div className="flex justify-between items-center gap-1 flex-1">
+                  <input
+                    type="text"
+                    onChange={(e) => changeHandlerPropertyName(e, index)}
+                    value={form.properties[index].name}
+                    placeholder="نام ویژگی"
+                    className="input-property-admin"
+                  />
+                  <input
+                    type="text"
+                    onChange={(e) => changeHandlerPropertyValue(e, index)}
+                    value={form.properties[index].value}
+                    placeholder="مقدار ویژگی"
+                    className="input-property-admin"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => deleteProperty(index)}
+                  className="bg-error text-white rounded-lg p-1 mx-1"
                 >
-                  {item.value.map((val, index) => (
-                    <option key={index} value={val}>
-                      {val}
-                    </option>
-                  ))}
-                </select>
+                  ×
+                </button>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
-      )}
+      </div>
+      {/* properties */}
 
-
-
-
-
-
-
-      
       {confirmUpload ? (
         <div className="confirm-upload">
           <p className="text-center">آیا میخواهید این عکس را اپلود کنید؟</p>
@@ -355,23 +404,27 @@ function FormProduct({
       )}
 
       <div className="input-content__textarea">
-        <label>توضیحات </label>
+        <label>توضیحات کوتاه </label>
         <textarea
-          rows="10"
+          rows="5"
           cols="30"
-          name="description"
-          value={form.description}
+          name="shortDes"
+          value={form.shortDes}
           onChange={changeHandler}
         ></textarea>
       </div>
 
+      <div className="input-content__textarea">
+        <label>توضیحات </label>
+        <div className="editor">
+          <Editor desHandler={desHandler} value={form.description} />
+        </div>
+      </div>
+
       <div className="flex justify-end items-center ">
-
-
         <Button className="btn-primary-admin w-24" handler={saveHandler}>
           {edit ? "ویرایش" : "افزودن"}
         </Button>
-
       </div>
     </div>
   );
