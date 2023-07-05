@@ -113,25 +113,29 @@ function FormProduct({
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", "adminEcommerce");
+    try {
 
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload",
-      {
-        method: "POST",
-        body: formData,
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+
+      if (data.secure_url) {
+        setForm({
+          ...form,
+          images: [...form.images, { name: image.name, link: data.secure_url }],
+        });
       }
-    );
-    const data = await res.json();
 
-    if (data.secure_url) {
-      setForm({
-        ...form,
-        images: [...form.images, { name: image.name, link: data.secure_url }],
-      });
+      setUploadLoading(false);
+      cancelHandler();
+    } catch (error) {
+      console.log(error)
     }
-
-    setUploadLoading(false);
-    cancelHandler();
   };
 
   // delete image product
@@ -183,8 +187,8 @@ function FormProduct({
     const properties = [...form.properties]
     properties[index].name = e.target.value
     setForm({
-      ...form ,
-      properties 
+      ...form,
+      properties
     })
   };
 
@@ -192,21 +196,21 @@ function FormProduct({
     const properties = [...form.properties]
     properties[index].value = e.target.value
     setForm({
-      ...form ,
-      properties 
+      ...form,
+      properties
     })
-    
+
   };
 
   const deleteProperty = (indexP) => {
 
-    const filterProperties = form.properties.filter((item , index) => index !== indexP)
+    const filterProperties = form.properties.filter((item, index) => index !== indexP)
 
     setForm({
       ...form,
-      properties : [...filterProperties]
+      properties: [...filterProperties]
     })
-    
+
   }
 
 
@@ -297,7 +301,7 @@ function FormProduct({
         </button>
 
         <div className="input-content">
-          {form.properties.length > 0 &&
+          {form?.properties?.length > 0 &&
             form.properties.map((item, index) => (
               <div key={index} className="flex justify-between items-center">
                 <div className="flex justify-between items-center gap-1 flex-1">

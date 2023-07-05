@@ -25,7 +25,7 @@ function CardProduct({ name, images, price, category, _id, description, shortDes
                         />
                     </div>
                     <div className="card-p__body">
-                        <div className="card-p__title">{name}</div>
+                        <div className="card-p__title">{shortText(name , 40)}{name.length > 40 && "..."} </div>
                         <div className="card-p__des">
                             {shortText(shortDes, 70)}{shortDes.length > 70 && "..."}
                         </div>

@@ -32,6 +32,11 @@ export const getServerSideProps = async (context) => {
     query.category = context.query.category
   }
 
+
+  if(context.query.brand) {
+    query.brand = context.query.brand
+  }
+
   if (context.query.name) {
     query.name = {
       $regex: context.query.name,
@@ -76,17 +81,6 @@ export const getServerSideProps = async (context) => {
 
   const categories = await Category.find()
 
-  //دسته بندی هاایی که والد دارند
-  // const categoriesWithParent = await Category.find({ parent: { $ne: null } }).exec();
-
-
-  // if (!Object.keys(query).length) {
-  //   return {
-  //     props: {
-  //       categories: JSON.parse(JSON.stringify(categories)),
-  //     },
-  //   }
-  // }
 
   const { page = 1, limit = 10 } = context.query
 
@@ -100,8 +94,6 @@ export const getServerSideProps = async (context) => {
       select: '_id name',
     },
   }
-
-
 
   // const result = await Product.find(query).sort(sort).populate("category")
 

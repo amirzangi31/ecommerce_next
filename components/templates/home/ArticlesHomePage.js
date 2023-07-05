@@ -1,92 +1,100 @@
-import Link from "next/link";
-import React from "react";
-import Slider from "react-slick";
+import Link from 'next/link'
+import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectCoverflow, Autoplay, Pagination } from 'swiper/modules'
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Image from "next/image";
+import 'swiper/css/autoplay';
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
 
-import { Fade } from 'react-reveal'
-import shortText from "@/services/shortText";
-import CardArticle from "@/components/modules/CardArticle";
 
-function ArticlesHomePage({ articles }) {
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    autoplaySpeed : 4000,
 
-    responsive: [
-      {
-        breakpoint: 5000,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 1300,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 968,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 650,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-    ],
-  };
 
+const products = [
+  { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
+  { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
+  { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
+  { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
+  { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
+  { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
+  { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
+  { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
+  { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
+]
+
+
+
+function ArticleHomePage() {
   return (
-    <section className="products-home mt-24 pb-12">
+    <div>
       <div className="flex justify-between items-center title">
         <h2>جدیدترین مقالات</h2>
         <Link href={"/articles"}>
-        <button type="button" className="btn-sm sm:btn-md btn-primary">
-
+          <button type="button" className="btn-sm sm:btn-md btn-primary">
             سایر مقالات
           </button>
         </Link>
-      </div>
-      <div className="content-products mt-12">
-        <Fade top>
-          <Slider {...settings} className="product-slider">
-            {
-              articles.map((item) => (
-                <CardArticle key={item._id} {...item} />
-              ))
-            }
 
-
-          </Slider>
-        </Fade>
       </div>
-    </section>
-  );
+      <div className='section-slider'>
+
+        <Swiper
+          modules={[EffectCoverflow, Autoplay, Pagination]}
+
+          effect='coverflow'
+          grabCursor="true"
+          centeredSlides="true"
+
+          speed={600}
+          className='swiper-home'
+          loop="true"
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false
+          }}
+          pagination={{
+            clickable: true
+          }}
+          coverflowEffect={{
+            rotate: 20,
+            stretch: 0,
+            depth: 100,
+            modifier: 3,
+
+          }}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+            },
+            630: {
+              slidesPerView: 2,
+            },
+            1100: {
+              slidesPerView: 3,
+            },
+          }}
+        >
+          {products.map((i, el) => (
+            <SwiperSlide key={el} className='swiper-slide__one'>
+              <div className='swiper-slide__body'>
+                <h2>slider {el}</h2>
+                <img src={i.link} alt="adf" />
+                <div className='swiper-slide__buttons-article'>
+                  
+                  <Link href={"/"}>
+                    <button type="button" className='btn-sm btn-primary w-full'>جزییات</button>
+                  </Link>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+
+        </Swiper>
+      </div >
+    </div>
+
+  )
 }
 
-export default ArticlesHomePage;
+export default ArticleHomePage

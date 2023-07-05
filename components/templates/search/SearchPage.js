@@ -22,7 +22,59 @@ function SearchPage({ products, categories, page, pageCount }) {
     category: router.query.categroy || "",
     lowPrice: +router.query.lowPrice || "",
     highPrice: +router.query.highPrice || "",
+    brand: router.query.brand || ""
   });
+
+  const [brands, setBrands] = useState([])
+
+
+
+
+  //set brand in form when loading page
+  const setBrandsLoad = () => {
+    const filterCategory = categories.find(item => item._id === router.query.category)
+
+    if (filterCategory) {
+      setBrands(filterCategory.brands)
+      if(router.query.brand){
+        setForm({
+          ...form,
+          brand : router.query.brand
+        })
+      }
+    }
+  }
+  useEffect(() => {
+    if (router.query.category) {
+      setBrandsLoad()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
+  //change handlers 
+  const changeHandlerCategory = (e) => {
+    if (e.target.value === "") {
+      setBrands([]);
+    }
+
+
+
+    setForm({
+      ...form,
+      category: e.target.value,
+      brand : ""
+    });
+
+    const filterCategory = categories.find(
+      (item) => item._id === e.target.value
+    );
+
+    if (filterCategory) {
+      setBrands(filterCategory.brands);
+    }
+    return;
+  }
 
   const changeHandler = (e) => {
     setForm({
@@ -54,6 +106,9 @@ function SearchPage({ products, categories, page, pageCount }) {
     const url = arrayUrl.join("&&");
 
     router.push(`search?${url}`);
+
+
+
   };
 
   //add sortBy
@@ -74,7 +129,6 @@ function SearchPage({ products, categories, page, pageCount }) {
       router.push(`search?${url}`);
     } else {
       const url = `${router.asPath}&&sortBy=${path}`;
-
       router.push(url);
     }
   };
@@ -107,11 +161,15 @@ function SearchPage({ products, categories, page, pageCount }) {
     }
   };
 
+
+
+
   return (
     <div className="container mx-auto py-16 px-2 flex">
-      <div className="flex justify-between items-start flex-col lg:flex-row">
+      <div className="flex justify-between items-start flex-col lg:flex-row w-full">
 
         <div className="search-navbar">
+          {/* product name */}
           <div
             className={`search-navbar__item ${numberActive === 1 && "active"}`}
             onClick={(e) => activeHandler(e, 1)}
@@ -134,6 +192,8 @@ function SearchPage({ products, categories, page, pageCount }) {
               />
             </div>
           </div>
+          {/* product name */}
+          {/* categoruy */}
           <div
             className={`search-navbar__item ${numberActive === 2 && "active"}`}
             onClick={(e) => activeHandler(e, 2)}
@@ -150,7 +210,7 @@ function SearchPage({ products, categories, page, pageCount }) {
             <div className="serach-navbar__item-body">
               <select
                 name="category"
-                onChange={changeHandler}
+                onChange={changeHandlerCategory}
                 defaultValue={router.query.category}
               >
                 <option value="">بدون دسته بندی</option>
@@ -163,6 +223,8 @@ function SearchPage({ products, categories, page, pageCount }) {
               </select>
             </div>
           </div>
+          {/* categoruy */}
+          {/* price */}
           <div
             className={`search-navbar__item ${numberActive === 3 && "active"}`}
             onClick={(e) => activeHandler(e, 3)}
@@ -192,6 +254,42 @@ function SearchPage({ products, categories, page, pageCount }) {
               />
             </div>
           </div>
+          {/* price */}
+
+          {/* brands */}
+          {brands.length > 0 && (
+            <div
+              className={`search-navbar__item ${numberActive === 4 && "active"}`}
+              onClick={(e) => activeHandler(e, 4)}
+            >
+              <div className="search-navbar__item-title">
+                <p>برند</p>
+                <span className="search-navbar__arrow-down">
+                  <MdKeyboardDoubleArrowDown className="text-3xl text-bg-primary" />{" "}
+                </span>
+                <span className="search-navbar__arrow-up">
+                  <MdKeyboardDoubleArrowUp className="text-3xl text-bg-primary" />{" "}
+                </span>
+              </div>
+              <div className="serach-navbar__item-body">
+                <select
+                  name="brand"
+                  onChange={changeHandler}
+                  defaultValue={router.query.brand}
+                >
+                  <option value="">بدون  برند</option>
+                  {brands.length > 0 &&
+                    brands.map((item, index) => (
+                      <option value={item.name} key={index}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {/* brands */}
+
           <div className="w-full">
             <button
               type="button"
@@ -245,7 +343,7 @@ function SearchPage({ products, categories, page, pageCount }) {
           </div>
 
           {!products.length && (
-            <div className="h-96 flex justify-center items-center">
+            <div className="h-96 flex justify-center items-center w-9/12">
               <p className="text-center text-2xl text-text-primary ">
                 محصول مورد نظر یافت نشد !
               </p>

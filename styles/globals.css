@@ -115,16 +115,16 @@ hr {
   @apply text-text-primary my-1 text-center;
 }
 .card-p__des {
-  @apply text-text-secondary my-1 text-center;
+  @apply text-text-secondary my-1 text-center text-sm;
 }
 .card-p__price {
-  @apply flex justify-between items-center w-full;
+  @apply flex justify-between items-center w-full ;
 }
 .card-p__price p {
-  @apply text-text-secondary;
+  @apply text-text-secondary text-xs;
 }
 .card-p__price p span {
-  @apply text-text-primary;
+  @apply text-text-primary text-sm;
 }
 .card-p__buttons {
   @apply flex justify-between items-center w-full;
@@ -674,10 +674,10 @@ hr {
   @apply my-12 text-justify text-text-primary;
 }
 .product-details__description h2 {
-  @apply my-2 text-2xl ;
+  @apply my-2 text-2xl;
 }
-.product-details__description h3{
-  @apply my-2 text-xl ;
+.product-details__description h3 {
+  @apply my-2 text-xl;
 }
 .product-details__description img {
   @apply mx-auto my-2 rounded-lg w-1/2;
@@ -825,3 +825,87 @@ hr {
 }
 
 /*-----------------------error style validate form----------------------------*/
+
+/*-----------------------slider home----------------------------*/
+
+.section-slider {
+  @apply relative mx-auto flex items-center gap-12 px-12 w-full lg:w-4/5 py-12;
+  
+  
+}
+
+
+
+.swiper-home {
+  @apply w-full ; 
+}
+.swiper-home .swiper-slide {
+  @apply flex flex-col justify-end items-center pb-20 rounded-lg ;
+  filter: grayscale(0.6);
+  -webkit-filter: grayscale(0.6);
+}
+.swiper-home .swiper-slide .swiper-slide__body {
+  @apply transition-all duration-75 opacity-40 rounded-lg relative;
+}
+
+.swiper-home .swiper-slide-active .swiper-slide__body {
+  @apply opacity-100 bg-white p-4;
+}
+.swiper-home .swiper-slide .swiper-slide__buttons{
+  @apply  justify-between flex-col  lg:hidden lg:grid-cols-2 gap-2 text-sm hidden ;
+}
+.swiper-home .swiper-slide-active .swiper-slide__buttons{
+  @apply   lg:grid flex ;
+}
+.swiper-home .swiper-slide .swiper-slide__buttons-article{
+  @apply w-full hidden;
+}
+.swiper-home .swiper-slide-active .swiper-slide__buttons-article{
+  @apply w-full block;
+}
+.swiper-home .swiper-slide-active .swiper-slide__buttons-article a{
+  @apply w-full;
+}
+
+
+
+.swiper-home .swiper-slide h2 {
+  @apply hidden mb-5 uppercase text-center bg-bg-three py-1 rounded-lg text-sm font-bold text-text-primary absolute;
+  width: 90%;
+  left: 5%;
+}
+.swiper-home .swiper-slide-active h2 {
+  @apply block ;
+  
+}
+.swiper-home .swiper-slide .swiper-slide__buttons button{
+  @apply w-full  ;
+}
+.swiper-home .swiper-slide .swiper-slide__buttons p{
+  @apply block w-full text-center;
+}
+.swiper-home .swiper-slide .swiper-slide__buttons a{
+  @apply block w-full text-center;
+}
+.swiper-home .swiper-slide .swiper-slide__body img {
+  @apply w-full  rounded-lg;
+  max-width: 300px;
+  height: 300px;
+}
+
+
+.swiper-3d,
+.swiper-slide-shadow-left ,
+.swiper-3d,
+.swiper-slide-shadow-right {
+    
+  @apply hidden md:block ;
+}
+.swiper-pagination-bullet-active{
+  
+  background-color: #fff !important;
+
+}
+
+
+/*-----------------------slider home----------------------------*/
