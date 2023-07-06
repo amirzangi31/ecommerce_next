@@ -10,6 +10,12 @@ const nextConfig = {
         pathname: "/dglh3bbsp/image/upload/**"
       },
       {
+        protocol: "https",
+        hostname: "matrixstore-zangiabadi.iran.liara.run",
+        port: "",
+        pathname: "/images/products/**"
+      },
+      {
         protocol: "http",
         hostname: "localhost",
         port: "3000",
