@@ -20,6 +20,7 @@ import { fetchUser } from "@/redux/features/user/userSlice";
 import Loader from "../modules/Loader";
 import { useRouter } from "next/router";
 import { fetchCart } from "@/redux/features/cart/cartSlice";
+import { fetchCategories } from "@/redux/features/categories/categoriesSlice";
 
 
 
@@ -37,10 +38,12 @@ function Header() {
 
   const dispatch = useDispatch()
   const { user: { user }, loading } = useSelector(state => state.user)
+  const categories = useSelector(state => state.categories)
 
 
   useEffect(() => {
     dispatch(fetchCart())
+    dispatch(fetchCategories())
   }, [])
 
 
@@ -123,40 +126,30 @@ function Header() {
                 جست و جو{" "}
               </div>
             </li>
-            <li>
+            <li className="lg:hidden">
+              <Link href="/categories">دسته بندی </Link>
+            </li>
+            <li className="hidden lg:block">
               <Link href="/">دسته بندی ها</Link>
-              
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4 hidden lg:block"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-              <div className="drop-down-nav hidden lg:block ">
+
+       
+              <div className="drop-down-nav  ">
                 <div className="drop-down-nav__inner">
-                  <div className="drop-down-nav__link">
-                    <Link href="/">link_1</Link>
-                  </div>
-                  <div className="drop-down-nav__link">
-                    <Link href="/">link_2</Link>
-                  </div>
-                  <div className="drop-down-nav__link">
-                    <Link href="/">link_3</Link>
-                  </div>
-                  <div className="drop-down-nav__link">
-                    <Link href="/">link_4</Link>
-                  </div>
-                  <div className="drop-down-nav__link">
-                    <Link href="/">link_5</Link>
-                  </div>
+
+                  {!categories.loading && (
+                    categories.categories?.data.map(item => (
+                      <div className="drop-down-nav__link" key={item._id}>
+                        <Link href={`/search?category=${item._id}`} className="text-lg font-bold text-bg-primary">
+                          {item.name}
+                        </Link>
+                        <div className="flex justify-between items-center flex-col gap-2">
+                          {item.brands.map((brand, index) => (
+                            <Link href={`/search?category=${item._id}&&brand=${brand.name}`}  className="hover:text-lg transition-all duration-300" key={index}>{brand.name}</Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </li>

@@ -17,7 +17,7 @@ function HomePage({ products,articles }) {
         <ServicesHomePage />
         
         <RequestHomePage />
-        <NewSliderProductsHome /> 
+        <NewSliderProductsHome products={products} /> 
         {/* <ProductSliderHomePage products={products} /> */}
         <InstagramHomePage />
         <ArticlesHomePage   articles={articles} />

@@ -203,9 +203,9 @@ function ProfilePage({ user }) {
                 htmlFor="file"
                 className="upload-image-element overflow-hidden bg-bg-three border border-text-secondary text-xs text-text-primary"
               >
-                {form.profileimage ? (
+                {form?.profileimage ? (
                   <Image
-                    src={form.profileimage}
+                    src={form?.profileimage}
 
                     alt="image"
                     width={700}

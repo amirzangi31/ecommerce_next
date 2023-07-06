@@ -72,7 +72,7 @@ function DashboardPage() {
         </form>
       </Modal>
 
-      {!laoding && user.user.profileimage && (
+      {/* {!laoding && user.user?.profileimage && (
 
         <div className="flex justify-center items-center">
           {session.status === "authenticated" && (
@@ -85,7 +85,7 @@ function DashboardPage() {
             />
           )}
         </div>
-      )}
+      )} */}
 
       <div className="grid grid-cols-2 gap-2 mt-4">
         <Link href={"/dashboard/profile"} className="w-full ">

@@ -76,7 +76,7 @@ header nav li .drop-down-nav .drop-down-nav__inner {
 
 header nav li .drop-down-nav .drop-down-nav__inner .drop-down-nav__link {
   @apply transition-all duration-500 text-sm  text-center;
-  @apply hover:text-text-secondary;
+  
   animation: fadeInOne 300ms ease-in-out 800ms both;
   -webkit-animation: fadeInOne 300ms ease-in-out 800ms both;
 }

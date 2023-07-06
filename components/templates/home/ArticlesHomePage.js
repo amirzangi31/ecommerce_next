@@ -7,25 +7,18 @@ import 'swiper/css/autoplay';
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
+import shortText from '@/services/shortText';
+import Image from 'next/image';
 
 
 
 
-const products = [
-  { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
-  { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
-  { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
-  { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
-  { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
-  { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
-  { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
-  { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
-  { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
-]
 
 
 
-function ArticleHomePage() {
+
+
+function ArticleHomePage({articles}) {
   return (
     <div>
       <div className="flex justify-between items-center title">
@@ -75,14 +68,14 @@ function ArticleHomePage() {
             },
           }}
         >
-          {products.map((i, el) => (
+          {articles.map((i, el) => (
             <SwiperSlide key={el} className='swiper-slide__one'>
               <div className='swiper-slide__body'>
-                <h2>slider {el}</h2>
-                <img src={i.link} alt="adf" />
+                <h2>{shortText(i.title , 40) }{i.title.length > 40 && "..."}</h2>
+                <Image src={i.image} alt={i.image} width={200} height={200}  /> 
                 <div className='swiper-slide__buttons-article'>
                   
-                  <Link href={"/"}>
+                  <Link href={`/articles/${i._id}`}>
                     <button type="button" className='btn-sm btn-primary w-full'>جزییات</button>
                   </Link>
                 </div>

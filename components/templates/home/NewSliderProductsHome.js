@@ -7,25 +7,17 @@ import 'swiper/css/autoplay';
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
+import Image from 'next/image';
+import shortText from '@/services/shortText';
 
 
 
 
-const products = [
-    { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
-    { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
-    { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
-    { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
-    { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
-    { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
-    { link: "https://www.technolife.ir/image/gallery-1-TLP-6122_4acd5813-ce0b-4f69-a999-eb92b845703b.png" },
-    { link: "https://www.technolife.ir/image/gallery-1-TLP-4373_3c87b1de-79f3-4a73-b5f3-68da38ee9f5c.png" },
-    { link: "https://www.technolife.ir/image/gallery-0-TLP-6194_f8a86980-6201-44a1-b00c-911a6714cd55.png" },
-]
 
 
 
-function NewSliderProductsHome() {
+
+function NewSliderProductsHome({products}) {
     return (
         <div>
             <div className="flex justify-between items-center title">
@@ -77,11 +69,11 @@ function NewSliderProductsHome() {
                     {products.map((i, el) => (
                         <SwiperSlide key={el} className='swiper-slide__one'>
                             <div className='swiper-slide__body'>
-                                <h2>slider {el}</h2>
-                                <img src={i.link} alt="adf" />
+                                <h2>{shortText(i.name , 20)}{i.name.length > 20 && "..."}</h2>
+                                <Image src={i.images[0].link} alt={i.images[0].name} width={200} height={200}  /> 
                                 <div className='swiper-slide__buttons'>
-                                    <p className='btn-sm btn-primary'>قیمت : <span>12000</span></p>
-                                    <Link href={"/"}>
+                                    <p className='btn-sm btn-primary'>قیمت : <span>{i.price.toLocaleString()}ريال</span></p>
+                                    <Link href={`/products/${i._id}`}>
                                         <button type="button" className='btn-sm btn-primary'>جزییات</button>
                                     </Link>
                                 </div>
