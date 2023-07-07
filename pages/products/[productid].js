@@ -22,7 +22,7 @@ export async function getStaticPaths() {
   const test = JSON.parse(JSON.stringify(products))
 
 
-  const data = test.slice(0, 8)
+  const data = products.slice(0, 8)
 
 
   const paths = data.map(item => ({
@@ -39,8 +39,8 @@ export async function getStaticPaths() {
 
 
 export async function getStaticProps(context) {
-  const { params } = context;
   await connectDB()
+  const { params } = context;
   const categories = await Category.find()
   const id = params.productid
   const product = await Product.findOne({ _id: id }).populate("category")

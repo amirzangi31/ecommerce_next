@@ -1,14 +1,10 @@
-
-import mongoose from 'mongoose'
-
-
+import mongoose from "mongoose";
 
 async function connectDB() {
-    if (mongoose.connections[0].readyState) return;
-
-    
-    await mongoose.connect(process.env.MONGODB_URI)
-
-    console.log("connect to db")
+  if (mongoose.connections[0].readyState) return;
+  mongoose.set("strictQuery", false);
+  await mongoose.connect("mongodb+srv://amirzangi31:03413642127@cluster0.dqryldi.mongodb.net/?retryWrites=true&w=majority");
+  console.log("Connected to DB");
 }
-export default connectDB
+
+export default connectDB;

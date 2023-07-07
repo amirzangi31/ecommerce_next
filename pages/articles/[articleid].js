@@ -1,9 +1,9 @@
+import React from 'react'
 import ArticlePage from '@/components/templates/articles/ArticlePage'
 import Article from '@/models/Article'
 import Category from '@/models/Category'
 import Comment from '@/models/Comment'
 import connectDB from '@/utils/connectDB'
-import React from 'react'
 
 function ArticleP({ article }) {
 
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
   const test = JSON.parse(JSON.stringify(articles))
 
 
-  const data = test.slice(0, 8)
+  const data = articles.slice(0, 8)
 
 
   const paths = data.map(item => ({
@@ -42,8 +42,8 @@ export async function getStaticPaths() {
 
 
 export async function getStaticProps(context) {
-  const { params } = context;
   await connectDB()
+  const { params } = context;
   const categories = await Category.find()
   const id = params.articleid
 
