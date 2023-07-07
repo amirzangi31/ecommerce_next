@@ -3,7 +3,7 @@ import connectDB from "@/utils/connectDB";
 import { getSession } from "next-auth/react";
 
 const handler = async (req, res) => {
-
+    
     try {
         await connectDB();
     } catch (err) {

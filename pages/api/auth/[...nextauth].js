@@ -8,8 +8,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
     session: { strategy: "jwt" },
-    secret: process.env.NEXTAUTH_SECRET
-    ,
+    secret: process.env.NEXTAUTH_SECRET,
+    
     providers: [
         CredentialsProvider({
             async authorize(credentials, req) {

@@ -12,17 +12,11 @@ export default function Home({ articles ,products}) {
   );
 }
 
-
-
-
-
 export async function getStaticProps() {
   await connectDB()
   const category = await Category.find()
-  const products = await Product.find({}, null, { sort: { "_id": -1 }, limit: 6 }).populate("category")
-  const articles = await Article.find({}, null, { sort: { "_id": -1 }, limit: 6 })
-
-  
+  const products = await Product.find({}, null, { sort: { "_id": -1 }, limit: 5 })
+  const articles = await Article.find({}, null, { sort: { "_id": -1 }, limit: 5 })
 
   return {
     props: {
