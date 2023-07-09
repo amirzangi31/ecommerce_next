@@ -6,7 +6,8 @@ import Toastify from "@/services/Toast";
 import axios from "axios";
 import Link from "next/link";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "@/redux/features/cart/cartSlice";
 
 function ShoppingCartPage() {
 
@@ -16,7 +17,7 @@ function ShoppingCartPage() {
   const [isPay, setIsPay] = useState(false);
 
   const cartData = useSelector(state => state.cart)
-
+  const dispatch = useDispatch()
 
 
   const {
@@ -30,6 +31,7 @@ function ShoppingCartPage() {
       const res = await axios.patch(`/api/order/${cartData.cart.data._id}?type=payment`);
       if (res.data.status === "success") {
         Toastify("success", "سبد خرید شما با موفقیت خریداری شد");
+        dispatch(fetchCart())
         setModalPayment(false);
         setIsPay(true);
       }

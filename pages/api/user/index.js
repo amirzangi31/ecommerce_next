@@ -27,7 +27,11 @@ const handler = async (req, res) => {
 
 
     if (req.method === "GET") {
+
         const { name, email, profileimage, orders, createdAt, updatedAt, address, postalcode, phone, _id, isComplete, card } = user
+
+        
+
         return res.status(200).json({ status: "success", user: { _id, name, email, profileimage, postalcode, orders, card, createdAt, updatedAt, address, phone, isComplete } })
     }
 
@@ -46,6 +50,8 @@ const handler = async (req, res) => {
         user.profileimage = profileimage 
         user.card = card 
         user.updatedAt = Date.now()
+
+        
 
         if (!!user.name.trim() && !!user.phone.trim() && !!user.address.trim() && !!user.postalcode.trim() && !!user.card.trim()) {
             user.isComplete = true

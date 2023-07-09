@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 
 function ProfilePage({ user }) {
 
+  
   const [form, setForm] = useState({
     name: user?.name || "",
     profileimage: user?.image || "",

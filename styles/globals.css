@@ -36,6 +36,11 @@
   font-style: normal;
 }
 
+
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-bg-body text-text-secondary  mx-auto overflow-x-hidden relative;
 
@@ -218,6 +223,12 @@ hr {
 .Toastify__toast-body {
   @apply text-sm text-center;
 }
+
+.Toastify__toast-container .Toastify__toast-container--top-right{
+  max-width: 250px !important;
+  
+}
+
 
 /*----------------modal------------------*/
 

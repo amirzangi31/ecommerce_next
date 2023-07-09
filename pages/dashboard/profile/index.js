@@ -27,7 +27,8 @@ export async function getServerSideProps({ req }) {
     postalcode: user.postalcode,
     phone: user.phone,
     address: user.address,
-    image: user.profileimage
+    image: user.profileimage,
+    card : user.card
   }
 
   

@@ -151,7 +151,7 @@ function ProductPage({ product }) {
   };
 
   return (
-    <div>
+    
       <div className="container mx-auto py-16 px-2">
         <SignModal show={signModal} setShow={setSignModal} />
 
@@ -376,7 +376,7 @@ function ProductPage({ product }) {
         <div className="box-title">ارسال نظر</div>
         <CommentForm parent={_id} type="product" />
       </div>
-    </div>
+
   );
 }
 

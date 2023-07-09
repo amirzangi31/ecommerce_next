@@ -90,11 +90,11 @@ function RequestHomePage() {
   const sendHandler = async (type) => {
     if (type === "sale") {
       try {
-        
+
         const res = await axios.post(`/api/request?type=${type}`, {
           requestText: form.sale,
         });
-        
+
         successHandler(res.data.status);
         setForm({
           ...form,
@@ -102,15 +102,15 @@ function RequestHomePage() {
         });
         setModalSale(false);
       } catch (error) {
-          Toastify("error" , "لطفا درخواست خود را وارد کنید")
+        Toastify("error", "لطفا درخواست خود را وارد کنید")
       }
-      } else if (type === "repire") {
+    } else if (type === "repire") {
       try {
-        
+
         const res = await axios.post(`/api/request?type=${type}`, {
           requestText: form.repire,
         });
-        
+
         successHandler(res.data.status);
         setForm({
           ...form,
@@ -118,15 +118,15 @@ function RequestHomePage() {
         });
         setModalRepire(false);
       } catch (error) {
-          Toastify("error" , "لطفا درخواست خود را وارد کنید")
+        Toastify("error", "لطفا درخواست خود را وارد کنید")
       }
-      } else if (type === "counseling") {
+    } else if (type === "counseling") {
       try {
-        
+
         const res = await axios.post(`/api/request?type=${type}`, {
           requestText: form.counseling,
         });
-        
+
         successHandler(res.data.status);
         setForm({
           ...form,
@@ -134,9 +134,9 @@ function RequestHomePage() {
         });
         setModalCounseling(false);
       } catch (error) {
-          Toastify("error" , "لطفا درخواست خود را وارد کنید")
+        Toastify("error", "لطفا درخواست خود را وارد کنید")
       }
-      }
+    }
   };
 
   return (
@@ -311,12 +311,13 @@ function RequestHomePage() {
             ))}
           </div>
         </Fade>
-        <Fade left>
-          <div>
-            <div className="card p-4 h-full">
-              {data.map(
-                (item, index) =>
-                  activeSliceIndex === index && (
+
+        <div>
+          <div className="card p-4 h-full">
+            {data.map(
+              (item, index) =>
+                activeSliceIndex === index && (
+                  
                     <Image
                       key={index}
                       src={item.image}
@@ -325,11 +326,12 @@ function RequestHomePage() {
                       height={500}
                       className="w-8/12 mx-auto"
                     />
-                  )
-              )}
-            </div>
+                  
+                )
+            )}
           </div>
-        </Fade>
+        </div>
+
       </div>
     </section>
   );

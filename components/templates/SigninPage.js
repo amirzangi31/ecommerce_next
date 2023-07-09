@@ -51,10 +51,10 @@ function SigninPage() {
 
     const submitHandler = async (e) => {
         e.preventDefault()
-        setLoading(true)
 
         const validate = signValidate(form, "signin").errorLength
         if (validate === 0) {
+            setLoading(true)
 
             const res = await signIn("credentials", {
                 email: form.email,
@@ -70,6 +70,9 @@ function SigninPage() {
                 setLoading(false)
             }
         }
+
+
+
     }
 
     return (

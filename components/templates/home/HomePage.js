@@ -13,7 +13,7 @@ function HomePage({ products,articles }) {
   return (
     <>
       <LandingHomePage />
-      <div className='container mx-auto px-2'>
+      <div className='container mx-auto px-4 lg:px-0'>
         <ServicesHomePage />
         
         <RequestHomePage />
