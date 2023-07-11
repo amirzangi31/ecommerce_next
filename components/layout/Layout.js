@@ -27,7 +27,7 @@ function Layout({ children }) {
     return (
         <>
             {show && <Header  />}
-            <main className='min-h-[calc(100vh-280px)]'>
+            <main className='section-all min-h-[calc(100vh-280px)]'>
                 {children}
             </main>
             {show && <Footer />}

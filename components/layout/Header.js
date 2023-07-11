@@ -132,7 +132,7 @@ function Header() {
             <li className="hidden lg:block">
               <Link href="/">دسته بندی ها</Link>
 
-       
+
               <div className="drop-down-nav  ">
                 <div className="drop-down-nav__inner">
 
@@ -144,7 +144,7 @@ function Header() {
                         </Link>
                         <div className="flex justify-between items-center flex-col gap-2">
                           {item.brands.map((brand, index) => (
-                            <Link href={`/search?category=${item._id}&&brand=${brand.name}`}  className="hover:text-lg transition-all duration-300" key={index}>{brand.name}</Link>
+                            <Link href={`/search?category=${item._id}&&brand=${brand.name}`} className="hover:text-lg transition-all duration-300" key={index}>{brand.name}</Link>
                           ))}
                         </div>
                       </div>
@@ -187,6 +187,7 @@ function Header() {
 
                   }
                   {cartData.loading === false && cartData.cart.data?.total}
+                  {cartData.loading === false && cartData.cart.data?.total === undefined && 0}
                 </span>
               </Link>
             </li>

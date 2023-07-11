@@ -60,6 +60,6 @@ export async function getStaticProps(context) {
 
   return {
     props: { product: JSON.parse(JSON.stringify(product)) },
-    revalidate: 5 * 60 //one day
+    revalidate: 24 * 60 * 60 //one day
   }
 }
