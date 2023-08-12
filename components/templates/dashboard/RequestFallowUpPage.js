@@ -32,7 +32,7 @@ function RequestFallowUpPage({ requests }) {
 
   return (
     <div className="container px-2 py-16 mx-auto">
-      <h2 className="title-one">پیگیری سفارشات</h2>
+      <h2 className="title-one">پیگیری درخواست ها</h2>
 
       <Modal show={modal} setShow={setModal}>
         <div className="rounded-lg border border-text-secondary bg-bg-three p-2 text-text-primary">

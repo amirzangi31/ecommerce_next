@@ -10,7 +10,7 @@ function LandingHomePage() {
         <div className="landing-home__right">
           <Flip top>
             <h1>
-            به فروشگاه آنلاین <span>ماتریکس</span> خوش آمدید
+              به فروشگاه آنلاین <span>ماتریکس</span> خوش آمدید
             </h1>
           </Flip>
 
@@ -30,7 +30,7 @@ function LandingHomePage() {
               <button type="button" className="btn-md btn-primary">
                 شروع کار
               </button>
-              </Link>
+            </Link>
             <Link href={"/products"}>
               <button type="button" className="btn-md btn-secondary">
                 محصولات
@@ -40,18 +40,21 @@ function LandingHomePage() {
         </div>
         <div className="landing-home__left">
           <Image
-            src="/images/landing/landing_image.png"
+            src="https://res.cloudinary.com/dglh3bbsp/image/upload/v1689405527/kpopu40lrywsyrgphlrb.png"
             className="w-10/12 landing_image"
             alt="landing-image"
+            priority={true}
             width={500}
             height={300}
           />
+
           <Image
             src="/images/landing/shape_1.png"
             alt="landing-image"
             className="shape shape_1"
             width={500}
             height={300}
+            priority={true}
           />
           <Image
             src="/images/landing/shape_2.png"
@@ -59,6 +62,7 @@ function LandingHomePage() {
             className="shape shape_2"
             width={500}
             height={300}
+            priority={true}
           />
           <Image
             src="/images/landing/shape_3.png"
@@ -66,6 +70,7 @@ function LandingHomePage() {
             className="shape shape_3"
             width={500}
             height={300}
+            priority={true}
           />
           <Image
             src="/images/landing/shape_4.png"
@@ -73,6 +78,7 @@ function LandingHomePage() {
             className="shape shape_4"
             width={500}
             height={300}
+            priority={true}
           />
         </div>
       </div>

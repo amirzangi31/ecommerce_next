@@ -55,10 +55,20 @@ function CommentForm({ parent, type }) {
             email: "",
             comment: "",
           })
+          setTouched({
+            name: false,
+            email: false,
+            comment: false,
+          })
         }
       } catch (error) {
 
         Toastify("error", error)
+        setTouched({
+          name: false,
+          email: false,
+          comment: false,
+        })
       }
 
     }

@@ -14,8 +14,9 @@ function InstagramHomePage() {
         <Fade top>
 
           <Image
-            src="/images/landing/mobile_instagram.png"
+            src="https://res.cloudinary.com/dglh3bbsp/image/upload/v1689406219/xz2tgarod4ifk2lsst3j.png"
             alt="bg-instagram"
+            priority={true}
             width={700}
             height={500}
           />

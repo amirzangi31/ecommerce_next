@@ -114,6 +114,7 @@ function FormProduct({
     formData.append("file", image);
     formData.append("upload_preset", "adminEcommerce");
     try {
+      
 
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/dglh3bbsp/image/upload",
@@ -123,6 +124,8 @@ function FormProduct({
         }
       );
       const data = await res.json();
+
+        console.log(data)
 
       if (data.secure_url) {
         setForm({
